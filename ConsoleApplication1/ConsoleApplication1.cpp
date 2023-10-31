@@ -6,7 +6,8 @@
 #include <SFML/Window/Mouse.hpp>
 #include <Header/Card.hpp>
 #include <Header/Hand.hpp>
-
+#include <Header/Shuffle.hpp>
+using namespace std;
 
 int main()
 {
