@@ -21,9 +21,15 @@
     <ClCompile Include="Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shuffle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shuffle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

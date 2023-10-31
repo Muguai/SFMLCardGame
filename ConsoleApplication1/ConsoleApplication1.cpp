@@ -4,13 +4,20 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <Header/Card.hpp>
-
+#include <Header/Shuffle.hpp>
+using namespace std;
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
     sf::RectangleShape shape(sf::Vector2f(120.f,50.f));
     shape.setFillColor(sf::Color::Green);
+    
+    cout << "shuffle array 1-10:" << endl;
+    int *arr = permutedIndices(10);
+    for (int i = 0; i < 10; i++) {
+        cout <<"Init: " << (i) << " Shuffled index: " << arr[i] << endl;
+    }
 
     while (window.isOpen())
     {
