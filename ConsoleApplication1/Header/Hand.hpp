@@ -2,6 +2,7 @@
 #include <vector>
 #include "Card.hpp"
 
+
 class Hand {
 public:
     void addCard(const Card& card);
@@ -9,9 +10,9 @@ public:
     std::vector<sf::Vector2f> getCardPositions() const;
     void move(float offsetX, float offsetY);
     void draw(sf::RenderWindow& window);
-    void arrangeCardsInArc(float radiusX, float radiusY, float centerX, float centerY);
+    void arrangeCardsInArc(float radiusX, float radiusY, float centerX, float centerY, sf::RenderWindow& window);
     void printCardDetails() const;
-
+    void handleCardHover(sf::RenderWindow& window);
 
 private:
     std::vector<Card> cards;
