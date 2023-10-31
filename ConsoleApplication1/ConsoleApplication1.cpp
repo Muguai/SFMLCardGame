@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <Header/Card.hpp>
+
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
+    sf::RectangleShape shape(sf::Vector2f(120.f,50.f));
     shape.setFillColor(sf::Color::Green);
 
     while (window.isOpen())
@@ -20,6 +22,7 @@ int main()
         }
 
         window.clear();
+        shape.move(0.01f, 0.01f);
         window.draw(shape);
         window.display();
     }
