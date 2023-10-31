@@ -1,6 +1,8 @@
 #include "Card.hpp"
 #include <iostream>
 
+Card::Card() {};
+
 Card::Card(sf::Vector2f widthHeight, string name) {
     shape.setSize(widthHeight);
     shape.setFillColor(sf::Color::Blue);

@@ -4,6 +4,7 @@ using namespace std;
 
 class Card {
 public:
+    Card();
     Card(sf::Vector2f widthHeight, string name); // Constructor
     void move(float offsetX, float offsetY);
     void draw(sf::RenderWindow& window);

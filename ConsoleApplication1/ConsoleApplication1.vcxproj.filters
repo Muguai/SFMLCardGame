@@ -21,11 +21,8 @@
     <ClCompile Include="Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Shuffle.cpp">
-=======
     <ClCompile Include="Hand.cpp">
->>>>>>> fa1aa52015a41412fc90720237dc8e2a35758c1b
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -33,11 +30,8 @@
     <ClInclude Include="Card.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Shuffle.hpp">
-=======
     <ClInclude Include="Hand.hpp">
->>>>>>> fa1aa52015a41412fc90720237dc8e2a35758c1b
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
