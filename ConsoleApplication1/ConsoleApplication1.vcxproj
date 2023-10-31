@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SFML\include;$(SolutionDir)ConsoleApplication1;$(SolutionDir)ConsoleApplication1\Scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SFML\include;$(SolutionDir)ConsoleApplication1;$(SolutionDir)ConsoleApplication1\Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,11 +141,19 @@
   <ItemGroup>
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Shuffle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.hpp" />
     <ClInclude Include="Shuffle.hpp" />
+=======
+    <ClCompile Include="Hand.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Card.hpp" />
+    <ClInclude Include="Hand.hpp" />
+>>>>>>> fa1aa52015a41412fc90720237dc8e2a35758c1b
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
