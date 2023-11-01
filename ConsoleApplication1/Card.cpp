@@ -13,7 +13,7 @@ Card::Card(sf::Vector2f widthHeight, string name) {
     if (!font.loadFromFile("Fonts/COMIC.ttf")) {
         cout << "Error loading font!";
     }
-    if (!cardTexture.loadFromFile("card2.png")) {
+    if (!cardTexture.loadFromFile("Images/card2.png")) {
         cout << "Error loading card image!";
     }
 }

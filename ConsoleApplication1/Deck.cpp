@@ -13,7 +13,7 @@ sf::Texture cardTexture;
 Deck::Deck(){
 	position.x = 0;
 	position.y = 0;
-	if (!cardTexture.loadFromFile("card.png")) {
+	if (!cardTexture.loadFromFile("Images/card.png")) {
 		// Handle loading error
 		cerr << "Failed to load card texture." << endl;
 		cout << "cant find png!" << endl;
