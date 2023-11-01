@@ -21,7 +21,7 @@ Deck::Deck(){
 	if (!font.loadFromFile("Fonts/COMIC.ttf")) {
 		cout << "Error loading font!";
 	}
-	if (!soundBuffer.loadFromFile("whoosh.wav")) {
+	if (!soundBuffer.loadFromFile("Sound/whoosh.wav")) {
 		cout << "Error loading sound effect!";
 	}
 }
