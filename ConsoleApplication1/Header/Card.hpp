@@ -15,14 +15,17 @@ public:
     sf::RectangleShape getShape();
     float getWidth() const;
     float getHeight() const;
+    void flip();
     void setZ(float z) { this->z = z; }
     float getZ() const { return z; }
 
 
 private:
     sf::RectangleShape shape;
+    sf::RectangleShape backFace;
     sf::Font font;
     string cardName;
     sf::Texture cardTexture;
     float z;
+    bool frontFacing;
 };
