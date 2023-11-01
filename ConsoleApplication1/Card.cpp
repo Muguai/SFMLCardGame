@@ -12,9 +12,10 @@ Card::Card(sf::Vector2f widthHeight, string name) {
     shape.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
 }
 
-void Card::move(float offsetX, float offsetY) {
-    shape.move(offsetX, offsetY);
+void Card::move(sf::Vector2f moveDir) {
+    shape.move(moveDir);
 }
+
 
 void Card::setPosition(sf::Vector2f vector2) {
     shape.setPosition(vector2);

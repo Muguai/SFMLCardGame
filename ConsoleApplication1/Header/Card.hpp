@@ -5,8 +5,8 @@ using namespace std;
 class Card {
 public:
     Card();
-    Card(sf::Vector2f widthHeight, string name); // Constructor
-    void move(float offsetX, float offsetY);
+    Card(sf::Vector2f widthHeight, string name); 
+    void move(sf::Vector2f moveDir);
     void draw(sf::RenderWindow& window);
     void setPosition(sf::Vector2f vector2);
     sf::Vector2f getPosition() const;

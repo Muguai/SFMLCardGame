@@ -1,5 +1,6 @@
 #include "Header/Hand.hpp"
 #include <iostream>
+#include "VectorHelper.hpp"
 
 void Hand::addCard(const Card& card) {
     cards.push_back(card);
@@ -21,7 +22,7 @@ std::vector<sf::Vector2f> Hand::getCardPositions() const {
     return positions;
 }
 
-void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float centerY, sf::RenderWindow& window) {
+void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float centerY, sf::RenderWindow& window, float deltaTIme) {
     int numCards = static_cast<int>(cards.size());
     float angleIncrement = 180.f / (numCards * 2);
     float currentAngle = 90.f - (angleIncrement * (numCards - 1) / 2);
@@ -39,6 +40,16 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
         z += 1;
         card.setZ(z);
 
+        if (VectorHelper::distanceTo(card.getPosition(), targetPosition) > 10.f) {
+            sf::Vector2f direction = targetPosition - card.getPosition();     
+            direction = VectorHelper::normalize(direction);
+
+            float speed = 1000.f;
+            cout << "Move " + std::to_string(VectorHelper::distanceTo(card.getPosition(), targetPosition)) + " With Vector " + std::to_string((direction * speed * deltaTIme).x) + " " + std::to_string((direction * speed * deltaTIme).y);
+            card.move(direction * speed * deltaTIme);
+        }
+
+        /*
         if (isHovered && !onlyOneHovered && !onlyOneDragging) {
             onlyOneHovered = true;
             card.setZ(numCards);
@@ -51,8 +62,8 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
             card.setZ(numCards);
             targetPosition = static_cast<sf::Vector2f>(mousePos);
         }
+        */
 
-        card.setPosition(targetPosition);
         currentAngle += angleIncrement;
     }
 
@@ -62,11 +73,6 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
 
 }
 
-void Hand::move(float offsetX, float offsetY) {
-    for (auto& card : cards) {
-        card.move(offsetX, offsetY);
-    }
-}
 
 void Hand::draw(sf::RenderWindow& window) {
     for (auto& card : cards) {
