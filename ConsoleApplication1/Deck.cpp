@@ -5,14 +5,11 @@
 
 using namespace std;
 deque<Card> cardStack;
-int x;
-int y;
+sf::Vector2f position;
 sf::Texture cardTexture;
 	
 // Constructor:
 Deck::Deck(){
-	x = 0;
-	y = 0;
 	if (!cardTexture.loadFromFile("card.png")) {
 		// Handle loading error
 		cerr << "Failed to load card texture." << endl;
@@ -25,10 +22,14 @@ int Deck::getSize() {
 	return cardStack.size();
 }
 
+sf::Vector2f Deck::getPosition() {
+	return position;
+}
+
 // Simple setters:
-void Deck::setPosition(int newX, int newY) {
-	x = newX;
-	y = newY;
+void Deck::setPosition(sf::Vector2f newPosition) {
+	position.x = newPosition.x;
+	position.y = newPosition.y;
 }
 
 // Logical Functions:
@@ -90,8 +91,4 @@ void Deck::drawDeck(sf::RenderWindow& window){
 	sf::Sprite cardSprite(cardTexture);
 	cardSprite.setPosition(x, y);
 	window.draw(cardSprite);
-}
-
-void Deck::dealCardAnimation() {
-
 }

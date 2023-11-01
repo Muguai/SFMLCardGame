@@ -18,7 +18,8 @@ public:
 	void shuffleDeck();
 	void printCards();
 	int getSize();
-	void setPosition(int newX, int newY);
+	sf::Vector2f getPosition();
+	void setPosition(sf::Vector2f newPosition);
 	void drawDeck(sf::RenderWindow& window);
-	void dealCardAnimation();
+
 };
