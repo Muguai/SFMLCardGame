@@ -21,6 +21,8 @@ public:
 
 private:
     sf::RectangleShape shape;
+    sf::Font font;
     string cardName;
+    sf::Texture cardTexture;
     float z;
 };

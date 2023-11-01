@@ -2,13 +2,43 @@
 #include <Card.hpp>
 #include <Shuffle.hpp>
 #include <iostream>
+#include <string>
 
 using namespace std;
 deque<Card> cardStack;
+sf::Vector2f position;
+sf::Texture cardTexture;
 	
 // Constructor:
-Deck::Deck(){}
+Deck::Deck(){
+	position.x = 0;
+	position.y = 0;
+	if (!cardTexture.loadFromFile("card.png")) {
+		// Handle loading error
+		cerr << "Failed to load card texture." << endl;
+		cout << "cant find png!" << endl;
+	}
+	if (!font.loadFromFile("Fonts/COMIC.ttf")) {
+		cout << "Error loading font!";
+	}
+}
 
+// Simple getters:
+int Deck::getSize() {
+	return cardStack.size();
+}
+
+sf::Vector2f Deck::getPosition() {
+	return position;
+}
+
+// Simple setters:
+void Deck::setPosition(sf::Vector2f newPosition) {
+	position.x = newPosition.x;
+	position.y = newPosition.y;
+}
+
+// Logical Functions:
 /* addCard()
 *  A function that adds a card to the bottom of the deck.
 *  Input: The card to be added.
@@ -22,8 +52,9 @@ void Deck::addCard(Card card){
 *	A function that deals the card from the top of the deck, popping and returning it.
 */
 
-Card dealCard() {
+Card Deck::dealCard() {
 	Card topCard = cardStack[0];
+	topCard.setPosition(position);
 	cardStack.pop_front();
 	return topCard;
 }
@@ -48,11 +79,6 @@ void Deck::shuffleDeck() {
 	}
 }
 
-// Simple getter:
-int Deck::getSize() {
-	return cardStack.size();
-}
-
 /* printCards():
 *  A function that iterates over the card-deque and prints invokes the toString for every card.
 *  Basically printCards is a helper function used for testing every other function.
@@ -64,4 +90,18 @@ void Deck::printCards(){
 		cout << " : ";
 		cardStack[i].toString();
 	}
+}
+
+// Graphical functions: 
+void Deck::drawDeck(sf::RenderWindow& window){
+	sf::Sprite cardSprite(cardTexture);
+	cardSprite.setPosition(position.x, position.y);
+	cardSprite.scale(sf::Vector2f(0.5, 0.5));
+	
+	sf::Text cardsLeftText("Cards left: " + to_string(cardStack.size()), font, 18);
+	cardsLeftText.setPosition(cardSprite.getPosition().x, cardSprite.getPosition().y -50);
+	
+	window.draw(cardsLeftText);
+	window.draw(cardSprite);
+
 }

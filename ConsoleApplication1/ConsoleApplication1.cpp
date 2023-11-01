@@ -42,20 +42,20 @@ int main()
     playerHand.addCard(card5);
     playerHand.addCard(card6);
 
-    // Testing shuffle functionality in deck:
+    // Adding three cards to the deck:
     cout << "Shuffle test:" << endl;
+    playerDeck.setPosition(sf::Vector2f(100.0, 800.0));
     playerDeck.addCard(card1);
     playerDeck.addCard(card2);
     playerDeck.addCard(card3);
-    playerDeck.addCard(card4);
     playerDeck.shuffleDeck();
-    playerDeck.printCards();
-
 
     while (window.isOpen())
-    {
+    {   
         if (testSpawnTimer.getElapsedTime().asSeconds() > 4.f) {
-            playerHand.addCard(card1);
+            if (playerDeck.getSize() > 0) {
+                playerHand.addCard(playerDeck.dealCard());
+            }
             testSpawnTimer.restart();
         }
 
@@ -72,8 +72,7 @@ int main()
         }
 
         window.clear();
-
-
+        playerDeck.drawDeck(window);
         if (event.type == sf::Event::Resized)
         {
             sf::FloatRect view(0, 0, event.size.width, event.size.height);
@@ -86,7 +85,6 @@ int main()
         playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window, deltaTime); 
         playerHand.handleCardHover(window);
         playerHand.draw(window);
-        
         window.display();
     }
 
