@@ -8,13 +8,13 @@ using namespace std;
 class Deck {
 private:
 	deque<Card> cardStack;
-	void drawDeck();
-	int x;
-	int y;
+	sf::Vector2f position;
+	sf::Font font;
 
 public:
 	Deck();
 	void addCard(Card card);
+	Card dealCard();
 	void shuffleDeck();
 	void printCards();
 	int getSize();

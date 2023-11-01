@@ -10,6 +10,8 @@ sf::Texture cardTexture;
 	
 // Constructor:
 Deck::Deck(){
+	position.x = 0;
+	position.y = 0;
 	if (!cardTexture.loadFromFile("card.png")) {
 		// Handle loading error
 		cerr << "Failed to load card texture." << endl;
@@ -46,8 +48,9 @@ void Deck::addCard(Card card){
 *	A function that deals the card from the top of the deck, popping and returning it.
 */
 
-Card dealCard() {
+Card Deck::dealCard() {
 	Card topCard = cardStack[0];
+	topCard.setPosition(position);
 	cardStack.pop_front();
 	return topCard;
 }
@@ -86,9 +89,12 @@ void Deck::printCards(){
 }
 
 // Graphical functions: 
-
 void Deck::drawDeck(sf::RenderWindow& window){
 	sf::Sprite cardSprite(cardTexture);
-	cardSprite.setPosition(x, y);
+	cardSprite.setPosition(position.x, position.y);
+	sf::Vector2f scalingVector;
+	scalingVector.x = 0.5;
+	scalingVector.y = 0.5;
+	cardSprite.scale(scalingVector);
 	window.draw(cardSprite);
 }

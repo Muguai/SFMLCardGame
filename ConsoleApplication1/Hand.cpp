@@ -45,7 +45,7 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
             direction = VectorHelper::normalize(direction);
 
             float speed = 1000.f;
-            cout << "Move " + std::to_string(VectorHelper::distanceTo(card.getPosition(), targetPosition)) + " With Vector " + std::to_string((direction * speed * deltaTIme).x) + " " + std::to_string((direction * speed * deltaTIme).y);
+            //cout << "Move " + std::to_string(VectorHelper::distanceTo(card.getPosition(), targetPosition)) + " With Vector " + std::to_string((direction * speed * deltaTIme).x) + " " + std::to_string((direction * speed * deltaTIme).y);
             card.move(direction * speed * deltaTIme);
         }
 

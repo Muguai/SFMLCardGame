@@ -2,7 +2,6 @@
 #include <iostream>
 
 Card::Card() {};
-
 Card::Card(sf::Vector2f widthHeight, string name) {
     shape.setSize(widthHeight);
     shape.setFillColor(sf::Color::Blue);
@@ -10,6 +9,13 @@ Card::Card(sf::Vector2f widthHeight, string name) {
     shape.setOutlineColor(sf::Color::White); 
     cardName = name;
     shape.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
+
+    if (!font.loadFromFile("Fonts/COMIC.ttf")) {
+        cout << "Error loading font!";
+    }
+    if (!cardTexture.loadFromFile("card2.png")) {
+        cout << "Error loading card image!";
+    }
 }
 
 void Card::move(sf::Vector2f moveDir) {
@@ -27,7 +33,23 @@ sf::Vector2f Card::getPosition() const {
 
 
 void Card::draw(sf::RenderWindow& window) {
+    // 1. Render name of the card:
+    sf::Text nameText(cardName, font, 18);
+    int nameOffsetX = -(shape.getSize().x /2) + 20;
+    int nameOffsetY = -(shape.getSize().y / 2) + 20;
+    nameText.setPosition(shape.getPosition().x + nameOffsetX, shape.getPosition().y + nameOffsetY);
+    
+    // 2. Render center image:
+    sf::Sprite cardSprite(cardTexture);
+    int imgOffsetX =  -(shape.getSize().x / 2) + 20;
+    int imgOffsetY = -(shape.getSize().y / 2) + 60;
+    cardSprite.scale(sf::Vector2f(0.5, 0.5));
+    cardSprite.setPosition(shape.getPosition().x + imgOffsetX, shape.getPosition().y + imgOffsetY);
+
+    // 3. Render order:
     window.draw(shape);
+    window.draw(nameText);
+    window.draw(cardSprite);
 }
 
 void Card::toString() const{
