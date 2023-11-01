@@ -79,7 +79,7 @@ int main()
             sf::FloatRect view(0, 0, event.size.width, event.size.height);
             window.setView(sf::View(view));
         }
-        playerHand.printCardDetails();
+        //playerHand.printCardDetails();
         float centerX = window.getSize().x / 2.f; 
         float centerY = window.getSize().y - 300.f; 
 

@@ -4,6 +4,7 @@
 
 void Hand::addCard(const Card& card) {
     cards.push_back(card);
+    cardsRenderOrder = cards;
 }
 
 void Hand::setCardPositions(const std::vector<sf::Vector2f>& positions) {
@@ -24,50 +25,66 @@ std::vector<sf::Vector2f> Hand::getCardPositions() const {
 
 void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float centerY, sf::RenderWindow& window, float deltaTIme) {
     int numCards = static_cast<int>(cards.size());
-    float angleIncrement = 180.f / (numCards * 2);
+    float angleIncrement = 120.f / numCards;
     float currentAngle = 90.f - (angleIncrement * (numCards - 1) / 2);
     bool onlyOneHovered = false;
-    bool onlyOneDragging = false;
     float z = 0.0f;
+
     for (auto& card : cards) {
         float radians = currentAngle * (3.14159265359f / 180.f); 
         float xPos = centerX + radiusX * cos(radians);
         float yPos = centerY - radiusY * sin(radians); 
         sf::Vector2f targetPosition = sf::Vector2f(xPos, yPos);
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        bool isHovered = mousePos.x >= xPos - card.getWidth() / 2 && mousePos.x <= xPos + card.getWidth() / 2 &&
-            mousePos.y >= yPos - card.getHeight() / 2 && mousePos.y <= yPos + card.getHeight() / 2;
         z += 1;
         card.setZ(z);
 
-        if (VectorHelper::distanceTo(card.getPosition(), targetPosition) > 10.f) {
+        if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && draggingCard) {
+            draggingCard = nullptr;
+        }
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && card.isHovered(window) && !draggingCard) {
+            draggingCard = &card;
+        }
+
+        if (draggingCard == &card) {
+            card.setZ(numCards + 1);
+            targetPosition = static_cast<sf::Vector2f>(mousePos);
+            card.setPosition(targetPosition);
+            currentAngle += angleIncrement;
+            continue;
+        }
+
+
+        bool isHovered = mousePos.x >= xPos - card.getWidth() / 2 && mousePos.x <= xPos + card.getWidth() / 2 &&
+            mousePos.y >= yPos - card.getHeight() / 2 && mousePos.y <= yPos + card.getHeight() / 2;
+
+        if (isHovered && !onlyOneHovered && !draggingCard) {
+            targetPosition.y -= 100;
+            card.setZ(numCards + 1);
+            onlyOneHovered = true;
+        }
+
+        float distance = VectorHelper::distanceTo(card.getPosition(), targetPosition);
+        if (distance > 10.f) {
             sf::Vector2f direction = targetPosition - card.getPosition();     
             direction = VectorHelper::normalize(direction);
+            float minSpeed = 500.f; 
+            float maxSpeed = 2000.f;  
 
-            float speed = 1000.f;
-            cout << "Move " + std::to_string(VectorHelper::distanceTo(card.getPosition(), targetPosition)) + " With Vector " + std::to_string((direction * speed * deltaTIme).x) + " " + std::to_string((direction * speed * deltaTIme).y);
+            float speedFactor = 5.f;
+            float speed = std::max(minSpeed, std::min(distance * speedFactor, maxSpeed));
+            if (speed > minSpeed) {
+            cout << "Speed " + std::to_string(speed) << endl;
+            }
             card.move(direction * speed * deltaTIme);
         }
-
-        /*
-        if (isHovered && !onlyOneHovered && !onlyOneDragging) {
-            onlyOneHovered = true;
-            card.setZ(numCards);
-            targetPosition.y -= 100; 
-        }
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && card.isHovered(window) && !onlyOneDragging) {
-            cout << "Hovered";
-            onlyOneDragging = true;
-            card.setZ(numCards);
-            targetPosition = static_cast<sf::Vector2f>(mousePos);
-        }
-        */
 
         currentAngle += angleIncrement;
     }
 
-    std::sort(cards.begin(), cards.end(), [](const Card& a, const Card& b) {
+    cardsRenderOrder = cards;
+    std::sort(cardsRenderOrder.begin(), cardsRenderOrder.end(), [](const Card& a, const Card& b) {
         return a.getZ() < b.getZ();
     });
 
@@ -75,7 +92,7 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
 
 
 void Hand::draw(sf::RenderWindow& window) {
-    for (auto& card : cards) {
+    for (auto& card : cardsRenderOrder) {
         card.draw(window);
     }
 }

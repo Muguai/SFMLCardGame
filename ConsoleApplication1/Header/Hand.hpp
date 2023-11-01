@@ -12,7 +12,10 @@ public:
     void arrangeCardsInArc(float radiusX, float radiusY, float centerX, float centerY, sf::RenderWindow& window, float deltaTime);
     void printCardDetails() const;
     void handleCardHover(sf::RenderWindow& window);
+    float easeInOut(float t);
 
 private:
     std::vector<Card> cards;
+    std::vector<Card> cardsRenderOrder;
+    Card* draggingCard;
 };
