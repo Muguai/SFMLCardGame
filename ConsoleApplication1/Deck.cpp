@@ -2,6 +2,7 @@
 #include <Card.hpp>
 #include <Shuffle.hpp>
 #include <iostream>
+#include <string>
 
 using namespace std;
 deque<Card> cardStack;
@@ -16,6 +17,9 @@ Deck::Deck(){
 		// Handle loading error
 		cerr << "Failed to load card texture." << endl;
 		cout << "cant find png!" << endl;
+	}
+	if (!font.loadFromFile("Fonts/COMIC.ttf")) {
+		cout << "Error loading font!";
 	}
 }
 
@@ -92,9 +96,12 @@ void Deck::printCards(){
 void Deck::drawDeck(sf::RenderWindow& window){
 	sf::Sprite cardSprite(cardTexture);
 	cardSprite.setPosition(position.x, position.y);
-	sf::Vector2f scalingVector;
-	scalingVector.x = 0.5;
-	scalingVector.y = 0.5;
-	cardSprite.scale(scalingVector);
+	cardSprite.scale(sf::Vector2f(0.5, 0.5));
+	
+	sf::Text cardsLeftText("Cards left: " + to_string(cardStack.size()), font, 18);
+	cardsLeftText.setPosition(cardSprite.getPosition().x, cardSprite.getPosition().y -50);
+	
+	window.draw(cardsLeftText);
 	window.draw(cardSprite);
+
 }
