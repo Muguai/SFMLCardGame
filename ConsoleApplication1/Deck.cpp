@@ -5,10 +5,33 @@
 
 using namespace std;
 deque<Card> cardStack;
+int x;
+int y;
+sf::Texture cardTexture;
 	
 // Constructor:
-Deck::Deck(){}
+Deck::Deck(){
+	x = 0;
+	y = 0;
+	if (!cardTexture.loadFromFile("card.png")) {
+		// Handle loading error
+		cerr << "Failed to load card texture." << endl;
+		cout << "cant find png!" << endl;
+	}
+}
 
+// Simple getters:
+int Deck::getSize() {
+	return cardStack.size();
+}
+
+// Simple setters:
+void Deck::setPosition(int newX, int newY) {
+	x = newX;
+	y = newY;
+}
+
+// Logical Functions:
 /* addCard()
 *  A function that adds a card to the bottom of the deck.
 *  Input: The card to be added.
@@ -48,11 +71,6 @@ void Deck::shuffleDeck() {
 	}
 }
 
-// Simple getter:
-int Deck::getSize() {
-	return cardStack.size();
-}
-
 /* printCards():
 *  A function that iterates over the card-deque and prints invokes the toString for every card.
 *  Basically printCards is a helper function used for testing every other function.
@@ -64,4 +82,16 @@ void Deck::printCards(){
 		cout << " : ";
 		cardStack[i].toString();
 	}
+}
+
+// Graphical functions: 
+
+void Deck::drawDeck(sf::RenderWindow& window){
+	sf::Sprite cardSprite(cardTexture);
+	cardSprite.setPosition(x, y);
+	window.draw(cardSprite);
+}
+
+void Deck::dealCardAnimation() {
+
 }

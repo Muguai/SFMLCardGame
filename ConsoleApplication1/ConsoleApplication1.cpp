@@ -45,7 +45,6 @@ int main()
     playerDeck.shuffleDeck();
     playerDeck.printCards();
 
-
     while (window.isOpen())
     {
         sf::Event event;
@@ -71,7 +70,7 @@ int main()
         playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window); // Set radiusX, radiusY, center coordinates, and cardGap    
         playerHand.handleCardHover(window);
         playerHand.draw(window);
-        
+        playerDeck.drawDeck(window);
         window.display();
     }
 

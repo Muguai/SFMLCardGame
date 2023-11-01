@@ -8,6 +8,9 @@ using namespace std;
 class Deck {
 private:
 	deque<Card> cardStack;
+	void drawDeck();
+	int x;
+	int y;
 
 public:
 	Deck();
@@ -15,4 +18,7 @@ public:
 	void shuffleDeck();
 	void printCards();
 	int getSize();
+	void setPosition(int newX, int newY);
+	void drawDeck(sf::RenderWindow& window);
+	void dealCardAnimation();
 };
