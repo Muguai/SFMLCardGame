@@ -8,7 +8,7 @@ using namespace std;
 deque<Card> cardStack;
 sf::Vector2f position;
 sf::Texture cardTexture;
-	
+
 // Constructor:
 Deck::Deck(){
 	position.x = 0;
@@ -20,6 +20,9 @@ Deck::Deck(){
 	}
 	if (!font.loadFromFile("Fonts/COMIC.ttf")) {
 		cout << "Error loading font!";
+	}
+	if (!soundBuffer.loadFromFile("whoosh.wav")) {
+		cout << "Error loading sound effect!";
 	}
 }
 
@@ -53,6 +56,9 @@ void Deck::addCard(Card card){
 */
 
 Card Deck::dealCard() {
+	sound.setBuffer(soundBuffer);
+	sound.play();
+
 	Card topCard = cardStack[0];
 	topCard.setPosition(position);
 	cardStack.pop_front();

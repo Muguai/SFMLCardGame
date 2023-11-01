@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <Header/Card.hpp>
 #include <Header/Deck.hpp>
 #include <deque>
@@ -10,6 +11,9 @@ private:
 	deque<Card> cardStack;
 	sf::Vector2f position;
 	sf::Font font;
+	sf::SoundBuffer soundBuffer;
+	sf::Sound sound;
+	
 
 public:
 	Deck();
