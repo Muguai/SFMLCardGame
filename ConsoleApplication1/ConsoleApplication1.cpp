@@ -6,6 +6,8 @@
 #include <Header/Card.hpp>
 #include <Header/Hand.hpp>
 #include <Header/Shuffle.hpp>
+#include <Header/Deck.hpp>
+
 using namespace std;
 
 int main()
@@ -17,7 +19,7 @@ int main()
     shape.setFillColor(sf::Color::Green);
 
     Hand playerHand;
-
+    Deck playerDeck;
 
     Card card1(120.f, 200.f, "1");
     Card card2(120.f, 200.f, "2");
@@ -32,8 +34,14 @@ int main()
     playerHand.addCard(card5);
     playerHand.addCard(card6);
 
-
-
+    // Testing shuffle functionality in deck:
+    cout << "Shuffle test:" << endl;
+    playerDeck.addCard(card1);
+    playerDeck.addCard(card2);
+    playerDeck.addCard(card3);
+    playerDeck.addCard(card4);
+    playerDeck.shuffleDeck();
+    playerDeck.printCards();
 
 
     while (window.isOpen())
