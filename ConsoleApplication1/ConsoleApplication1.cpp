@@ -13,16 +13,22 @@ using namespace std;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
     sf::RectangleShape shape(sf::Vector2f(120.f,50.f));
     shape.setFillColor(sf::Color::Green);
 
+    sf::Clock clock;
+    sf::Clock testSpawnTimer;
+
+    float deltaTime;
+
     Hand playerHand;
     Deck playerDeck;
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
+    //Player Hand dummy cards
     Card card1(cardSize, "1");
     Card card2(cardSize, "2");
     Card card3(cardSize, "3");
@@ -48,6 +54,16 @@ int main()
 
     while (window.isOpen())
     {
+        if (testSpawnTimer.getElapsedTime().asSeconds() > 4.f) {
+            playerHand.addCard(card1);
+            testSpawnTimer.restart();
+        }
+
+        sf::Time elapsed = clock.restart();
+        deltaTime = elapsed.asSeconds();
+
+        
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -58,17 +74,16 @@ int main()
         window.clear();
 
 
-
         if (event.type == sf::Event::Resized)
         {
             sf::FloatRect view(0, 0, event.size.width, event.size.height);
             window.setView(sf::View(view));
         }
-        //playerHand.printCardDetails();
-        float centerX = window.getSize().x / 2.f; // Center X-coordinate
-        float centerY = window.getSize().y - 300.f; // Bottom Y-coordinate
+        playerHand.printCardDetails();
+        float centerX = window.getSize().x / 2.f; 
+        float centerY = window.getSize().y - 300.f; 
 
-        playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window); // Set radiusX, radiusY, center coordinates, and cardGap    
+        playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window, deltaTime); 
         playerHand.handleCardHover(window);
         playerHand.draw(window);
         

@@ -143,11 +143,13 @@
     <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="Shuffle.cpp" />
+    <ClCompile Include="VectorHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.hpp" />
     <ClInclude Include="Shuffle.hpp" />
     <ClCompile Include="Hand.cpp" />
+    <ClInclude Include="VectorHelper.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
