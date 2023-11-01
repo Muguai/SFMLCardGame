@@ -81,7 +81,7 @@ int main()
         }
         //playerHand.printCardDetails();
         float centerX = window.getSize().x / 2.f; 
-        float centerY = window.getSize().y - 300.f; 
+        float centerY = window.getSize().y - 100.f; 
 
         playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window, deltaTime); 
         playerHand.handleCardHover(window);

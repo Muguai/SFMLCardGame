@@ -56,7 +56,7 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
         }
 
 
-        bool isHovered = mousePos.x >= xPos - card.getWidth() / 2 && mousePos.x <= xPos + card.getWidth() / 2 &&
+        bool isHovered = mousePos.x >= xPos - card.getWidth() / 3 && mousePos.x <= xPos + card.getWidth() / 3 &&
             mousePos.y >= yPos - card.getHeight() / 2 && mousePos.y <= yPos + card.getHeight() / 2;
 
         if (isHovered && !onlyOneHovered && !draggingCard) {
@@ -66,7 +66,7 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
         }
 
         float distance = VectorHelper::distanceTo(card.getPosition(), targetPosition);
-        if (distance > 10.f) {
+        if (distance > 5.f) {
             sf::Vector2f direction = targetPosition - card.getPosition();     
             direction = VectorHelper::normalize(direction);
             float minSpeed = 500.f; 
