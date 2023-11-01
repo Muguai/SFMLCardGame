@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <Header/Card.hpp>
 #include <Header/Hand.hpp>
 #include <Header/Shuffle.hpp>
@@ -20,13 +21,14 @@ int main()
 
     Hand playerHand;
     Deck playerDeck;
+    sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
-    Card card1(120.f, 200.f, "1");
-    Card card2(120.f, 200.f, "2");
-    Card card3(120.f, 200.f, "3");
-    Card card4(120.f, 200.f, "4");
-    Card card5(120.f, 200.f, "5");
-    Card card6(120.f, 200.f, "6");
+    Card card1(cardSize, "1");
+    Card card2(cardSize, "2");
+    Card card3(cardSize, "3");
+    Card card4(cardSize, "4");
+    Card card5(cardSize, "5");
+    Card card6(cardSize, "6");
     playerHand.addCard(card1);
     playerHand.addCard(card2);
     playerHand.addCard(card3);
@@ -53,9 +55,9 @@ int main()
                 window.close();
         }
 
-
-
         window.clear();
+
+
 
         if (event.type == sf::Event::Resized)
         {
@@ -66,7 +68,8 @@ int main()
         float centerX = window.getSize().x / 2.f; // Center X-coordinate
         float centerY = window.getSize().y - 300.f; // Bottom Y-coordinate
 
-        playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY); // Set radiusX, radiusY, center coordinates, and cardGap        
+        playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window); // Set radiusX, radiusY, center coordinates, and cardGap    
+        playerHand.handleCardHover(window);
         playerHand.draw(window);
         
         window.display();

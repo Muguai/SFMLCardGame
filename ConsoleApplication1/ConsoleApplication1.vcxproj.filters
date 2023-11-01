@@ -8,7 +8,29 @@
     <ClCompile Include="Deck.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="Card.hpp" />
     <ClInclude Include="Shuffle.hpp" />
+=======
+    <ClCompile Include="ConsoleApplication1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shuffle.cpp">
+    <ClCompile Include="Hand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Card.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shuffle.hpp">
+    <ClInclude Include="Hand.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> f0eead5286260528a20eca196aa8986d81ffe4a9
   </ItemGroup>
 </Project>
