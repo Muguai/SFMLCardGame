@@ -25,7 +25,6 @@ int main()
     float deltaTime;
 
     Hand playerHand;
-    Deck playerDeck;
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     //Player Hand dummy cards
@@ -44,10 +43,10 @@ int main()
 
     // Adding three cards to the deck:
     cout << "Shuffle test:" << endl;
-    playerDeck.setPosition(sf::Vector2f(100.0, 800.0));
-    playerDeck.addCard(card1);
-    playerDeck.addCard(card2);
-    playerDeck.addCard(card3);
+    Deck playerDeck(10, 100.0f, 800.0f);
+    //playerDeck.returnCard(card1);
+    //playerDeck.returnCard(card2);
+    //playerDeck.returnCard(card3);
     playerDeck.shuffleDeck();
 
     while (window.isOpen())
@@ -72,7 +71,7 @@ int main()
         }
 
         window.clear();
-        playerDeck.drawDeck(window);
+        playerDeck.renderDeck(window);
         if (event.type == sf::Event::Resized)
         {
             sf::FloatRect view(0, 0, event.size.width, event.size.height);

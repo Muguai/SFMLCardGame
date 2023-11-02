@@ -10,9 +10,9 @@ sf::Vector2f position;
 sf::Texture cardTexture;
 
 // Constructor:
-Deck::Deck(){
-	position.x = 0;
-	position.y = 0;
+Deck::Deck(int deckSize, int x, int y){
+	position.x = x;
+	position.y = y;
 
 	// Load in resources:
 	if (!cardTexture.loadFromFile("Images/card.png")) {
@@ -25,9 +25,11 @@ Deck::Deck(){
 	if (!soundBuffer.loadFromFile("Sound/whoosh.wav")) {
 		cout << "Error loading sound effect!";
 	}
+
+	createDeck(deckSize);
 }
 
-// Simple getters:
+//	Simple getters:
 int Deck::getSize() {
 	return cardStack.size();
 }
@@ -36,20 +38,37 @@ sf::Vector2f Deck::getPosition() {
 	return position;
 }
 
-// Simple setters:
+//	Simple setters:
 void Deck::setPosition(sf::Vector2f newPosition) {
 	position.x = newPosition.x;
 	position.y = newPosition.y;
 }
 
-// Logical Functions:
-/* addCard()
-*  A function that adds a card to the bottom of the deck.
-*  Input: The card to be added.
+//	Logical Functions:
+
+/*	returnCard()
+*	A function that adds a card to the bottom of the deck.
+*	Input: The card to be added.
 */
 
-void Deck::addCard(Card card){
+void Deck::returnCard(Card card){
 	cardStack.push_back(card);
+}
+
+/*	createDeck()
+	A function that initiates a deck:
+	1. Iterate over the range of the suposed card stack size.
+	2. For every iteration, create a card (maybe read cards from some resource).
+	3. Push the card to the stack.
+	Input: n, the card stack size.
+*/
+
+void Deck::createDeck(int n) {
+	sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
+	for (int i = 0; i < n; i++) {
+		Card card(cardSize, "my name is jeff");
+		cardStack.push_back(card);
+	}
 }
 
 /*	dealCard()
@@ -102,16 +121,24 @@ void Deck::printCards(){
 	}
 }
 
-// Graphical functions: 
-void Deck::drawDeck(sf::RenderWindow& window){
+//	Graphical functions:
+
+/*
+	renderDeck()
+	A void function that renders the deck at the given position.
+*/
+
+void Deck::renderDeck(sf::RenderWindow& window){
+	// 1. Create the card sprite:
 	sf::Sprite cardSprite(cardTexture);
 	cardSprite.setPosition(position.x, position.y);
 	cardSprite.scale(sf::Vector2f(0.5, 0.5));
 	
+	// 2. Create the "how many cards left"-text, with an offsetted y:
 	sf::Text cardsLeftText("Cards left: " + to_string(cardStack.size()), font, 18);
 	cardsLeftText.setPosition(cardSprite.getPosition().x, cardSprite.getPosition().y -50);
 	
+	// 3. Append to the window
 	window.draw(cardsLeftText);
 	window.draw(cardSprite);
-
 }

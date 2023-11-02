@@ -17,14 +17,14 @@ private:
 	
 
 public:
-	Deck();
-	void addCard(Card card);
-	Card dealCard(Hand& playerHand);
+	Deck(int deckSize, int x, int y);
+	void returnCard(Card card);
+	void createDeck(int n);
 	void shuffleDeck();
 	void printCards();
+	void setPosition(sf::Vector2f newPosition);
+	void renderDeck(sf::RenderWindow& window);
 	int getSize();
 	sf::Vector2f getPosition();
-	void setPosition(sf::Vector2f newPosition);
-	void drawDeck(sf::RenderWindow& window);
-
+	Card dealCard(Hand& playerHand);
 };
