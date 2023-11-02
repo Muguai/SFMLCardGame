@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include <Header/Card.hpp>
 #include <Header/Deck.hpp>
+#include <Header/Hand.hpp>
 #include <deque>
 using namespace std;
 
@@ -18,7 +19,7 @@ private:
 public:
 	Deck();
 	void addCard(Card card);
-	Card dealCard();
+	Card dealCard(Hand& playerHand);
 	void shuffleDeck();
 	void printCards();
 	int getSize();

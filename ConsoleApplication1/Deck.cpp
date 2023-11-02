@@ -13,8 +13,9 @@ sf::Texture cardTexture;
 Deck::Deck(){
 	position.x = 0;
 	position.y = 0;
+
+	// Load in resources:
 	if (!cardTexture.loadFromFile("Images/card.png")) {
-		// Handle loading error
 		cerr << "Failed to load card texture." << endl;
 		cout << "cant find png!" << endl;
 	}
@@ -52,15 +53,18 @@ void Deck::addCard(Card card){
 }
 
 /*	dealCard()
-*	A function that deals the card from the top of the deck, popping and returning it.
+*	A function that deals the card from the top of the deck, popping and attaching
+*	the card to the playerHand object.
+*	Input: playerHand, the player object that is drawing the card on top of the stack.
 */
 
-Card Deck::dealCard() {
+Card Deck::dealCard(Hand& playerHand) {
 	sound.setBuffer(soundBuffer);
 	sound.play();
-
 	Card topCard = cardStack[0];
 	topCard.setPosition(position);
+	playerHand.addCard(topCard);
+	
 	cardStack.pop_front();
 	return topCard;
 }

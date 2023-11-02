@@ -54,7 +54,7 @@ int main()
     {   
         if (testSpawnTimer.getElapsedTime().asSeconds() > 4.f) {
             if (playerDeck.getSize() > 0) {
-                playerHand.addCard(playerDeck.dealCard());
+                playerDeck.dealCard(playerHand);
             }
             testSpawnTimer.restart();
         }
