@@ -108,9 +108,10 @@ void Deck::shuffleDeck() {
 	}
 }
 
-/* printCards():
-*  A function that iterates over the card-deque and prints invokes the toString for every card.
-*  Basically printCards is a helper function used for testing every other function.
+/*	(Test function)
+*	printCards():
+*	A function that iterates over the card-deque and prints invokes the toString for every card.
+*	Basically printCards is a helper function used for testing every other function.
 */
 
 void Deck::printCards(){

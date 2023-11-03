@@ -41,12 +41,8 @@ int main()
     playerHand.addCard(card5);
     playerHand.addCard(card6);
 
-    // Adding three cards to the deck:
-    cout << "Shuffle test:" << endl;
-    Deck playerDeck(10, 100.0f, 800.0f);
-    //playerDeck.returnCard(card1);
-    //playerDeck.returnCard(card2);
-    //playerDeck.returnCard(card3);
+    // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0:
+    Deck playerDeck(10, 100.0f, 700.0f);
     playerDeck.shuffleDeck();
 
     while (window.isOpen())

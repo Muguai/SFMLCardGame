@@ -31,6 +31,10 @@ sf::Vector2f Card::getPosition() const {
     return shape.getPosition();
 }
 
+/*  draw()
+    A function that renders different components onto a card-body.
+    The body as a whole is offsetted depending on the position of the card class.
+*/
 
 void Card::draw(sf::RenderWindow& window) {
     // 1. Render name of the card:
