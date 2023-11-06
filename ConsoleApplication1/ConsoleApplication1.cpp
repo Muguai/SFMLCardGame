@@ -4,28 +4,44 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Network.hpp>
 #include <Header/Card.hpp>
 #include <Header/Hand.hpp>
 #include <Header/Shuffle.hpp>
 #include <Header/Deck.hpp>
-#include <Header/Server.hpp>
-
+#include <thread> 
+#include <Server.hpp>
+#include <Client.hpp>
 using namespace std;
+
+float deltaTime;
+
+
+enum class NetworkMode {
+    Server,
+    Client
+};
+
+
 int main()
 {
+    NetworkMode mode = NetworkMode::Server;
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
     sf::RectangleShape shape(sf::Vector2f(120.f,50.f));
     shape.setFillColor(sf::Color::Green);
 
+
     sf::Clock clock;
     sf::Clock testSpawnTimer;
 
-    float deltaTime;
-
     Hand playerHand;
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
+
+    Server server;
+    Client client("127.0.0.1");
+
 
     //Player Hand dummy cards
     Card card1(cardSize, "1");
@@ -44,6 +60,34 @@ int main()
     // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0:
     Deck playerDeck(10, 100.0f, 700.0f);
     playerDeck.shuffleDeck();
+
+    char who;
+    std::cout << "Do you want to be a server (s) or a client (c)? ";
+    std::cin >> who;
+
+    // Declare serverThread variable outside the if block
+    std::thread serverThread;
+
+    if (who == 's') {
+        mode = NetworkMode::Server;
+    }
+    else {
+        mode = NetworkMode::Client;
+    }
+
+
+    // Run either server or client based on the chosen mode
+    if (mode == NetworkMode::Server) {
+        // Initialize serverThread inside the if block
+        serverThread = std::thread([&]() {
+            server.run();
+            });
+    }
+    else if (mode == NetworkMode::Client) {
+
+        client.run();
+    }
+
 
     while (window.isOpen())
     {   
@@ -73,6 +117,7 @@ int main()
             sf::FloatRect view(0, 0, event.size.width, event.size.height);
             window.setView(sf::View(view));
         }
+        
         //playerHand.printCardDetails();
         float centerX = window.getSize().x / 2.f; 
         float centerY = window.getSize().y - 100.f; 
@@ -82,6 +127,14 @@ int main()
         playerHand.draw(window);
         window.display();
     }
+    if (mode == NetworkMode::Server) {
+        // Join the serverThread if it was initialized
+        if (serverThread.joinable()) {
+            serverThread.join();
+        }
+    }
+
+
 
     return 0;
 }

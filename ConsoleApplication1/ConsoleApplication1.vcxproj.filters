@@ -7,11 +7,14 @@
     <ClCompile Include="Shuffle.cpp" />
     <ClCompile Include="VectorHelper.cpp" />
     <ClCompile Include="Hand.cpp" />
-    <ClCompile Include="server.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="Client.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.hpp" />
     <ClInclude Include="Shuffle.hpp" />
     <ClInclude Include="VectorHelper.hpp" />
+    <ClInclude Include="Server.hpp" />
+    <ClInclude Include="Client.hpp" />
   </ItemGroup>
 </Project>
