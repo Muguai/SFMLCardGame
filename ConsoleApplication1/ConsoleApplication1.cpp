@@ -37,7 +37,6 @@ int main()
     sf::Clock testSpawnTimer;
 
     Hand playerHand;
-    Deck playerDeck;
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     Server server;
@@ -58,12 +57,8 @@ int main()
     playerHand.addCard(card5);
     playerHand.addCard(card6);
 
-    // Adding three cards to the deck:
-    cout << "Shuffle test:" << endl;
-    playerDeck.setPosition(sf::Vector2f(100.0, 800.0));
-    playerDeck.addCard(card1);
-    playerDeck.addCard(card2);
-    playerDeck.addCard(card3);
+    // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0:
+    Deck playerDeck(10, 100.0f, 700.0f);
     playerDeck.shuffleDeck();
 
     char who;
@@ -98,7 +93,7 @@ int main()
     {   
         if (testSpawnTimer.getElapsedTime().asSeconds() > 4.f) {
             if (playerDeck.getSize() > 0) {
-                playerHand.addCard(playerDeck.dealCard());
+                playerDeck.dealCard(playerHand);
             }
             testSpawnTimer.restart();
         }
@@ -116,8 +111,7 @@ int main()
         }
 
         window.clear();
-        playerDeck.drawDeck(window);
-        
+        playerDeck.renderDeck(window);
         if (event.type == sf::Event::Resized)
         {
             sf::FloatRect view(0, 0, event.size.width, event.size.height);

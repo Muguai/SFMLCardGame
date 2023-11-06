@@ -23,7 +23,7 @@ Card::Card(sf::Vector2f widthHeight, string name) {
     if (!font.loadFromFile("Fonts/COMIC.ttf")) {
         cout << "Error loading font!";
     }
-    if (!cardTexture.loadFromFile("card2.png")) {
+    if (!cardTexture.loadFromFile("Images/card2.png")) {
         cout << "Error loading card image!";
     }
 }
@@ -55,6 +55,10 @@ sf::Vector2f Card::getPosition() const {
     }
 }
 
+/*  draw()
+    A function that renders different components onto a card-body.
+    The body as a whole is offsetted depending on the position of the card class.
+*/
 
 void Card::draw(sf::RenderWindow& window) {
     // 1. Render name of the card:
