@@ -105,7 +105,6 @@ int main()
 
         int portInt = std::stoi(port);
 
-
         Client client(ip, portInt);
 
         clientThread = std::thread([&]() {
