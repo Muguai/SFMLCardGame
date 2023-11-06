@@ -99,8 +99,14 @@ int main()
         std::cout << "Whats the servers ip adress?" << endl;
         std::cin >> ip;
 
+        string port;
+        std::cout << "Whats the servers port?" << endl;
+        std::cin >> port;
 
-        Client client(ip);
+        int portInt = std::stoi(port);
+
+
+        Client client(ip, portInt);
 
         clientThread = std::thread([&]() {
             client.run();

@@ -6,7 +6,7 @@ Server::Server() {
 }
 
 void Server::startListening(int port) {
-    if (listener.listen(53000) != sf::Socket::Done) {
+    if (listener.listen(port) != sf::Socket::Done) {
         cout << "Cant bind server to port" << endl;
         // Handle error...
     }
