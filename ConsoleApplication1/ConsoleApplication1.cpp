@@ -12,6 +12,8 @@
 #include <thread> 
 #include <Server.hpp>
 #include <Client.hpp>
+#include <string>
+
 using namespace std;
 
 float deltaTime;
@@ -40,7 +42,6 @@ int main()
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     Server server;
-    Client client("127.0.0.1");
 
 
     //Player Hand dummy cards
@@ -67,6 +68,7 @@ int main()
 
     // Declare serverThread variable outside the if block
     std::thread serverThread;
+    std::thread clientThread;
 
     if (who == 's') {
         mode = NetworkMode::Server;
@@ -78,6 +80,14 @@ int main()
 
     // Run either server or client based on the chosen mode
     if (mode == NetworkMode::Server) {
+
+        string port;
+        std::cout << "choose a port to render to" << endl;
+        std::cin >> port;
+
+
+        int portInt = std::stoi(port);
+        server.startListening(portInt);
         // Initialize serverThread inside the if block
         serverThread = std::thread([&]() {
             server.run();
@@ -85,7 +95,16 @@ int main()
     }
     else if (mode == NetworkMode::Client) {
 
-        client.run();
+        string ip;
+        std::cout << "Whats the servers ip adress?" << endl;
+        std::cin >> ip;
+
+
+        Client client(ip);
+
+        clientThread = std::thread([&]() {
+            client.run();
+            });
     }
 
 
@@ -131,6 +150,11 @@ int main()
         // Join the serverThread if it was initialized
         if (serverThread.joinable()) {
             serverThread.join();
+        }
+    }
+    else if (mode == NetworkMode::Client) {
+        if (clientThread.joinable()) {
+            clientThread.join();
         }
     }
 

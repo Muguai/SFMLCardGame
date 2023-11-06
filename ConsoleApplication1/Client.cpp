@@ -1,8 +1,13 @@
 #include "Client.hpp"
+#include <iostream>
+using namespace std;
 
 Client::Client(const sf::IpAddress& serverIP) {
     if (socket.connect(serverIP, 53000) != sf::Socket::Done) {
-        // Handle connection error...
+        cout << "couldnt connect to server" << endl;
+    }
+    else {
+        cout << "connected to server " + socket.getRemoteAddress().toString() << endl;
     }
 }
 

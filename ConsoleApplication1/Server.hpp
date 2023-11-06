@@ -9,6 +9,7 @@ public:
     Server();
 
     void handleConnections();
+    void startListening(int port);
     void run();
 
 private:
