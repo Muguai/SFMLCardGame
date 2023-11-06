@@ -3,7 +3,7 @@
 
 class Client {
 public:
-    Client(const sf::IpAddress& serverIP);
+    Client(const sf::IpAddress& serverIP, int port);
     void run();
 
 private:
