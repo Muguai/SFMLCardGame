@@ -2,12 +2,18 @@
 #include <iostream>
 using namespace std;
 
-Client::Client(const sf::IpAddress& serverIP, int port) {
+Client::Client() {
+
+}
+
+void Client::connectClient(const sf::IpAddress& serverIP, int port) {
+
+    cout << "Trying to connect to server with ip adress " + serverIP.toString() + " and port " + std::to_string(port) << endl;
     if (socket.connect(serverIP, port) != sf::Socket::Done) {
-        cout << "couldnt connect to server" << endl;
+        cout << "Couldnt connect to server" << endl;
     }
     else {
-        cout << "connected to server " + socket.getRemoteAddress().toString() << endl;
+        cout << "Connected to server " + socket.getRemoteAddress().toString() << endl;
     }
 }
 
@@ -19,7 +25,15 @@ void Client::run() {
         char buffer[1024];
         std::size_t received;
         if (socket.receive(buffer, sizeof(buffer), received) == sf::Socket::Done) {
-            // Process received data from the server
+            cout << "Received message from server: " << buffer << endl;
         }
     }
 }
+
+void Client::messageToServer(char message[]) {
+    if (socket.send(message, sizeof(message)) != sf::Socket::Done) {
+        // Handle send error...
+        std::cout << "Failed to send message to server" << std::endl;
+    }
+}
+
