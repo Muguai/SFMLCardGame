@@ -8,9 +8,9 @@
 #include <Header/Hand.hpp>
 #include <Header/Shuffle.hpp>
 #include <Header/Deck.hpp>
+#include <Header/Server.hpp>
 
 using namespace std;
-
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
