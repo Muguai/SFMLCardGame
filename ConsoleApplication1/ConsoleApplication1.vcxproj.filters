@@ -3,34 +3,18 @@
   <ItemGroup>
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
-    <ClCompile Include="Shuffle.cpp" />
-    <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="Shuffle.cpp" />
+    <ClCompile Include="VectorHelper.cpp" />
+    <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="Client.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClInclude Include="Card.hpp" />
     <ClInclude Include="Shuffle.hpp" />
-=======
-    <ClCompile Include="ConsoleApplication1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Card.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shuffle.cpp">
-    <ClCompile Include="Hand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Card.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shuffle.hpp">
-    <ClInclude Include="Hand.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
->>>>>>> f0eead5286260528a20eca196aa8986d81ffe4a9
+    <ClInclude Include="VectorHelper.hpp" />
+    <ClInclude Include="Server.hpp" />
+    <ClInclude Include="Client.hpp" />
   </ItemGroup>
 </Project>

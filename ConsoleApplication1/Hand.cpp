@@ -74,9 +74,7 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
 
             float speedFactor = 5.f;
             float speed = std::max(minSpeed, std::min(distance * speedFactor, maxSpeed));
-            if (speed > minSpeed) {
-            cout << "Speed " + std::to_string(speed) << endl;
-            }
+
             card.move(direction * speed * deltaTIme);
         }
 

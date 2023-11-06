@@ -1,14 +1,24 @@
 #include "Card.hpp"
 #include <iostream>
 
+extern float deltaTime;
+
 Card::Card() {};
 Card::Card(sf::Vector2f widthHeight, string name) {
     shape.setSize(widthHeight);
     shape.setFillColor(sf::Color::Blue);
     shape.setOutlineThickness(2.f);
     shape.setOutlineColor(sf::Color::White); 
+    backFace.setSize(widthHeight);
+    backFace.setFillColor(sf::Color::Green);
+    backFace.setOutlineColor(sf::Color::White);
+    backFace.setOutlineThickness(2.f);
+
+    frontFacing = true;
     cardName = name;
     shape.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
+    backFace.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
+
 
     if (!font.loadFromFile("Fonts/COMIC.ttf")) {
         cout << "Error loading font!";
@@ -20,15 +30,29 @@ Card::Card(sf::Vector2f widthHeight, string name) {
 
 void Card::move(sf::Vector2f moveDir) {
     shape.move(moveDir);
+    backFace.move(moveDir);
+}
+
+void Card::flip() {
+    if (frontFacing) {
+
+       // shape.scale(1.0f, )
+    }
 }
 
 
 void Card::setPosition(sf::Vector2f vector2) {
     shape.setPosition(vector2);
+    backFace.setPosition(vector2);
 }
 
 sf::Vector2f Card::getPosition() const {
-    return shape.getPosition();
+    if (frontFacing == true) {
+        return shape.getPosition();
+    }
+    else {
+        return backFace.getPosition();
+    }
 }
 
 
@@ -47,9 +71,18 @@ void Card::draw(sf::RenderWindow& window) {
     cardSprite.setPosition(shape.getPosition().x + imgOffsetX, shape.getPosition().y + imgOffsetY);
 
     // 3. Render order:
-    window.draw(shape);
-    window.draw(nameText);
-    window.draw(cardSprite);
+    if (frontFacing == true) {
+        window.draw(backFace);
+        window.draw(shape);
+        window.draw(nameText);
+        window.draw(cardSprite);
+    }
+    else {
+        window.draw(shape);
+        window.draw(nameText);
+        window.draw(cardSprite);
+        window.draw(backFace);
+    }
 }
 
 void Card::toString() const{
