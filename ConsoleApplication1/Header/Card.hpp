@@ -8,7 +8,6 @@ public:
     int attack;
     int health;
     virtual void useAbility();
-    Card();
     Card(int a, int h, sf::Vector2f widthHeight, string name, std::function<void()> myLambda);
 
     void move(sf::Vector2f moveDir);

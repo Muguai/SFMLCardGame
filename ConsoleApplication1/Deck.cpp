@@ -64,7 +64,7 @@ void Deck::returnCard(Card card){
 */
 
 void Deck::createDeck(int n) {
-	cardStack = getInitCards();
+	cardStack = getChaosSuperDeck();
 	shuffleDeck();
 	while (cardStack.size() > n) {
 		cardStack.pop_back();

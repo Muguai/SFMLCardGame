@@ -15,7 +15,6 @@
 #include <string>
 
 using namespace std;
-
 float deltaTime;
 
 
@@ -120,7 +119,7 @@ int main()
 
     while (window.isOpen())
     {   
-        if (testSpawnTimer.getElapsedTime().asSeconds() > 2.f) {
+        if (testSpawnTimer.getElapsedTime().asSeconds() > 1.f) {
             if (playerDeck.getSize() > 0) {
                 playerDeck.dealCard(playerHand);
             }
