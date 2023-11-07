@@ -39,10 +39,7 @@ void Card::move(sf::Vector2f moveDir) {
 }
 
 void Card::flip() {
-    if (frontFacing) {
-
-       // shape.scale(1.0f, )
-    }
+    frontFacing = !frontFacing;
 }
 
 

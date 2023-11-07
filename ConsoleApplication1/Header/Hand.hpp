@@ -5,7 +5,8 @@
 
 class Hand {
 public:
-    void addCard(const Card& card);
+    Hand(bool _hoverable, bool _spawnFlipped);
+    void addCard(Card& card);
     void setCardPositions(const std::vector<sf::Vector2f>& positions);
     std::vector<sf::Vector2f> getCardPositions() const;
     void draw(sf::RenderWindow& window);
@@ -13,9 +14,12 @@ public:
     void printCardDetails() const;
     void handleCardHover(sf::RenderWindow& window);
     float easeInOut(float t);
+    void flipAllCards();
 
 private:
     std::vector<Card> cards;
     std::vector<Card> cardsRenderOrder;
     Card* draggingCard;
+    bool hoverable;
+    bool spawnFlipped;
 };
