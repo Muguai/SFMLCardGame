@@ -44,6 +44,7 @@ deque<Card> getChaosSuperDeck() {
 	2. Add  quantities of (Chaos faction) cards with ATK/HP etc, added together into a super deck:
 	3. Return the super deck.
 */
+
 deque<Card> getLifeSuperDeck() {
 	deque<Card> superDeck;
 	return superDeck;

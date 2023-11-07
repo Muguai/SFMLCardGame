@@ -28,10 +28,16 @@ int main()
 {   
     // Select a faction to play:
     int faction = 0;
-    cout << "What faction do you want to play?" << endl;
-    cout << "1. Chaos" << endl;
-    cout << "2. Life (Currently no such faction)" << endl;
-    cin >> faction;
+    while (faction == 0) {
+        cout << "What faction do you want to play?" << endl;
+        cout << "1. Chaos" << endl;
+        cout << "2. Life (Currently no such faction)" << endl;
+        cin >> faction;
+        if (faction < 0 || faction > 2) {
+            cout << "Bad faction choice, try again!" << endl;
+            faction = 0;
+        }
+    }
 
     NetworkMode mode = NetworkMode::Server;
     Server server;
