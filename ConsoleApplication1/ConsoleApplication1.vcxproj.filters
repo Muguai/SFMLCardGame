@@ -10,6 +10,7 @@
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Board.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.hpp" />

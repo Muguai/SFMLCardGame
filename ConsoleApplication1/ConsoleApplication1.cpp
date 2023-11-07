@@ -30,6 +30,7 @@ int main()
     int faction = 0;
     cout << "What faction do you want to play?" << endl;
     cout << "1. Chaos" << endl;
+    cout << "2. Life (Currently no such faction)" << endl;
     cin >> faction;
 
     NetworkMode mode = NetworkMode::Server;

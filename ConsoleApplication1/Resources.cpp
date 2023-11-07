@@ -2,6 +2,8 @@
 #include <iostream>
 #include <deque>
 using namespace std;
+sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
+auto emptyFunction = []() {};
 
 /*	addQuantity
 	A function that adds a quantity of n cards with specified spec to a cardstack.
@@ -18,7 +20,7 @@ deque<Card> addQuantity(deque<Card> cardStack, int n, int atk, int hp, sf::Vecto
 }
 
 /*	getChaosSuperDeck()
-	getChaosSuperDeck() is a function that returns the deck containing every card.
+	getChaosSuperDeck() is a function that returns the deck containing every card for the chaos faction.
 	1. Init the cardStack and set properties, like size, functions etc.
 	2. Add  quantities of (Chaos faction) cards with ATK/HP etc, added together into a super deck:
 	3. Return the super deck.
@@ -26,12 +28,21 @@ deque<Card> addQuantity(deque<Card> cardStack, int n, int atk, int hp, sf::Vecto
 
 deque<Card> getChaosSuperDeck() {
 	deque<Card> superDeck;
-	sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
-	auto emptyFunction = [](){};
 	
 	superDeck = addQuantity(superDeck, 10, 10, 10, cardSize, "Troll", emptyFunction);
 	superDeck = addQuantity(superDeck, 3, 100, 100, cardSize, "Dragon", emptyFunction);
 	superDeck = addQuantity(superDeck, 1, 1000, 1000, cardSize, "Dragon Lord", emptyFunction);
 
+	return superDeck;
+}
+
+/*	getLifeSuperDeck()
+	getLifeSuperDeck() is a function that returns the superdeck containing every card of the life fac.
+	1. Init the cardStack and set properties, like size, functions etc.
+	2. Add  quantities of (Chaos faction) cards with ATK/HP etc, added together into a super deck:
+	3. Return the super deck.
+*/
+deque<Card> getLifeSuperDeck() {
+	deque<Card> superDeck;
 	return superDeck;
 }

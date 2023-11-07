@@ -17,7 +17,8 @@ Card::Card(int a, int h, sf::Vector2f widthHeight, string name, std::function<vo
     cardName = name;
     shape.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
     backFace.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
-
+    attack = a;
+    health = h;
 
     if (!font.loadFromFile("Fonts/COMIC.ttf")) {
         cout << "Error loading font!";
@@ -79,12 +80,19 @@ void Card::draw(sf::RenderWindow& window) {
     cardSprite.scale(sf::Vector2f(0.35, 0.35));
     cardSprite.setPosition(shape.getPosition().x + imgOffsetX, shape.getPosition().y + imgOffsetY);
 
+    // 3. Render Attack and Health
+    sf::Text statsText("yoo", font, 12);
+    int statsOffsetX =  20;
+    int statsOffsetY = -(shape.getSize().y / 2) + 20;
+    statsText.setPosition(shape.getPosition().x + statsOffsetX, shape.getPosition().y + statsOffsetY);
+
     // 3. Render order:
     if (frontFacing == true) {
         window.draw(backFace);
         window.draw(shape);
         window.draw(nameText);
         window.draw(cardSprite);
+        window.draw(statsText);
     }
     else {
         window.draw(shape);
