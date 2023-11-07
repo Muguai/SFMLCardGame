@@ -7,8 +7,9 @@ class Card {
 public:
     int attack;
     int health;
+    int cost; 
     virtual void useAbility();
-    Card(int a, int h, sf::Vector2f widthHeight, string name, std::function<void()> myLambda);
+    Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::function<void()> myLambda);
 
     void move(sf::Vector2f moveDir);
     void draw(sf::RenderWindow& window);

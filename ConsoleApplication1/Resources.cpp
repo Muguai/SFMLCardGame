@@ -1,6 +1,8 @@
 #include <Card.hpp>
 #include <iostream>
 #include <deque>
+#include <Header/Resources.hpp>
+
 using namespace std;
 sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 auto emptyFunction = []() {};
@@ -10,9 +12,9 @@ auto emptyFunction = []() {};
 	return: The updated deck.
 */
 
-deque<Card> addQuantity(deque<Card> cardStack, int n, int atk, int hp, sf::Vector2f size, string name, std::function<void()> f) {
+deque<Card> addQuantity(deque<Card> cardStack, int n, int atk, int hp, int cost, sf::Vector2f size, string name, std::function<void()> f) {
 	for (int i = 0; i < n; i++) {
-		Card card(atk, hp, size, name, f);
+		Card card(atk, hp, cost, size, name, f);
 		cardStack.push_back(card);
 	}
 
@@ -29,9 +31,9 @@ deque<Card> addQuantity(deque<Card> cardStack, int n, int atk, int hp, sf::Vecto
 deque<Card> getChaosSuperDeck() {
 	deque<Card> superDeck;
 	
-	superDeck = addQuantity(superDeck, 10, 10, 10, cardSize, "Troll", emptyFunction);
-	superDeck = addQuantity(superDeck, 3, 100, 100, cardSize, "Dragon", emptyFunction);
-	superDeck = addQuantity(superDeck, 1, 1000, 1000, cardSize, "Dragon Lord", emptyFunction);
+	superDeck = addQuantity(superDeck, 10, 10,  10,    1, cardSize, "Troll", emptyFunction);
+	superDeck = addQuantity(superDeck, 3, 100,  100,   3, cardSize, "Dragon", emptyFunction);
+	superDeck = addQuantity(superDeck, 1, 1000, 1000,  10, cardSize, "Dragon Lord", emptyFunction);
 
 	return superDeck;
 }
