@@ -37,20 +37,23 @@ int main()
 
     sf::Clock clock;
     sf::Clock testSpawnTimer;
-
     Hand playerHand;
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     Server server;
 
 
+    auto myLambda = []() {
+        std::cout << "Lambda function called" << std::endl;
+    };
+
     //Player Hand dummy cards
-    Card card1(cardSize, "1");
-    Card card2(cardSize, "2");
-    Card card3(cardSize, "3");
-    Card card4(cardSize, "4");
-    Card card5(cardSize, "5");
-    Card card6(cardSize, "6");
+    Card card1(10, 10, cardSize, "1", myLambda);
+    Card card2(10, 10, cardSize, "2", myLambda);
+    Card card3(10, 10, cardSize, "3", myLambda);
+    Card card4(10, 10, cardSize, "4", myLambda);
+    Card card5(10, 10, cardSize, "5", myLambda);
+    Card card6(10, 10, cardSize, "6", myLambda);
     playerHand.addCard(card1);
     playerHand.addCard(card2);
     playerHand.addCard(card3);

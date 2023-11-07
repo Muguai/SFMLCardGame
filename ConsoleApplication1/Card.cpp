@@ -1,10 +1,9 @@
 #include "Card.hpp"
 #include <iostream>
+#include <functional>
 
 extern float deltaTime;
-
-Card::Card() {};
-Card::Card(sf::Vector2f widthHeight, string name) {
+Card::Card(int a, int h, sf::Vector2f widthHeight, string name, std::function<void()> myLambda) : lambda(myLambda) {
     shape.setSize(widthHeight);
     shape.setFillColor(sf::Color::Blue);
     shape.setOutlineThickness(2.f);
@@ -23,10 +22,16 @@ Card::Card(sf::Vector2f widthHeight, string name) {
     if (!font.loadFromFile("Fonts/COMIC.ttf")) {
         cout << "Error loading font!";
     }
-    if (!cardTexture.loadFromFile("Images/card2.png")) {
+    if (!cardTexture.loadFromFile("Images/" + name + ".png")) {
         cout << "Error loading card image!";
     }
 }
+
+void Card::ExecuteLambda() {
+    lambda();
+}
+
+void Card::useAbility() {}
 
 void Card::move(sf::Vector2f moveDir) {
     shape.move(moveDir);
@@ -71,7 +76,7 @@ void Card::draw(sf::RenderWindow& window) {
     sf::Sprite cardSprite(cardTexture);
     int imgOffsetX =  -(shape.getSize().x / 2) + 20;
     int imgOffsetY = -(shape.getSize().y / 2) + 60;
-    cardSprite.scale(sf::Vector2f(0.5, 0.5));
+    cardSprite.scale(sf::Vector2f(0.35, 0.35));
     cardSprite.setPosition(shape.getPosition().x + imgOffsetX, shape.getPosition().y + imgOffsetY);
 
     // 3. Render order:

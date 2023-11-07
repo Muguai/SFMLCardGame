@@ -143,6 +143,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Shuffle.cpp" />
     <ClCompile Include="VectorHelper.cpp" />

@@ -9,6 +9,7 @@
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Resources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.hpp" />

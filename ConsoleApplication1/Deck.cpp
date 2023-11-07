@@ -3,6 +3,7 @@
 #include <Shuffle.hpp>
 #include <iostream>
 #include <string>
+#include <Resources.hpp>
 
 using namespace std;
 deque<Card> cardStack;
@@ -56,19 +57,19 @@ void Deck::returnCard(Card card){
 }
 
 /*	createDeck()
-	A function that initiates a deck:
-	1. Iterate over the range of the suposed card stack size.
-	2. For every iteration, create a card (maybe read cards from some resource).
-	3. Push the card to the stack.
-	Input: n, the card stack size.
+	A function that creates a shuffled deck of size n.
+	1. Read in the initial cards from the resources (The entire deck).
+	2. Shuffle it.
+	3. Trim it until it is of size n.
 */
 
 void Deck::createDeck(int n) {
-	sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
-	for (int i = 0; i < n; i++) {
-		Card card(cardSize, "my name is jeff");
-		cardStack.push_back(card);
+	cardStack = getInitCards();
+	shuffleDeck();
+	while (cardStack.size() > n) {
+		cardStack.pop_back();
 	}
+
 }
 
 /*	dealCard()

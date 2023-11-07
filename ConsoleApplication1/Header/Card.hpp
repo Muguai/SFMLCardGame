@@ -1,11 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <functional>
 using namespace std;
 
 class Card {
 public:
+    int attack;
+    int health;
+    virtual void useAbility();
     Card();
-    Card(sf::Vector2f widthHeight, string name); 
+    Card(int a, int h, sf::Vector2f widthHeight, string name, std::function<void()> myLambda);
+
     void move(sf::Vector2f moveDir);
     void draw(sf::RenderWindow& window);
     void setPosition(sf::Vector2f vector2);
@@ -18,6 +23,7 @@ public:
     void flip();
     void setZ(float z) { this->z = z; }
     float getZ() const { return z; }
+    void ExecuteLambda();
 
 
 private:
@@ -28,4 +34,5 @@ private:
     sf::Texture cardTexture;
     float z;
     bool frontFacing;
+    std::function<void()> lambda;
 };
