@@ -33,6 +33,7 @@ deque<Card> getChaosSuperDeck() {
 	
 	superDeck = addQuantity(superDeck, 10, 10,  10,    1, cardSize, "Troll", emptyFunction);
 	superDeck = addQuantity(superDeck, 3, 100,  100,   3, cardSize, "Dragon", emptyFunction);
+	superDeck = addQuantity(superDeck, 2, 200,  200,   5, cardSize, "Ogre Magi", emptyFunction);
 	superDeck = addQuantity(superDeck, 1, 1000, 1000,  10, cardSize, "Dragon Lord", emptyFunction);
 
 	return superDeck;
