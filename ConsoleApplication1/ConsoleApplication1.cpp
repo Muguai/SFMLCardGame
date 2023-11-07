@@ -60,7 +60,7 @@ int main()
     if (mode == NetworkMode::Server) {
 
         string port;
-        std::cout << "Choose a port to render to" << endl;
+        std::cout << "Choose a port for your server" << endl;
         std::cin >> port;
 
         if (port == "s") {
@@ -75,8 +75,15 @@ int main()
             server.run();
             });
 
-    }
-    else if (mode == NetworkMode::Client) {
+        client.connectClient(sf::IpAddress::getLocalAddress(), portInt);
+
+        client.setPlayerNumber(1);
+
+        clientThread = std::thread([&]() {
+            client.run();
+            });
+
+    }else if (mode == NetworkMode::Client) {
 
         string ip;
         std::cout << "Whats the servers ip adress?" << endl;
@@ -99,6 +106,7 @@ int main()
 
         client.connectClient(ip, portInt);
 
+        client.setPlayerNumber(2);
 
         clientThread = std::thread([&]() {
             client.run();
@@ -134,16 +142,8 @@ int main()
         sf::Time elapsed = clock.restart();
         deltaTime = elapsed.asSeconds();
 
-        if (mode == NetworkMode::Server) {
-            char message[] = "Hello, Client!";
-
-            server.messageToClient(message);
-        }
-
-        if (mode == NetworkMode::Client) {
-            char message[] = "Hello, Server!";
-            client.messageToServer(message);
-        }
+         //client.messageToServer("Hello, Server!");
+         server.messageToClients("Hello Clients");
         
 
         sf::Event event;
@@ -171,6 +171,7 @@ int main()
         window.display();
     }
     if (mode == NetworkMode::Server) {
+        server.stop();
         if (serverThread.joinable()) {
             serverThread.join();
         }
@@ -181,8 +182,6 @@ int main()
             clientThread.join();
         }
     }
-
-
 
     return 0;
 }

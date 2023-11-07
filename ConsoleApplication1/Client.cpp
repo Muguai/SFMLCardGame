@@ -30,10 +30,21 @@ void Client::run() {
     }
 }
 
-void Client::messageToServer(char message[]) {
-    if (socket.send(message, sizeof(message)) != sf::Socket::Done) {
+void Client::messageToServer(string message) {
+    std::vector<char> charMessage(message.begin(), message.end());
+    charMessage.push_back('\0');
+
+    if (socket.send(charMessage.data(), charMessage.size()) != sf::Socket::Done) {
         // Handle send error...
         std::cout << "Failed to send message to server" << std::endl;
     }
+}
+
+void Client::setPlayerNumber(int number) {
+    playerNumber = number;
+}
+
+int Client::getPlayerNumber() {
+    return playerNumber;
 }
 
