@@ -1,9 +1,10 @@
 #include "Card.hpp"
 #include <iostream>
 #include <functional>
+#include <string>
 
 extern float deltaTime;
-Card::Card(int a, int h, sf::Vector2f widthHeight, string name, std::function<void()> myLambda) : lambda(myLambda) {
+Card::Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::function<void()> myLambda) : lambda(myLambda) {
     shape.setSize(widthHeight);
     shape.setFillColor(sf::Color::Blue);
     shape.setOutlineThickness(2.f);
@@ -17,7 +18,9 @@ Card::Card(int a, int h, sf::Vector2f widthHeight, string name, std::function<vo
     cardName = name;
     shape.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
     backFace.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
-
+    attack = a;
+    health = h;
+    cost = c;
 
     if (!font.loadFromFile("Fonts/COMIC.ttf")) {
         cout << "Error loading font!";
@@ -72,16 +75,35 @@ void Card::draw(sf::RenderWindow& window) {
     // 2. Render center image:
     sf::Sprite cardSprite(cardTexture);
     int imgOffsetX =  -(shape.getSize().x / 2) + 20;
-    int imgOffsetY = -(shape.getSize().y / 2) + 60;
-    cardSprite.scale(sf::Vector2f(0.35, 0.35));
+    int imgOffsetY = -(shape.getSize().y / 2) + 50;
+    cardSprite.scale(sf::Vector2f(0.3, 0.3));
     cardSprite.setPosition(shape.getPosition().x + imgOffsetX, shape.getPosition().y + imgOffsetY);
 
-    // 3. Render order:
+    // 3. Render Attack and Health
+    sf::Text statsText("ATK: " + to_string(attack) + "\nHP: " + to_string(health), font, 12);
+    int statsOffsetX = -(shape.getSize().x / 2) + 20;
+    int statsOffsetY = +(shape.getSize().y / 2) - 35;
+    statsText.setPosition(shape.getPosition().x + statsOffsetX, shape.getPosition().y + statsOffsetY);
+
+    // 4. Render Mana Cost:
+    string paddedStr = to_string(cost);
+    if (paddedStr.length() == 1) {
+        paddedStr = " " + paddedStr;
+    }
+
+    sf::Text manaText(paddedStr, font, 12);
+    int manaOffsetX = +(shape.getSize().x / 2) - 20;
+    int manaOffsetY = -(shape.getSize().y / 2) + 5;
+    manaText.setPosition(shape.getPosition().x + manaOffsetX, shape.getPosition().y + manaOffsetY);
+
+    // 5. Render order:
     if (frontFacing == true) {
         window.draw(backFace);
         window.draw(shape);
         window.draw(nameText);
         window.draw(cardSprite);
+        window.draw(statsText);
+        window.draw(manaText);
     }
     else {
         window.draw(shape);

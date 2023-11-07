@@ -11,7 +11,7 @@ sf::Vector2f position;
 sf::Texture cardTexture;
 
 // Constructor:
-Deck::Deck(int deckSize, int x, int y){
+Deck::Deck(int deckSize, int x, int y, int faction){
 	position.x = x;
 	position.y = y;
 
@@ -27,7 +27,7 @@ Deck::Deck(int deckSize, int x, int y){
 		cout << "Error loading sound effect!";
 	}
 
-	createDeck(deckSize);
+	createDeck(deckSize, faction);
 }
 
 //	Simple getters:
@@ -63,8 +63,10 @@ void Deck::returnCard(Card card){
 	3. Trim it until it is of size n.
 */
 
-void Deck::createDeck(int n) {
-	cardStack = getInitCards();
+void Deck::createDeck(int n, int faction) {
+	if (faction == 1) {
+		cardStack = getChaosSuperDeck();
+	}
 	shuffleDeck();
 	while (cardStack.size() > n) {
 		cardStack.pop_back();
