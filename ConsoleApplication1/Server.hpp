@@ -3,6 +3,11 @@
 #include <memory>
 #include <thread>
 #include <atomic>
+#include <string>
+#include <mutex>
+
+using namespace std;
+
 
 class Server {
 public:
@@ -10,7 +15,8 @@ public:
     void startListening(int port);
     void run();
     void stop();
-    void messageToClient(char message[]);
+    void messageToClients(string message);
+    void messageToClient(string message, size_t clientIndex);
 
 
 private:
@@ -20,6 +26,7 @@ private:
 private:
     sf::TcpListener listener;
     std::vector<std::unique_ptr<sf::TcpSocket>> clients;
+    std::mutex clientsMutex;
     std::thread connectionsThread;
     std::thread receiveThread;
     std::atomic<bool> running; 
