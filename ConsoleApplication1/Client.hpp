@@ -3,8 +3,11 @@
 
 class Client {
 public:
-    Client(const sf::IpAddress& serverIP, int port);
+    Client();
+    void connectClient(const sf::IpAddress& serverIP, int port);
     void run();
+    void messageToServer(char message[]);
+
 
 private:
     sf::TcpSocket socket;

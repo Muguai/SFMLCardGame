@@ -28,73 +28,47 @@ enum class NetworkMode {
 int main()
 {
     NetworkMode mode = NetworkMode::Server;
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
-    window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(60);
-    sf::RectangleShape shape(sf::Vector2f(120.f,50.f));
-    shape.setFillColor(sf::Color::Green);
-
-
-    sf::Clock clock;
-    sf::Clock testSpawnTimer;
-    Hand playerHand;
-    sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
-
     Server server;
-
-
-    auto myLambda = []() {
-        std::cout << "Lambda function called" << std::endl;
-    };
-
-    //Player Hand dummy cards
-    Card card1(10, 10, cardSize, "1", myLambda);
-    Card card2(10, 10, cardSize, "2", myLambda);
-    Card card3(10, 10, cardSize, "3", myLambda);
-    Card card4(10, 10, cardSize, "4", myLambda);
-    Card card5(10, 10, cardSize, "5", myLambda);
-    Card card6(10, 10, cardSize, "6", myLambda);
-    playerHand.addCard(card1);
-    playerHand.addCard(card2);
-    playerHand.addCard(card3);
-    playerHand.addCard(card4);
-    playerHand.addCard(card5);
-    playerHand.addCard(card6);
-
-    // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0:
-    Deck playerDeck(10, 100.0f, 700.0f);
-    playerDeck.shuffleDeck();
+    Client client;
 
     char who;
-    std::cout << "Do you want to be a server (s) or a client (c)? ";
+    std::cout << "Do you want to be a server (s) or a client (c)?" << endl;
     std::cin >> who;
 
-    // Declare serverThread variable outside the if block
     std::thread serverThread;
+    std::thread serverHandleMessagesThread;
     std::thread clientThread;
 
-    if (who == 's') {
+    if (std::tolower(who) == 's') {
         mode = NetworkMode::Server;
     }
-    else {
+    else if (std::tolower(who) == 'c') {
         mode = NetworkMode::Client;
+    }
+    else {
+        std::cout << "No such command" << endl;
+        return 0;
     }
 
 
-    // Run either server or client based on the chosen mode
     if (mode == NetworkMode::Server) {
 
         string port;
-        std::cout << "choose a port to render to" << endl;
+        std::cout << "Choose a port to render to" << endl;
         std::cin >> port;
+
+        if (port == "s") {
+            port = "5000";
+        }
 
 
         int portInt = std::stoi(port);
         server.startListening(portInt);
-        // Initialize serverThread inside the if block
+
         serverThread = std::thread([&]() {
             server.run();
             });
+
     }
     else if (mode == NetworkMode::Client) {
 
@@ -102,13 +76,23 @@ int main()
         std::cout << "Whats the servers ip adress?" << endl;
         std::cin >> ip;
 
+        if (ip == "c") {
+            ip = "127.0.0.1";
+        }
+
         string port;
         std::cout << "Whats the servers port?" << endl;
         std::cin >> port;
 
+
+        if (port == "c") {
+            port = "5000";
+        }
+
         int portInt = std::stoi(port);
 
-        Client client(ip, portInt);
+        client.connectClient(ip, portInt);
+
 
         clientThread = std::thread([&]() {
             client.run();
@@ -116,9 +100,27 @@ int main()
     }
 
 
+
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+    window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(60);
+
+
+    sf::Clock clock;
+    sf::Clock testSpawnTimer;
+
+    Hand playerHand;
+    sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
+
+    // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0:
+    Deck playerDeck(10, 100.0f, 700.0f);
+    playerDeck.shuffleDeck();
+
+    
+
     while (window.isOpen())
     {   
-        if (testSpawnTimer.getElapsedTime().asSeconds() > 4.f) {
+        if (testSpawnTimer.getElapsedTime().asSeconds() > 2.f) {
             if (playerDeck.getSize() > 0) {
                 playerDeck.dealCard(playerHand);
             }
@@ -128,6 +130,16 @@ int main()
         sf::Time elapsed = clock.restart();
         deltaTime = elapsed.asSeconds();
 
+        if (mode == NetworkMode::Server) {
+            char message[] = "Hello, Client!";
+
+            server.messageToClient(message);
+        }
+
+        if (mode == NetworkMode::Client) {
+            char message[] = "Hello, Server!";
+            client.messageToServer(message);
+        }
         
 
         sf::Event event;
@@ -155,10 +167,10 @@ int main()
         window.display();
     }
     if (mode == NetworkMode::Server) {
-        // Join the serverThread if it was initialized
         if (serverThread.joinable()) {
             serverThread.join();
         }
+       
     }
     else if (mode == NetworkMode::Client) {
         if (clientThread.joinable()) {
