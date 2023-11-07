@@ -17,9 +17,9 @@ private:
 	
 
 public:
-	Deck(int deckSize, int x, int y);
+	Deck(int deckSize, int x, int y, int faction);
 	void returnCard(Card card);
-	void createDeck(int n);
+	void createDeck(int n, int faction);
 	void shuffleDeck();
 	void printCards();
 	void setPosition(sf::Vector2f newPosition);

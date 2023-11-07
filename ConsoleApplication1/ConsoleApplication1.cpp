@@ -25,7 +25,13 @@ enum class NetworkMode {
 
 
 int main()
-{
+{   
+    // Select a faction to play:
+    int faction = 0;
+    cout << "What faction do you want to play?" << endl;
+    cout << "1. Chaos" << endl;
+    cin >> faction;
+
     NetworkMode mode = NetworkMode::Server;
     Server server;
     Client client;
@@ -98,8 +104,6 @@ int main()
             });
     }
 
-
-
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
@@ -112,7 +116,7 @@ int main()
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0:
-    Deck playerDeck(10, 100.0f, 700.0f);
+    Deck playerDeck(10, 100.0f, 700.0f, faction);
     playerDeck.shuffleDeck();
 
     
