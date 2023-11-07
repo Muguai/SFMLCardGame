@@ -122,6 +122,7 @@ int main()
     sf::Clock testSpawnTimer;
 
     Hand playerHand(true, false);
+
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0:

@@ -48,11 +48,16 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
         z += 1;
         card.setZ(z);
 
+
+
+        bool isHovered = mousePos.x >= xPos - card.getWidth() / 3 && mousePos.x <= xPos + card.getWidth() / 3 &&
+            mousePos.y >= yPos - card.getHeight() / 2 && mousePos.y <= yPos + card.getHeight() / 2;
+
         if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && draggingCard) {
             draggingCard = nullptr;
         }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && card.isHovered(window) && !draggingCard && hoverable) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isHovered && !draggingCard && hoverable) {
             draggingCard = &card;
         }
 
@@ -63,10 +68,6 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
             currentAngle += angleIncrement;
             continue;
         }
-
-
-        bool isHovered = mousePos.x >= xPos - card.getWidth() / 3 && mousePos.x <= xPos + card.getWidth() / 3 &&
-            mousePos.y >= yPos - card.getHeight() / 2 && mousePos.y <= yPos + card.getHeight() / 2;
 
         if (isHovered && !onlyOneHovered && !draggingCard && hoverable) {
             targetPosition.y -= 100;
