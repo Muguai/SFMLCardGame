@@ -1,6 +1,8 @@
 #include "Header/Hand.hpp"
 #include <iostream>
 #include "VectorHelper.hpp"
+#include <GameObjectManager.hpp>
+#include <GameObject.hpp>
 
 Hand::Hand(bool _hoverable, bool _spawnFlipped) {
     hoverable = _hoverable;
@@ -8,9 +10,13 @@ Hand::Hand(bool _hoverable, bool _spawnFlipped) {
 }
 
 void Hand::addCard(Card& card) {
+    Card newCard = card;
     if (spawnFlipped) {
         card.flip();
     }
+    
+    //GameObjectManager::getInstance().addGameObject(&newCard);
+
     cards.push_back(card);
     cardsRenderOrder = cards;
 

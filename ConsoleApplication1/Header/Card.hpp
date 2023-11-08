@@ -1,16 +1,19 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <functional>
+#include <GameObject.hpp>
 using namespace std;
 
-class Card {
+class Card : public GameObject {
 public:
     int attack;
     int health;
     int cost; 
     virtual void useAbility();
     Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::function<void()> myLambda);
-
+    Card();
+    void update(float deltaTime) override;
+    void initialize() override;
     void move(sf::Vector2f moveDir);
     void draw(sf::RenderWindow& window);
     void setPosition(sf::Vector2f vector2);

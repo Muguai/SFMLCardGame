@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <Resources.hpp>
+#include <GameObjectManager.hpp>
 
 using namespace std;
 deque<Card> cardStack;
@@ -84,9 +85,10 @@ Card Deck::dealCard(Hand& playerHand) {
 	sound.setBuffer(soundBuffer);
 	sound.play();
 	Card topCard = cardStack[0];
+
 	topCard.setPosition(position);
 	playerHand.addCard(topCard);
-	
+
 	cardStack.pop_front();
 	return topCard;
 }

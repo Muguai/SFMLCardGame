@@ -13,6 +13,8 @@
 #include <Server.hpp>
 #include <Client.hpp>
 #include <string>
+#include "GameObjectManager.hpp"
+class GameObjectManager;
 
 using namespace std;
 float deltaTime;
@@ -26,6 +28,7 @@ enum class NetworkMode {
 
 int main()
 {   
+    GameObjectManager::getInstance();
     // Select a faction to play:
     int faction = 0;
     cout << "What faction do you want to play?" << endl;
@@ -135,6 +138,7 @@ int main()
     {   
         if (testSpawnTimer.getElapsedTime().asSeconds() > 1.f) {
             if (playerDeck.getSize() > 0) {
+                GameObjectManager::getInstance().updateAll(deltaTime);
                 playerDeck.dealCard(playerHand);
             }
             testSpawnTimer.restart();
@@ -155,6 +159,7 @@ int main()
         }
 
         window.clear();
+
         playerDeck.renderDeck(window);
         if (event.type == sf::Event::Resized)
         {

@@ -11,6 +11,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.hpp" />
@@ -18,5 +19,7 @@
     <ClInclude Include="VectorHelper.hpp" />
     <ClInclude Include="Server.hpp" />
     <ClInclude Include="Client.hpp" />
+    <ClInclude Include="GameObject.hpp" />
+    <ClInclude Include="GameObjectManager.hpp" />
   </ItemGroup>
 </Project>

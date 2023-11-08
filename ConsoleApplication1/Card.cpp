@@ -2,9 +2,10 @@
 #include <iostream>
 #include <functional>
 #include <string>
+#include "GameObjectManager.hpp"
 
 extern float deltaTime;
-Card::Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::function<void()> myLambda) : lambda(myLambda) {
+Card::Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::function<void()> myLambda) : lambda(myLambda), GameObject() {
     shape.setSize(widthHeight);
     shape.setFillColor(sf::Color::Blue);
     shape.setOutlineThickness(2.f);
@@ -30,6 +31,15 @@ Card::Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::func
     }
 }
 
+Card::Card() {}
+
+void Card::update(float deltaTime) {
+    cout << "Update card" << endl;
+}
+
+void Card::initialize() {
+    GameObjectManager::getInstance().addGameObject(this);
+}
 void Card::ExecuteLambda() {
     lambda();
 }
