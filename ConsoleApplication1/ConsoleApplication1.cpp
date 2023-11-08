@@ -9,6 +9,7 @@
 #include <Header/Hand.hpp>
 #include <Header/Shuffle.hpp>
 #include <Header/Deck.hpp>
+#include <Header/Monster.hpp>
 #include <thread> 
 #include <Server.hpp>
 #include <Client.hpp>
@@ -134,7 +135,7 @@ int main()
     Deck playerDeck(10, 100.0f, 700.0f, faction);
     playerDeck.shuffleDeck();
 
-    
+    Monster testMonster(10, 10, "yo monster", 4);
 
     while (window.isOpen())
     {   
@@ -174,6 +175,7 @@ int main()
         playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window, deltaTime); 
         playerHand.handleCardHover(window);
         playerHand.draw(window);
+        testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
         window.display();
     }
     if (mode == NetworkMode::Server) {

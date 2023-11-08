@@ -5,13 +5,14 @@ using namespace std;
 
 class Monster {
 public:
-	Monster() {};
+	Monster(int atk, int hp, string n, int s);
 	int getAttack();
 	int getHealth();
-	int getCost();
+	void drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& window);
 
 private:
 	int attack;
 	int health;
-	int cost;
+	string name;
+	int slot;
 };
