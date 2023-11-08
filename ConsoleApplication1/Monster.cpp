@@ -3,18 +3,28 @@
 #include <iostream>
 #include <string>
 using namespace std;
+
+Monster::Monster(){
+	null = true;
+}
+
 Monster::Monster(int atk, int hp, string n, int s) {
 	attack = atk;
 	health = hp;
 	name = n;
 	slot = s;
-	
+	null = false;
+
 	if (!monsterTexture.loadFromFile("Images/" + name + ".png")) {
 		cout << "Error loading card image!";
 	}
 	if (!font.loadFromFile("Fonts/COMIC.ttf")) {
 		cout << "Error loading font!";
 	}
+}
+
+bool Monster::isNull() {
+	return null;
 }
 
 void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& window) {

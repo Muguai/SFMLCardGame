@@ -10,6 +10,7 @@
 #include <Header/Shuffle.hpp>
 #include <Header/Deck.hpp>
 #include <Header/Monster.hpp>
+#include <Header/Board.hpp>
 #include <thread> 
 #include <Server.hpp>
 #include <Client.hpp>
@@ -135,13 +136,19 @@ int main()
     Deck playerDeck(10, 100.0f, 700.0f, faction);
     playerDeck.shuffleDeck();
 
+    // Testing playerboard:
     Monster testMonster(10, 10, "Dragon", 4);
+    Board playerBoard(sf::Vector2f(450, 500), 40.0f);
 
     while (window.isOpen())
     {   
         if (testSpawnTimer.getElapsedTime().asSeconds() > 1.f) {
             if (playerDeck.getSize() > 0) {
                 playerDeck.dealCard(playerHand);
+                
+                if (!playerBoard.isFull()) {
+                    playerBoard.addPlayerMonster(testMonster);
+                }
             }
             testSpawnTimer.restart();
         }
@@ -175,7 +182,10 @@ int main()
         playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window, deltaTime); 
         playerHand.handleCardHover(window);
         playerHand.draw(window);
-        testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
+        
+        //testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
+        playerBoard.renderPlayerMonsters(window);
+        
         window.display();
     }
     if (mode == NetworkMode::Server) {
