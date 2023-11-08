@@ -9,7 +9,8 @@ Card::Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::func
     shape.setSize(widthHeight);
     shape.setFillColor(sf::Color::Blue);
     shape.setOutlineThickness(2.f);
-    shape.setOutlineColor(sf::Color::White); 
+    shape.setOutlineColor(sf::Color::White);
+
     backFace.setSize(widthHeight);
     backFace.setFillColor(sf::Color::Green);
     backFace.setOutlineColor(sf::Color::White);

@@ -9,6 +9,8 @@
 #include <Header/Hand.hpp>
 #include <Header/Shuffle.hpp>
 #include <Header/Deck.hpp>
+#include <Header/Monster.hpp>
+#include <Header/Board.hpp>
 #include <thread> 
 #include <Server.hpp>
 #include <Client.hpp>
@@ -31,10 +33,16 @@ int main()
     GameObjectManager::getInstance();
     // Select a faction to play:
     int faction = 0;
-    cout << "What faction do you want to play?" << endl;
-    cout << "1. Chaos" << endl;
-    cout << "2. Life (Currently no such faction)" << endl;
-    cin >> faction;
+    while (faction == 0) {
+        cout << "What faction do you want to play?" << endl;
+        cout << "1. Chaos" << endl;
+        cout << "2. Life (Currently no such faction)" << endl;
+        cin >> faction;
+        if (faction < 0 || faction > 2) {
+            cout << "Bad faction choice, try again!" << endl;
+            faction = 0;
+        }
+    }
 
     NetworkMode mode = NetworkMode::Server;
     Server server;
@@ -128,11 +136,13 @@ int main()
 
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
-    // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0:
+    // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0, faction = <selected int>:
     Deck playerDeck(10, 100.0f, 700.0f, faction);
     playerDeck.shuffleDeck();
 
-    
+    // Testing playerboard:
+    Monster testMonster(10, 10, "Dragon", 4);
+    Board playerBoard(sf::Vector2f(450, 500), 40.0f);
 
     while (window.isOpen())
     {   
@@ -140,6 +150,10 @@ int main()
             if (playerDeck.getSize() > 0) {
                 GameObjectManager::getInstance().updateAll(deltaTime);
                 playerDeck.dealCard(playerHand);
+                
+                if (!playerBoard.isFull()) {
+                    playerBoard.addPlayerMonster(testMonster);
+                }
             }
             testSpawnTimer.restart();
         }
@@ -176,6 +190,10 @@ int main()
         playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window, deltaTime); 
         playerHand.handleCardHover(window);
         playerHand.draw(window);
+        
+        //testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
+        playerBoard.renderPlayerMonsters(window);
+        
         window.display();
     }
     if (mode == NetworkMode::Server) {

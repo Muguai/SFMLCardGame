@@ -146,6 +146,7 @@
     <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Shuffle.cpp" />

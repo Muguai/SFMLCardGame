@@ -12,6 +12,7 @@
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="Monster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.hpp" />
