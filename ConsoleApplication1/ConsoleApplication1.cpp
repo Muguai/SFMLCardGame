@@ -135,7 +135,7 @@ int main()
     Deck playerDeck(10, 100.0f, 700.0f, faction);
     playerDeck.shuffleDeck();
 
-    Monster testMonster(10, 10, "yo monster", 4);
+    Monster testMonster(10, 10, "Dragon", 4);
 
     while (window.isOpen())
     {   

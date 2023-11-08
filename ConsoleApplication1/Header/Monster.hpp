@@ -15,4 +15,6 @@ private:
 	int health;
 	string name;
 	int slot;
+	sf::Texture monsterTexture;
+	sf::Font font;
 };
