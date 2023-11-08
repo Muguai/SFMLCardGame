@@ -2,9 +2,18 @@
 #include <iostream>
 #include "VectorHelper.hpp"
 
-void Hand::addCard(const Card& card) {
+Hand::Hand(bool _hoverable, bool _spawnFlipped) {
+    hoverable = _hoverable;
+    spawnFlipped = _spawnFlipped;
+}
+
+void Hand::addCard(Card& card) {
+    if (spawnFlipped) {
+        card.flip();
+    }
     cards.push_back(card);
     cardsRenderOrder = cards;
+
 }
 
 void Hand::setCardPositions(const std::vector<sf::Vector2f>& positions) {
@@ -39,11 +48,16 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
         z += 1;
         card.setZ(z);
 
+
+
+        bool isHovered = mousePos.x >= xPos - card.getWidth() / 3 && mousePos.x <= xPos + card.getWidth() / 3 &&
+            mousePos.y >= yPos - card.getHeight() / 2 && mousePos.y <= yPos + card.getHeight() / 2;
+
         if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && draggingCard) {
             draggingCard = nullptr;
         }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && card.isHovered(window) && !draggingCard) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isHovered && !draggingCard && hoverable) {
             draggingCard = &card;
         }
 
@@ -55,11 +69,7 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
             continue;
         }
 
-
-        bool isHovered = mousePos.x >= xPos - card.getWidth() / 3 && mousePos.x <= xPos + card.getWidth() / 3 &&
-            mousePos.y >= yPos - card.getHeight() / 2 && mousePos.y <= yPos + card.getHeight() / 2;
-
-        if (isHovered && !onlyOneHovered && !draggingCard) {
+        if (isHovered && !onlyOneHovered && !draggingCard && hoverable) {
             targetPosition.y -= 100;
             card.setZ(numCards + 1);
             onlyOneHovered = true;
@@ -101,6 +111,11 @@ void Hand::printCardDetails() const {
     }
 }
 
+void Hand::flipAllCards() {
+    for (auto& card : cards) {
+        card.flip();
+    }
+}
 
 void Hand::handleCardHover(sf::RenderWindow& window) {
     for (auto& card : cards) {

@@ -129,7 +129,8 @@ int main()
     sf::Clock clock;
     sf::Clock testSpawnTimer;
 
-    Hand playerHand;
+    Hand playerHand(true, false);
+
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0, faction = <selected int>:
@@ -178,6 +179,8 @@ int main()
         //playerHand.printCardDetails();
         float centerX = window.getSize().x / 2.f; 
         float centerY = window.getSize().y - 100.f; 
+
+        
 
         playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window, deltaTime); 
         playerHand.handleCardHover(window);

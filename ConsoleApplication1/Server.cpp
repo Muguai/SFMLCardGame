@@ -54,13 +54,16 @@ void Server::handleConnections() {
             std::lock_guard<std::mutex> lock(clientsMutex); // Lock the mutex to access the clients vector
             cout << "Client connected from IP: " << ipAddress << " Port: " << port << endl;
             clients.push_back(std::move(client));
+            if (clients.size() > 0) {
+                running = true;
+            }
         }
     }
 }
 
 
 void Server::receiveMessages() {
-    while (true) {
+    while (running) {
         for (auto& client : clients) {
             char buffer[1024];
             std::size_t received;
@@ -74,12 +77,14 @@ void Server::receiveMessages() {
 void Server::run() {
 
     std::thread connectionsThread(&Server::handleConnections, this);
-
-    receiveMessages();
+    while (true) {
+        receiveMessages();
+    }
 
 }
 
 void Server::stop() {
+    running = false;
     if (connectionsThread.joinable()) {
         connectionsThread.join(); 
     }
