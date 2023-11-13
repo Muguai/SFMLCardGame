@@ -32,9 +32,11 @@ Board::Board(sf::Vector2f boardPos, float delimiterSpace){
 
 void Board::addPlayerMonster(Monster monster){
 	size++;
+	int permutation [] = {2, 1, 3, 0, 4};
 	for (int i = 0; i < maxCapacity; i++) {
-		if (playerMonsters[i].isNull()) {
-			playerMonsters[i] = monster;
+		int index = permutation[i];
+		if (playerMonsters[index].isNull()) {
+			playerMonsters[index] = monster;
 			break;
 		}
 	}
@@ -57,7 +59,7 @@ bool Board::isFull(){
 */
 
 void Board::renderPlayerMonsters(sf::RenderWindow& window) {
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < maxCapacity; i++) {
 		if (!playerMonsters[i].isNull()) {
 			sf::Vector2f offsetVector(boardPos.x + i*delimiterSpace, boardPos.y);
 			playerMonsters[i].drawMonster(offsetVector, radius, window);
@@ -65,3 +67,7 @@ void Board::renderPlayerMonsters(sf::RenderWindow& window) {
 	}
 }
 
+void Board::renderBoard(sf::RenderWindow& window) {
+	
+	renderPlayerMonsters(window);
+}

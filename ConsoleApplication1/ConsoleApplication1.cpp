@@ -192,7 +192,7 @@ int main()
         playerHand.draw(window);
         
         //testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
-        playerBoard.renderPlayerMonsters(window);
+        playerBoard.renderBoard(window);
         
         window.display();
     }

@@ -7,9 +7,10 @@ public:
 	void addPlayerMonster(Monster monster);
 	void addOppponentMonster();
 	bool isFull();
-	void renderPlayerMonsters(sf::RenderWindow& window);
+	void renderBoard(sf::RenderWindow& window);
 
 private:
+	void renderPlayerMonsters(sf::RenderWindow& window);
 	int size;
 	sf::Vector2f boardPos;
 	float delimiterSpace;
