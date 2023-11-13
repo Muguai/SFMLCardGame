@@ -12,7 +12,7 @@ public:
     void setCardPositions(const std::vector<sf::Vector2f>& positions);
     std::vector<sf::Vector2f> getCardPositions() const;
     void draw(sf::RenderWindow& window);
-    void arrangeCardsInArc(float radiusX, float radiusY, float centerX, float centerY, sf::RenderWindow& window, float deltaTime);
+    void arrangeCardsInArc(sf::Vector2f circleRadius, sf::Vector2f circleCenter, sf::RenderWindow& window, float deltaTime);
     void printCardDetails() const;
     void handleCardHover(sf::RenderWindow& window);
     float easeInOut(float t);
