@@ -7,14 +7,13 @@
 #include <deque>
 using namespace std;
 
-class Deck {
+class Deck : public GameObject {
 private:
 	deque<Card> cardStack;
 	sf::Vector2f position;
 	sf::Font font;
 	sf::SoundBuffer soundBuffer;
 	sf::Sound sound;
-	
 
 public:
 	Deck(int deckSize, int x, int y, int faction);
@@ -27,4 +26,6 @@ public:
 	int getSize();
 	sf::Vector2f getPosition();
 	Card dealCard(Hand& playerHand);
+	void update(float deltaTime, sf::RenderWindow& window) override;
+	void initialize() override;
 };

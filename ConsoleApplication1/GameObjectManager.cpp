@@ -15,6 +15,15 @@ GameObjectManager& GameObjectManager::getInstance() {
 // Change the parameter type to std::unique_ptr<GameObject>
 void GameObjectManager::addGameObject(GameObject* object) {
     gameObjects.push_back(std::move(object));
+    object->initialize();
+}
+
+void GameObjectManager::removeGameObject(GameObject* object) {
+    auto it = std::find(gameObjects.begin(), gameObjects.end(), object);
+    if (it != gameObjects.end()) {
+        gameObjects.erase(it);
+        delete object;
+    }
 }
 
 void GameObjectManager::updateAll(float deltaTime, sf::RenderWindow& window) {
@@ -25,5 +34,8 @@ void GameObjectManager::updateAll(float deltaTime, sf::RenderWindow& window) {
 }
 
 GameObjectManager::~GameObjectManager() {
-    // No need to manually delete the objects, smart pointers will handle it
+    for (auto object : gameObjects) {
+        delete object;
+    }
+    gameObjects.clear();
 }

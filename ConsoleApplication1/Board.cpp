@@ -31,6 +31,33 @@ Board::Board(sf::Vector2f boardPos, float delimiterSpace){
 	}
 }
 
+
+void Board::update(float deltaTime, sf::RenderWindow& window) {
+
+	playerSize++;
+	int permutation[] = { 2, 1, 3, 0, 4 };
+	for (int i = 0; i < maxCapacity; i++) {
+		int index = permutation[i];
+		if (playerMonsters[index].isNull()) {
+			playerMonsters[index].update(deltaTime, window);
+			break;
+		}
+	}
+	oppSize++;
+	int permutation2[] = { 2, 1, 3, 0, 4 };
+	for (int i = 0; i < maxCapacity; i++) {
+		int index = permutation2[i];
+		if (opponentMonsters[index].isNull()) {
+			opponentMonsters[index].update(deltaTime, window);
+			break;
+		}
+	}
+	renderBoard(window);
+}
+
+void Board::initialize() {
+}
+
 /*	addPlayerMonster()
 *	A function that takes in a monster object and adds it to the array
 *	of player owned monsters. The array permutation can be edited to
@@ -48,6 +75,7 @@ void Board::addPlayerMonster(Monster monster){
 		}
 	}
 }
+
 
 void Board::addOppponentMonster(Monster monster){
 	oppSize++;

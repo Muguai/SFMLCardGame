@@ -147,6 +147,9 @@ int main()
     Board playerBoard(sf::Vector2f(450, 150), 40.0f);
 
     GameObjectManager::getInstance().addGameObject(&playerHand);
+    GameObjectManager::getInstance().addGameObject(&playerDeck);
+    GameObjectManager::getInstance().addGameObject(&playerBoard);
+
 
     while (window.isOpen())
     {   
@@ -182,19 +185,14 @@ int main()
 
         window.clear();
 
-
-        playerDeck.renderDeck(window);
         if (event.type == sf::Event::Resized)
         {
             sf::FloatRect view(0, 0, event.size.width, event.size.height);
             window.setView(sf::View(view));
         }
         GameObjectManager::getInstance().updateAll(deltaTime, window);
-
-        //playerHand.printCardDetails();
         
         //testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
-        playerBoard.renderBoard(window);
         
         window.display();
     }
