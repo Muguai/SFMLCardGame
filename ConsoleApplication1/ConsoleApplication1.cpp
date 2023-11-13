@@ -142,6 +142,7 @@ int main()
 
     // Testing playerboard:
     Monster testMonster(10, 10, "Dragon", 4);
+    Monster testMonster2(10, 10, "Troll", 2);
     Board playerBoard(sf::Vector2f(450, 150), 40.0f);
 
     while (window.isOpen())
@@ -151,8 +152,13 @@ int main()
                 GameObjectManager::getInstance().updateAll(deltaTime);
                 playerDeck.dealCard(playerHand);
                 
-                if (!playerBoard.isFull()) {
+                // Testcode for adding to the board:
+                bool isPlayer = true;
+                if (!playerBoard.isFull(isPlayer)) {
                     playerBoard.addPlayerMonster(testMonster);
+                }
+                if (!playerBoard.isFull(!isPlayer)) {
+                    playerBoard.addOppponentMonster(testMonster2);
                 }
             }
             testSpawnTimer.restart();

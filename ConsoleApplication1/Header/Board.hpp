@@ -5,13 +5,16 @@ class Board {
 public:
 	Board(sf::Vector2f boardPos, float delimiterSpace);
 	void addPlayerMonster(Monster monster);
-	void addOppponentMonster();
-	bool isFull();
+	void addOppponentMonster(Monster monster);
+	bool isFull(bool isPlayer);
 	void renderBoard(sf::RenderWindow& window);
 
 private:
 	void renderPlayerMonsters(sf::RenderWindow& window, float monsterYOffset);
-	int size;
+	void renderOpponentMonsters(sf::RenderWindow& window, float monsterYOffset);
+
+	int playerSize;
+	int oppSize;
 	sf::Vector2f boardPos;
 	float delimiterSpace;
 	float monsterXOffset;
