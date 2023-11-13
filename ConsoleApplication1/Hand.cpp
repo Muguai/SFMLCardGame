@@ -3,8 +3,10 @@
 #include "VectorHelper.hpp"
 #include <GameObjectManager.hpp>
 #include <GameObject.hpp>
+using namespace std;
 
-Hand::Hand(bool _hoverable, bool _spawnFlipped) {
+
+Hand::Hand(bool _hoverable, bool _spawnFlipped) : GameObject()  {
     hoverable = _hoverable;
     spawnFlipped = _spawnFlipped;
 }
@@ -14,13 +16,31 @@ void Hand::addCard(Card& card) {
     if (spawnFlipped) {
         card.flip();
     }
-    
-    //GameObjectManager::getInstance().addGameObject(&newCard);
 
-    cards.push_back(card);
+    cards.push_back(newCard);    
     cardsRenderOrder = cards;
 
 }
+void Hand::update(float deltaTime, sf::RenderWindow& window) {
+
+    for (auto& card : cards) {
+        card.update(deltaTime, window);
+    }
+
+    float centerX = window.getSize().x / 2.f;
+    float centerY = window.getSize().y - 100.f;
+
+    arrangeCardsInArc(400.f, 150.f, centerX, centerY, window, deltaTime);
+    handleCardHover(window);
+    draw(window);
+
+
+}
+
+void Hand::initialize() {
+
+}
+
 
 void Hand::setCardPositions(const std::vector<sf::Vector2f>& positions) {
     if (positions.size() == cards.size()) {
@@ -133,5 +153,9 @@ void Hand::handleCardHover(sf::RenderWindow& window) {
         }
     }
 
+}
+
+std::vector<Card> Hand::getCards() {
+    return cards;
 }
 

@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <functional>
 #include <GameObject.hpp>
+#include <SFML/System.hpp>
+
 using namespace std;
 
 class Card : public GameObject {
@@ -12,7 +14,7 @@ public:
     virtual void useAbility();
     Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::function<void()> myLambda);
     Card();
-    void update(float deltaTime) override;
+    void update(float deltaTime, sf::RenderWindow& window) override;
     void initialize() override;
     void move(sf::Vector2f moveDir);
     void draw(sf::RenderWindow& window);
@@ -27,7 +29,6 @@ public:
     void setZ(float z) { this->z = z; }
     float getZ() const { return z; }
     void ExecuteLambda();
-
 
 private:
     sf::RectangleShape shape;

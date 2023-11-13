@@ -34,12 +34,13 @@ Card::Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::func
 
 Card::Card() {}
 
-void Card::update(float deltaTime) {
-    cout << "Update card" << endl;
+void Card::update(float deltaTime, sf::RenderWindow& window) {
+    
+    
 }
 
 void Card::initialize() {
-    GameObjectManager::getInstance().addGameObject(this);
+    //GameObjectManager::getInstance().addGameObject(this);
 }
 void Card::ExecuteLambda() {
     lambda();

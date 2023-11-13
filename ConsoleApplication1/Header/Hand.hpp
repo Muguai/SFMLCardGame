@@ -1,9 +1,11 @@
 #pragma once
 #include <vector>
 #include "Card.hpp"
+#include <GameObject.hpp>
+#include <SFML/Graphics.hpp>
 
 
-class Hand {
+class Hand : public GameObject{
 public:
     Hand(bool _hoverable, bool _spawnFlipped);
     void addCard(Card& card);
@@ -15,6 +17,10 @@ public:
     void handleCardHover(sf::RenderWindow& window);
     float easeInOut(float t);
     void flipAllCards();
+    std::vector<Card> getCards();
+    void update(float deltaTime, sf::RenderWindow& window) override;
+    void initialize() override;
+
 
 private:
     std::vector<Card> cards;
