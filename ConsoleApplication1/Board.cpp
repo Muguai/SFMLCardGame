@@ -11,23 +11,25 @@ Monster* opponentMonsters;
 /*	Board()
 	The constructor for the board.
 	The position of the board is taken in and a delimiter space between each monster.
+	In the constructor every global value is set.
 */
 
 Board::Board(sf::Vector2f boardPos, float delimiterSpace){
 	maxCapacity = 5;
 	radius = 80.0f;
-
 	playerMonsters   = new Monster[maxCapacity];
 	opponentMonsters = new Monster[maxCapacity];
 	this->boardPos = boardPos;
-	this->delimiterSpace = radius * 2 + delimiterSpace;
-	
+	this->delimiterSpace = delimiterSpace;
+	this->monsterXOffset = radius * 2 + delimiterSpace;
 	size = 0;
+	xMargin = 15;
 }
 
-/*	addPlayerMonster
+/*	addPlayerMonster()
 *	A function that takes in a monster object and adds it to the array
-*	of player owned monsters.
+*	of player owned monsters. The array permutation can be edited to
+*	change the spawning order of adding monsters to the board.
 */
 
 void Board::addPlayerMonster(Monster monster){
@@ -61,13 +63,27 @@ bool Board::isFull(){
 void Board::renderPlayerMonsters(sf::RenderWindow& window) {
 	for (int i = 0; i < maxCapacity; i++) {
 		if (!playerMonsters[i].isNull()) {
-			sf::Vector2f offsetVector(boardPos.x + i*delimiterSpace, boardPos.y);
+			sf::Vector2f offsetVector(boardPos.x + i*monsterXOffset, boardPos.y);
 			playerMonsters[i].drawMonster(offsetVector, radius, window);
 		}
 	}
 }
 
 void Board::renderBoard(sf::RenderWindow& window) {
+	// Calculating the total width of the table:
+	float diameter = 2 * radius;
+	float diameterSum = (maxCapacity * diameter);
+	float twoEndMargin = 2 * xMargin;
+	float delimeterSum = (maxCapacity - 1) * delimiterSpace;
+	float tableWidth = diameterSum + twoEndMargin + delimeterSum;
 	
+	
+	sf::Vector2f tablePos(boardPos.x - xMargin, boardPos.y);
+	sf::RectangleShape table;
+	table.setPosition(tablePos);
+	table.setSize(sf::Vector2f(tableWidth, 300.0f));
+	table.setFillColor(sf::Color::Blue);
+	window.draw(table);
+
 	renderPlayerMonsters(window);
 }

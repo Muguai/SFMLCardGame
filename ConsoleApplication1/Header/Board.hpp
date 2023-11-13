@@ -14,6 +14,8 @@ private:
 	int size;
 	sf::Vector2f boardPos;
 	float delimiterSpace;
+	float monsterXOffset;
 	int maxCapacity;
 	float radius;
+	float xMargin;
 };
