@@ -25,6 +25,10 @@ Board::Board(sf::Vector2f boardPos, float delimiterSpace){
 	playerSize = 0;
 	oppSize = 0;
 	xMargin = 15;
+
+	if (!boardTexture.loadFromFile("Images/Wood.jpg")) {
+		cout << "Error loading card image!";
+	}
 }
 
 /*	addPlayerMonster()
@@ -103,18 +107,19 @@ void Board::renderBoard(sf::RenderWindow& window) {
 
 	// Calculating data for the height of the table and placement of monsters:
 	float yMargin = 20.0f;
-	float centerDist = 100.0f;
+	float centerDist = 40.0f;
 	float tableHeight = 2 * diameter + centerDist + 2 * yMargin;
 
 	// Placing down the table
 	sf::Vector2f tablePos(boardPos.x - xMargin, boardPos.y);
 	sf::RectangleShape table;
+	table.setTexture(&boardTexture);
 	table.setPosition(tablePos);
 	table.setSize(sf::Vector2f(tableWidth, tableHeight));
-	table.setFillColor(sf::Color::Red);
+	//table.setFillColor(sf::Color::Red);
 	window.draw(table);
 
-	// Calculat offsets for player monsters and opponent monsters:
+	// Calculate offsets for player monsters and opponent monsters:
 	float playerYOffset = (tableHeight-diameter) - yMargin;
 	float opponentYOffset = yMargin;
 	renderPlayerMonsters(window, playerYOffset);

@@ -21,4 +21,5 @@ private:
 	int maxCapacity;
 	float radius;
 	float xMargin;
+	sf::Texture boardTexture;
 };
