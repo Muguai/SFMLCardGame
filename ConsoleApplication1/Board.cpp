@@ -41,6 +41,12 @@ void Board::addPlayerMonster(Monster monster){
 }
 
 void Board::addOppponentMonster(){}
+
+/*	isFull()
+	Checks if the size has reached max capacity.
+	Return: If it has, then true is returned, else false.
+*/
+
 bool Board::isFull(){
 	return size == maxCapacity;
 }
