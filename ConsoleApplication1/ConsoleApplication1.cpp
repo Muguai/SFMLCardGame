@@ -142,7 +142,7 @@ int main()
 
     // Testing playerboard:
     Monster testMonster(10, 10, "Dragon", 4);
-    Board playerBoard(sf::Vector2f(450, 500), 40.0f);
+    Board playerBoard(sf::Vector2f(450, 150), 40.0f);
 
     while (window.isOpen())
     {   

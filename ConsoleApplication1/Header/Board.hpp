@@ -10,7 +10,7 @@ public:
 	void renderBoard(sf::RenderWindow& window);
 
 private:
-	void renderPlayerMonsters(sf::RenderWindow& window);
+	void renderPlayerMonsters(sf::RenderWindow& window, float monsterYOffset);
 	int size;
 	sf::Vector2f boardPos;
 	float delimiterSpace;

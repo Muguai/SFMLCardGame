@@ -60,10 +60,10 @@ bool Board::isFull(){
 	Render with a delimiter that seperates monsters (delimiter is set in constructor).
 */
 
-void Board::renderPlayerMonsters(sf::RenderWindow& window) {
+void Board::renderPlayerMonsters(sf::RenderWindow& window, float monsterYOffset) {
 	for (int i = 0; i < maxCapacity; i++) {
 		if (!playerMonsters[i].isNull()) {
-			sf::Vector2f offsetVector(boardPos.x + i*monsterXOffset, boardPos.y);
+			sf::Vector2f offsetVector(boardPos.x + i*monsterXOffset, boardPos.y + monsterYOffset);
 			playerMonsters[i].drawMonster(offsetVector, radius, window);
 		}
 	}
@@ -76,14 +76,20 @@ void Board::renderBoard(sf::RenderWindow& window) {
 	float twoEndMargin = 2 * xMargin;
 	float delimeterSum = (maxCapacity - 1) * delimiterSpace;
 	float tableWidth = diameterSum + twoEndMargin + delimeterSum;
-	
-	
+
+	// Calculating data for the height of the table and placement of monsters:
+	float yMargin = 20.0f;
+	float centerDist = 100.0f;
+	float tableHeight = 2 * diameter + centerDist + 2 * yMargin;
+
+	// Placing down the table
 	sf::Vector2f tablePos(boardPos.x - xMargin, boardPos.y);
 	sf::RectangleShape table;
 	table.setPosition(tablePos);
-	table.setSize(sf::Vector2f(tableWidth, 300.0f));
-	table.setFillColor(sf::Color::Blue);
+	table.setSize(sf::Vector2f(tableWidth, tableHeight));
+	table.setFillColor(sf::Color::Red);
 	window.draw(table);
 
-	renderPlayerMonsters(window);
+	float playerYOffset = (tableHeight-diameter) - yMargin;
+	renderPlayerMonsters(window, playerYOffset);
 }
