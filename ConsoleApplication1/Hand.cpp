@@ -3,8 +3,10 @@
 #include "VectorHelper.hpp"
 #include <GameObjectManager.hpp>
 #include <GameObject.hpp>
+using namespace std;
 
-Hand::Hand(bool _hoverable, bool _spawnFlipped) {
+
+Hand::Hand(bool _hoverable, bool _spawnFlipped) : GameObject()  {
     hoverable = _hoverable;
     spawnFlipped = _spawnFlipped;
 }
@@ -14,13 +16,34 @@ void Hand::addCard(Card& card) {
     if (spawnFlipped) {
         card.flip();
     }
-    
-    //GameObjectManager::getInstance().addGameObject(&newCard);
 
-    cards.push_back(card);
+    cards.push_back(newCard);    
     cardsRenderOrder = cards;
 
 }
+void Hand::update(float deltaTime, sf::RenderWindow& window) {
+
+    for (auto& card : cards) {
+        card.update(deltaTime, window);
+    }
+
+    float centerX = window.getSize().x / 2.f;
+    float centerY = window.getSize().y - 100.f;
+    sf::Vector2f circleCenter = sf::Vector2f(centerX, centerY);
+    sf::Vector2f circleRadius = sf::Vector2f(400.f, 150.f);
+
+
+    arrangeCardsInArc(circleRadius, circleCenter, window, deltaTime);
+    handleCardHover(window);
+    draw(window);
+
+
+}
+
+void Hand::initialize() {
+
+}
+
 
 /*  getDraggedCard()
 *   If no card is dragged, i.e, draggingCard = nullptr -> return null card.
@@ -52,7 +75,7 @@ std::vector<sf::Vector2f> Hand::getCardPositions() const {
     return positions;
 }
 
-void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float centerY, sf::RenderWindow& window, float deltaTIme) {
+void Hand::arrangeCardsInArc(sf::Vector2f circleRadius, sf::Vector2f circleCenter, sf::RenderWindow& window, float deltaTime) {
     int numCards = static_cast<int>(cards.size());
     float angleIncrement = 120.f / numCards;
     float currentAngle = 90.f - (angleIncrement * (numCards - 1) / 2);
@@ -61,8 +84,8 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
 
     for (auto& card : cards) {
         float radians = currentAngle * (3.14159265359f / 180.f); 
-        float xPos = centerX + radiusX * cos(radians);
-        float yPos = centerY - radiusY * sin(radians); 
+        float xPos = circleCenter.x + circleRadius.x * cos(radians);
+        float yPos = circleCenter.y - circleRadius.y * sin(radians);
         sf::Vector2f targetPosition = sf::Vector2f(xPos, yPos);
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         z += 1;
@@ -105,7 +128,7 @@ void Hand::arrangeCardsInArc(float radiusX, float radiusY, float centerX, float 
             float speedFactor = 5.f;
             float speed = std::max(minSpeed, std::min(distance * speedFactor, maxSpeed));
 
-            card.move(direction * speed * deltaTIme);
+            card.move(direction * speed * deltaTime);
         }
 
         currentAngle += angleIncrement;
@@ -147,5 +170,9 @@ void Hand::handleCardHover(sf::RenderWindow& window) {
         }
     }
 
+}
+
+std::vector<Card> Hand::getCards() {
+    return cards;
 }
 

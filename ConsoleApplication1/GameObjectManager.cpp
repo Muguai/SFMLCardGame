@@ -10,26 +10,32 @@ GameObjectManager::GameObjectManager() {}
 GameObjectManager& GameObjectManager::getInstance() {
     static GameObjectManager instance;
     return instance;
-
 }
 
+// Change the parameter type to std::unique_ptr<GameObject>
 void GameObjectManager::addGameObject(GameObject* object) {
-    gameObjects.push_back(object);
+    gameObjects.push_back(std::move(object));
+    object->initialize();
 }
 
+void GameObjectManager::removeGameObject(GameObject* object) {
+    auto it = std::find(gameObjects.begin(), gameObjects.end(), object);
+    if (it != gameObjects.end()) {
+        gameObjects.erase(it);
+        delete object;
+    }
+}
 
-void GameObjectManager::updateAll(float deltaTime) {
-    cout << gameObjects.size() << endl;
+void GameObjectManager::updateAll(float deltaTime, sf::RenderWindow& window) {
 
-    for (GameObject* object : gameObjects) {
-        if (object != nullptr) {
-            object->update(deltaTime);
-        }
+    for (const auto& object : gameObjects) {
+        object->update(deltaTime, window);
     }
 }
 
 GameObjectManager::~GameObjectManager() {
-    for (GameObject* object : gameObjects) {
+    for (auto object : gameObjects) {
         delete object;
     }
+    gameObjects.clear();
 }

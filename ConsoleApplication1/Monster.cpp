@@ -23,6 +23,13 @@ Monster::Monster(int atk, int hp, string n, int s) {
 	}
 }
 
+
+void Monster::update(float deltaTime, sf::RenderWindow& window) {
+}
+
+void Monster::initialize() {
+}
+
 bool Monster::isNull() {
 	return null;
 }

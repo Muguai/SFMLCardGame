@@ -40,12 +40,13 @@ bool Card::isNull() {
     return null;
 }
 
-void Card::update(float deltaTime) {
-    cout << "Update card" << endl;
+void Card::update(float deltaTime, sf::RenderWindow& window) {
+    
+    
 }
 
 void Card::initialize() {
-    GameObjectManager::getInstance().addGameObject(this);
+    //GameObjectManager::getInstance().addGameObject(this);
 }
 void Card::ExecuteLambda() {
     lambda();

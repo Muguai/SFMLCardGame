@@ -1,10 +1,35 @@
 #pragma once
+#include <SFML/Graphics.hpp>
+
 class GameObjectManager; 
 class GameObject {
 public:
-    virtual void update(float deltaTime) = 0;
+
+    /*	update()
+    	Calls once every frame
+    */
+    virtual void update(float deltaTime, sf::RenderWindow& window) = 0;
     virtual ~GameObject() {} 
+    /*	initialize()
+    	Calls once when added to GameObjectManager
+    */
     virtual void initialize() {}
 
 };
 
+
+/*
+HPP
+
+void update(float deltaTime, sf::RenderWindow& window) override;
+void initialize() override;
+
+CPP
+
+void Object::update(float deltaTime, sf::RenderWindow& window) {
+}
+
+void Object::initialize() {
+}
+
+*/

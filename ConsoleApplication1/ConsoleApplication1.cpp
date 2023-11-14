@@ -129,6 +129,7 @@ int main()
     window.setFramerateLimit(60);
 
 
+
     sf::Clock clock;
     sf::Clock testSpawnTimer;
 
@@ -145,11 +146,15 @@ int main()
     Monster testMonster2(10, 10, "Troll", 2);
     Board playerBoard(sf::Vector2f(450, 150), 40.0f);
 
+    GameObjectManager::getInstance().addGameObject(&playerHand);
+    GameObjectManager::getInstance().addGameObject(&playerDeck);
+    GameObjectManager::getInstance().addGameObject(&playerBoard);
+
+
     while (window.isOpen())
     {   
         if (testSpawnTimer.getElapsedTime().asSeconds() > 1.f) {
             if (playerDeck.getSize() > 0) {
-                GameObjectManager::getInstance().updateAll(deltaTime);
                 playerDeck.dealCard(playerHand);
                 
                 // Testcode for adding to the board:
@@ -182,7 +187,7 @@ int main()
         deltaTime = elapsed.asSeconds();
 
          //client.messageToServer("Hello, Server!");
-         server.messageToClients("Hello Clients");
+         //server.messageToClients("Hello Clients");
         
 
         sf::Event event;
@@ -194,25 +199,14 @@ int main()
 
         window.clear();
 
-        playerDeck.renderDeck(window);
         if (event.type == sf::Event::Resized)
         {
             sf::FloatRect view(0, 0, event.size.width, event.size.height);
             window.setView(sf::View(view));
         }
-        
-        //playerHand.printCardDetails();
-        float centerX = window.getSize().x / 2.f; 
-        float centerY = window.getSize().y - 100.f; 
-
-        
-
-        playerHand.arrangeCardsInArc(400.f, 150.f, centerX, centerY, window, deltaTime); 
-        playerHand.handleCardHover(window);
-        playerHand.draw(window);
+        GameObjectManager::getInstance().updateAll(deltaTime, window);
         
         //testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
-        playerBoard.renderBoard(window);
         
         window.display();
     }

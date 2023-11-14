@@ -75,6 +75,15 @@ void Deck::createDeck(int n, int faction) {
 
 }
 
+
+void Deck::update(float deltaTime, sf::RenderWindow& window) {
+	renderDeck(window);
+}
+
+void Deck::initialize() {
+}
+
+
 /*	dealCard()
 *	A function that deals the card from the top of the deck, popping and attaching
 *	the card to the playerHand object.
