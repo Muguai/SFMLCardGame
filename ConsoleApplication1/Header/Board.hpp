@@ -8,11 +8,12 @@ public:
 	void addOppponentMonster(Monster monster);
 	bool isFull(bool isPlayer);
 	void renderBoard(sf::RenderWindow& window);
+	bool isHovered(const sf::RenderWindow& window);
 
 private:
 	void renderPlayerMonsters(sf::RenderWindow& window, float monsterYOffset);
 	void renderOpponentMonsters(sf::RenderWindow& window, float monsterYOffset);
-
+	
 	int playerSize;
 	int oppSize;
 	sf::Vector2f boardPos;
@@ -22,4 +23,5 @@ private:
 	float radius;
 	float xMargin;
 	sf::Texture boardTexture;
+	sf::RectangleShape table;
 };

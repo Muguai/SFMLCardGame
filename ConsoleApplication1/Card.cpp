@@ -5,6 +5,9 @@
 #include "GameObjectManager.hpp"
 
 extern float deltaTime;
+Card::Card() {
+    null = true;
+}
 Card::Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::function<void()> myLambda) : lambda(myLambda), GameObject() {
     shape.setSize(widthHeight);
     shape.setFillColor(sf::Color::Blue);
@@ -17,6 +20,7 @@ Card::Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::func
     backFace.setOutlineThickness(2.f);
 
     frontFacing = true;
+    null = false;
     cardName = name;
     shape.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
     backFace.setOrigin(widthHeight.x / 2.f, widthHeight.y / 2.f);
@@ -32,7 +36,9 @@ Card::Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::func
     }
 }
 
-Card::Card() {}
+bool Card::isNull() {
+    return null;
+}
 
 void Card::update(float deltaTime) {
     cout << "Update card" << endl;

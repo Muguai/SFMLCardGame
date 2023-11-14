@@ -8,7 +8,9 @@ class Card : public GameObject {
 public:
     int attack;
     int health;
-    int cost; 
+    int cost;   
+    string cardName;
+    
     virtual void useAbility();
     Card(int a, int h, int c, sf::Vector2f widthHeight, string name, std::function<void()> myLambda);
     Card();
@@ -27,15 +29,16 @@ public:
     void setZ(float z) { this->z = z; }
     float getZ() const { return z; }
     void ExecuteLambda();
-
-
+    bool isNull();
+  
 private:
     sf::RectangleShape shape;
     sf::RectangleShape backFace;
     sf::Font font;
-    string cardName;
+
     sf::Texture cardTexture;
     float z;
     bool frontFacing;
+    bool null;
     std::function<void()> lambda;
 };

@@ -51,7 +51,7 @@ void Board::addPlayerMonster(Monster monster){
 
 /*	addOpponentMonster()
 	Does the same as addPlayerMonster() but for the opponent's
-	monsters instead.
+	monsters instead of the player's.
 */
 
 void Board::addOppponentMonster(Monster monster){
@@ -111,6 +111,12 @@ void Board::renderOpponentMonsters(sf::RenderWindow& window, float monsterYOffse
 	}
 }
 
+bool Board::isHovered(const sf::RenderWindow& window) {
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+	sf::FloatRect cardBounds = table.getGlobalBounds();
+	return cardBounds.contains(static_cast<sf::Vector2f>(mousePosition));
+}
+
 /*	renderBoard()
 	The main graphical function of the board class.
 	renderBoard() performs calculations and renders everything that is on the board.
@@ -132,7 +138,6 @@ void Board::renderBoard(sf::RenderWindow& window) {
 
 	// 3. Rendering the table
 	sf::Vector2f tablePos(boardPos.x - xMargin, boardPos.y);
-	sf::RectangleShape table;
 	table.setTexture(&boardTexture);
 	table.setPosition(tablePos);
 	table.setSize(sf::Vector2f(tableWidth, tableHeight));

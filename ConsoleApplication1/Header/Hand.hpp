@@ -15,6 +15,7 @@ public:
     void handleCardHover(sf::RenderWindow& window);
     float easeInOut(float t);
     void flipAllCards();
+    Card getDraggedCard();
 
 private:
     std::vector<Card> cards;

@@ -22,6 +22,20 @@ void Hand::addCard(Card& card) {
 
 }
 
+/*  getDraggedCard()
+*   If no card is dragged, i.e, draggingCard = nullptr -> return null card.
+*   Else: Return the dereferenced value on the pointer's address.
+*/
+
+Card Hand::getDraggedCard() {
+    if (draggingCard == nullptr) {
+        return Card();
+    }
+    else {
+        return *draggingCard;
+    }
+}
+
 void Hand::setCardPositions(const std::vector<sf::Vector2f>& positions) {
     if (positions.size() == cards.size()) {
         for (size_t i = 0; i < positions.size(); ++i) {
