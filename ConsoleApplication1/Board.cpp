@@ -77,6 +77,11 @@ void Board::addPlayerMonster(Monster monster){
 }
 
 
+/*	addOpponentMonster()
+	Does the same as addPlayerMonster() but for the opponent's
+	monsters instead of the player's.
+*/
+
 void Board::addOppponentMonster(Monster monster){
 	oppSize++;
 	int permutation[] = { 2, 1, 3, 0, 4 };
@@ -91,6 +96,8 @@ void Board::addOppponentMonster(Monster monster){
 
 /*	isFull()
 	Checks if the size has reached max capacity.
+	Input: The boolean value, pertaining to if you want to check the
+	player or the opponent's size.
 	Return: If it has, then true is returned, else false.
 */
 
@@ -115,6 +122,13 @@ void Board::renderPlayerMonsters(sf::RenderWindow& window, float monsterYOffset)
 	}
 }
 
+/*	renderOpponentMonster()
+*	Does the same thing as renderPlayerMonsters() but for the opponent's monsters.
+	The main difference is that the yOffset is passed in as a different value in renderBoard() below.
+	The different yOffset makes it so the player's monsters are rendered on one side and the opponent's
+	monsters on the other.
+*/
+
 void Board::renderOpponentMonsters(sf::RenderWindow& window, float monsterYOffset) {
 	for (int i = 0; i < maxCapacity; i++) {
 		if (!opponentMonsters[i].isNull()) {
@@ -125,29 +139,39 @@ void Board::renderOpponentMonsters(sf::RenderWindow& window, float monsterYOffse
 	}
 }
 
+bool Board::isHovered(const sf::RenderWindow& window) {
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+	sf::FloatRect cardBounds = table.getGlobalBounds();
+	return cardBounds.contains(static_cast<sf::Vector2f>(mousePosition));
+}
+
+/*	renderBoard()
+	The main graphical function of the board class.
+	renderBoard() performs calculations and renders everything that is on the board.
+	This includes the two player's monsters as well as the actual board.
+*/
+
 void Board::renderBoard(sf::RenderWindow& window) {
-	// Calculating the total width of the table:
+	// 1. Calculating the total width of the table:
 	float diameter = 2 * radius;
 	float diameterSum = (maxCapacity * diameter);
 	float twoEndMargin = 2 * xMargin;
 	float delimeterSum = (maxCapacity - 1) * delimiterSpace;
 	float tableWidth = diameterSum + twoEndMargin + delimeterSum;
 
-	// Calculating data for the height of the table and placement of monsters:
+	// 2. Calculating data for the height of the table:
 	float yMargin = 20.0f;
 	float centerDist = 40.0f;
 	float tableHeight = 2 * diameter + centerDist + 2 * yMargin;
 
-	// Placing down the table
+	// 3. Rendering the table
 	sf::Vector2f tablePos(boardPos.x - xMargin, boardPos.y);
-	sf::RectangleShape table;
 	table.setTexture(&boardTexture);
 	table.setPosition(tablePos);
 	table.setSize(sf::Vector2f(tableWidth, tableHeight));
-	//table.setFillColor(sf::Color::Red);
 	window.draw(table);
 
-	// Calculate offsets for player monsters and opponent monsters:
+	// 4. Calculate offsets for monsters and render them on top of the table:
 	float playerYOffset = (tableHeight-diameter) - yMargin;
 	float opponentYOffset = yMargin;
 	renderPlayerMonsters(window, playerYOffset);

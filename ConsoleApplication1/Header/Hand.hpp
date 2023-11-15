@@ -21,6 +21,7 @@ public:
     void update(float deltaTime, sf::RenderWindow& window) override;
     void initialize() override;
 
+    Card getDraggedCard();
 
 private:
     std::vector<Card> cards;

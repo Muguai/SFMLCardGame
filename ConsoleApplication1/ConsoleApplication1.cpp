@@ -174,13 +174,27 @@ int main()
                 // Testcode for adding to the board:
                 bool isPlayer = true;
                 if (!playerBoard.isFull(isPlayer)) {
-                    playerBoard.addPlayerMonster(testMonster);
+                    //playerBoard.addPlayerMonster(testMonster);
                 }
                 if (!playerBoard.isFull(!isPlayer)) {
-                    playerBoard.addOppponentMonster(testMonster2);
+                    //playerBoard.addOppponentMonster(testMonster2);
                 }
             }
             testSpawnTimer.restart();
+        }
+        
+        // November 14: Testing adding a card to the board:
+        if (playerBoard.isHovered(window) && !playerBoard.isFull(true)) {
+            Card draggedCard = playerHand.getDraggedCard();
+            if (!draggedCard.isNull()) {
+                cout << "YOU MAFAKKAS" << endl;
+
+                int atk = draggedCard.attack;
+                int hp = draggedCard.health;
+                string name = draggedCard.cardName;
+                Monster monster(atk, hp, name, 5);
+                playerBoard.addPlayerMonster(monster);
+            }
         }
 
         sf::Time elapsed = clock.restart();

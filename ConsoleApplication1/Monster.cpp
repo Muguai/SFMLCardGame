@@ -35,7 +35,7 @@ bool Monster::isNull() {
 }
 
 void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& window) {
-	// Render the bounding circle:
+	// 1. Render the bounding circle:
 	sf::CircleShape outerCircle;
 	outerCircle.setPosition(pos);
 	outerCircle.setRadius(radius);
@@ -44,7 +44,7 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	outerCircle.setOutlineColor(sf::Color::Blue);
 	window.draw(outerCircle);
 	
-	// Monster Portrait:
+	// 2. Monster Portrait:
 	sf::CircleShape portrait;
 	float portraitRadius = 60.0f;
 	float portraitOffset = radius - portraitRadius;
@@ -54,12 +54,12 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	portrait.setTexture(&monsterTexture);
 	window.draw(portrait);
 
-	// Data for the orbs containing Health / Attack damage numbers:
+	// 3. Data for the orbs containing Health / Attack damage numbers:
 	float orbMargin = 0.0f;
 	float orbRadius = 15.0f;
 	float orbOffset = radius - orbRadius;
 
-	// Render Remaining Health:
+	// 4. Render Remaining Health:
 	sf::CircleShape redCircle;
 	sf::Vector2f redPos(orbOffset + pos.x + sqrt((radius*radius) / 2) - orbMargin, orbOffset + pos.y + sqrt((radius*radius) / 2) - orbMargin);
 	redCircle.setPosition(redPos);
@@ -69,13 +69,13 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	redCircle.setOutlineColor(sf::Color::Blue);
 	window.draw(redCircle);
 	
-	// Text within the Red Orb:
+	// 5. Text within the Red Orb:
 	sf::Text redText(to_string(health), font, 14);
 	redText.setFillColor(sf::Color::Black);
 	redText.setPosition(sf::Vector2f(redPos.x + orbRadius/2, redPos.y+orbRadius/2));
 	window.draw(redText);
 	
-	// Render Yellow Orb (Attack):
+	// 6. Render Yellow Orb (Attack):
 	sf::CircleShape yellowCircle;
 	sf::Vector2f yellowPos(orbOffset + pos.x + -sqrt((radius * radius) / 2) + orbMargin, orbOffset + pos.y + sqrt((radius * radius) / 2) - orbMargin);
 	yellowCircle.setPosition(yellowPos);
@@ -85,7 +85,7 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	yellowCircle.setOutlineColor(sf::Color::Blue);
 	window.draw(yellowCircle);
 
-	// Text within yellow Orb:
+	// 7. Text within yellow Orb:
 	sf::Text yellowText(to_string(attack), font, 14);
 	yellowText.setFillColor(sf::Color::Black);
 	yellowText.setPosition(sf::Vector2f(yellowPos.x + orbRadius / 2, yellowPos.y + orbRadius / 2));
