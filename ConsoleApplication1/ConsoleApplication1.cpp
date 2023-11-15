@@ -147,7 +147,7 @@ int main()
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0, faction = <selected int>:
-    Deck playerDeck(14, false, faction);
+    Deck playerDeck(10, false, faction);
     Deck opponentDeck(10, true , faction);
 
     playerDeck.shuffleDeck();
