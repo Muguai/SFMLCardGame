@@ -14,9 +14,10 @@ private:
 	sf::Font font;
 	sf::SoundBuffer soundBuffer;
 	sf::Sound sound;
+	bool isOpponent;
 
 public:
-	Deck(int deckSize, int x, int y, int faction);
+	Deck(int deckSize, bool isOpponent, int faction);
 	void returnCard(Card card);
 	void createDeck(int n, int faction);
 	void shuffleDeck();

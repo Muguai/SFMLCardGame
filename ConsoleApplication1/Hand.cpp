@@ -6,15 +6,17 @@
 using namespace std;
 
 
-Hand::Hand(bool _hoverable, bool _spawnFlipped) : GameObject()  {
+Hand::Hand(bool _hoverable, bool _spawnFlipped, float _yHandOffset, sf::Vector2f _handArcRadius) : GameObject()  {
     hoverable = _hoverable;
     spawnFlipped = _spawnFlipped;
+    handArcRadius = _handArcRadius;
+    yHandOffset = _yHandOffset;
 }
 
 void Hand::addCard(Card& card) {
     Card newCard = card;
     if (spawnFlipped) {
-        card.flip();
+        newCard.flip();
     }
 
     cards.push_back(newCard);    
@@ -27,14 +29,20 @@ void Hand::update(float deltaTime, sf::RenderWindow& window) {
         card.update(deltaTime, window);
     }
 
+
+
     float centerX = window.getSize().x / 2.f;
-    float centerY = window.getSize().y - 100.f;
-    sf::Vector2f circleCenter = sf::Vector2f(centerX, centerY);
-    sf::Vector2f circleRadius = sf::Vector2f(400.f, 150.f);
+    float centerY = window.getSize().y - yHandOffset;
+    sf::Vector2f handCenter = sf::Vector2f(centerX, centerY);
+
+    arrangeCardsInArc(handArcRadius, handCenter, window, deltaTime);
 
 
-    arrangeCardsInArc(circleRadius, circleCenter, window, deltaTime);
-    handleCardHover(window);
+    cardsRenderOrder = cards;
+    std::sort(cardsRenderOrder.begin(), cardsRenderOrder.end(), [](const Card& a, const Card& b) {
+        return a.getZ() < b.getZ();
+    });
+
     draw(window);
 
 
@@ -63,8 +71,14 @@ std::vector<sf::Vector2f> Hand::getCardPositions() const {
 
 void Hand::arrangeCardsInArc(sf::Vector2f circleRadius, sf::Vector2f circleCenter, sf::RenderWindow& window, float deltaTime) {
     int numCards = static_cast<int>(cards.size());
-    float angleIncrement = 120.f / numCards;
-    float currentAngle = 90.f - (angleIncrement * (numCards - 1) / 2);
+    float angleIncrement = -120.f / numCards;
+    float currentAngle;
+    if (!spawnFlipped) {
+        currentAngle = 90.f - (angleIncrement * (numCards - 1) / 2);
+    }
+    else {
+        currentAngle = -90.f - (angleIncrement * (numCards - 1) / 2);
+    }
     bool onlyOneHovered = false;
     float z = 0.0f;
 
@@ -105,7 +119,7 @@ void Hand::arrangeCardsInArc(sf::Vector2f circleRadius, sf::Vector2f circleCente
         }
 
         float distance = VectorHelper::distanceTo(card.getPosition(), targetPosition);
-        if (distance > 5.f) {
+        if (distance > 10.f) {
             sf::Vector2f direction = targetPosition - card.getPosition();     
             direction = VectorHelper::normalize(direction);
             float minSpeed = 500.f; 
@@ -116,14 +130,12 @@ void Hand::arrangeCardsInArc(sf::Vector2f circleRadius, sf::Vector2f circleCente
 
             card.move(direction * speed * deltaTime);
         }
+        else {
+            card.setPosition(targetPosition);
+        }
 
         currentAngle += angleIncrement;
     }
-
-    cardsRenderOrder = cards;
-    std::sort(cardsRenderOrder.begin(), cardsRenderOrder.end(), [](const Card& a, const Card& b) {
-        return a.getZ() < b.getZ();
-    });
 
 }
 
@@ -146,17 +158,6 @@ void Hand::flipAllCards() {
     }
 }
 
-void Hand::handleCardHover(sf::RenderWindow& window) {
-    for (auto& card : cards) {
-        if (card.isHovered(window)) {
-            card.getShape().setFillColor(sf::Color::Yellow);
-        }
-        else {
-            card.getShape().setFillColor(sf::Color::Blue);
-        }
-    }
-
-}
 
 std::vector<Card> Hand::getCards() {
     return cards;

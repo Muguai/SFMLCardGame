@@ -48,5 +48,10 @@ deque<Card> getChaosSuperDeck() {
 
 deque<Card> getLifeSuperDeck() {
 	deque<Card> superDeck;
+
+	superDeck = addQuantity(superDeck, 10, 10, 10, 1, cardSize, "Chubby Wubby Angel", emptyFunction);
+	superDeck = addQuantity(superDeck, 10, 10, 10, 1, cardSize, "Soprano Bud", emptyFunction);
+
+
 	return superDeck;
 }

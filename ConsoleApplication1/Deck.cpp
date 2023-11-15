@@ -12,9 +12,8 @@ sf::Vector2f position;
 sf::Texture cardTexture;
 
 // Constructor:
-Deck::Deck(int deckSize, int x, int y, int faction){
-	position.x = x;
-	position.y = y;
+Deck::Deck(int deckSize, bool _isOpponent, int faction){
+	isOpponent = _isOpponent;
 
 	// Load in resources:
 	if (!cardTexture.loadFromFile("Images/card.png")) {
@@ -68,6 +67,9 @@ void Deck::createDeck(int n, int faction) {
 	if (faction == 1) {
 		cardStack = getChaosSuperDeck();
 	}
+	else if (faction == 2){
+		cardStack = getLifeSuperDeck();
+	}
 	shuffleDeck();
 	while (cardStack.size() > n) {
 		cardStack.pop_back();
@@ -77,6 +79,14 @@ void Deck::createDeck(int n, int faction) {
 
 
 void Deck::update(float deltaTime, sf::RenderWindow& window) {
+	sf::Vector2f newPos;
+	if (!isOpponent) {
+		newPos = sf::Vector2f(window.getSize().x / 2 + window.getSize().x / 3, window.getSize().y  - window.getSize().y / 5 ); 
+	}
+	else {
+		newPos = sf::Vector2f(window.getSize().x / 2 - window.getSize().x / 3, window.getSize().y / 5 );
+	}
+	setPosition(newPos);
 	renderDeck(window);
 }
 

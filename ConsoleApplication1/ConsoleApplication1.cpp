@@ -133,12 +133,23 @@ int main()
     sf::Clock clock;
     sf::Clock testSpawnTimer;
 
-    Hand playerHand(true, false);
+
+    sf::Vector2f circleRadius = sf::Vector2f(400.f, 150.f);
+
+    Hand playerHand(true, false, 100.f, circleRadius);
+
+    
+    sf::Vector2f circleRadiusOpponent = sf::Vector2f(400.f, 150.f);
+
+    Hand opponentHand(false, true, window.getSize().y * 2 + 100.f, circleRadiusOpponent);
+    
 
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0, faction = <selected int>:
-    Deck playerDeck(10, 100.0f, 700.0f, faction);
+    Deck playerDeck(14, false, faction);
+    Deck opponentDeck(10, true , faction);
+
     playerDeck.shuffleDeck();
 
     // Testing playerboard:
@@ -149,6 +160,8 @@ int main()
     GameObjectManager::getInstance().addGameObject(&playerHand);
     GameObjectManager::getInstance().addGameObject(&playerDeck);
     GameObjectManager::getInstance().addGameObject(&playerBoard);
+    GameObjectManager::getInstance().addGameObject(&opponentHand);
+    GameObjectManager::getInstance().addGameObject(&opponentDeck);
 
 
     while (window.isOpen())
@@ -156,6 +169,7 @@ int main()
         if (testSpawnTimer.getElapsedTime().asSeconds() > 1.f) {
             if (playerDeck.getSize() > 0) {
                 playerDeck.dealCard(playerHand);
+                opponentDeck.dealCard(opponentHand);
                 
                 // Testcode for adding to the board:
                 bool isPlayer = true;
@@ -190,6 +204,7 @@ int main()
             sf::FloatRect view(0, 0, event.size.width, event.size.height);
             window.setView(sf::View(view));
         }
+
         GameObjectManager::getInstance().updateAll(deltaTime, window);
         
         //testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
