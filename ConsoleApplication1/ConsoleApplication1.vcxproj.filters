@@ -13,6 +13,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="ManaHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.hpp" />
