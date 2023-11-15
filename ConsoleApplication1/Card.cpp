@@ -92,6 +92,10 @@ void Card::draw(sf::RenderWindow& window) {
     
     // 2. Render center image:
     sf::Sprite cardSprite(cardTexture);
+    cout << "TEST:" << endl;
+    cout << cardSprite.getLocalBounds().width << endl;
+    cout << cardSprite.getLocalBounds().height << endl;
+    cardSprite.setScale(308/cardSprite.getLocalBounds().width, 374/cardSprite.getLocalBounds().height);
     int imgOffsetX =  -(shape.getSize().x / 2) + 20;
     int imgOffsetY = -(shape.getSize().y / 2) + 50;
     cardSprite.scale(sf::Vector2f(0.3, 0.3));
