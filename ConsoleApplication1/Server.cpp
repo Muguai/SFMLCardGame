@@ -46,7 +46,6 @@ void Server::messageToClient(string message, size_t clientIndex) {
 void Server::handleConnections() {
     while (true) {
         auto client = std::make_unique<sf::TcpSocket>();
-        cout << "Server test:" << endl;
         if (listener.accept(*client) == sf::Socket::Done) {
             sf::IpAddress ipAddress = client->getRemoteAddress();
             unsigned short port = client->getRemotePort();

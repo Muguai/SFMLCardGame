@@ -7,7 +7,7 @@
 
 class Hand : public GameObject{
 public:
-    Hand(bool _hoverable, bool _spawnFlipped);
+    Hand(bool _hoverable, bool _spawnFlipped, float yHandOffset, sf::Vector2f _handArcRadius);
     void addCard(Card& card);
     void setCardPositions(const std::vector<sf::Vector2f>& positions);
     std::vector<sf::Vector2f> getCardPositions() const;
@@ -29,4 +29,6 @@ private:
     Card* draggingCard;
     bool hoverable;
     bool spawnFlipped;
+    float yHandOffset;
+    sf::Vector2f handArcRadius;
 };
