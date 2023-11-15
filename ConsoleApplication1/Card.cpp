@@ -90,11 +90,8 @@ void Card::draw(sf::RenderWindow& window) {
     int nameOffsetY = -(shape.getSize().y / 2) + 20;
     nameText.setPosition(shape.getPosition().x + nameOffsetX, shape.getPosition().y + nameOffsetY);
     
-    // 2. Render center image:
+    // 2. Render center image, normalize its scale:
     sf::Sprite cardSprite(cardTexture);
-    cout << "TEST:" << endl;
-    cout << cardSprite.getLocalBounds().width << endl;
-    cout << cardSprite.getLocalBounds().height << endl;
     cardSprite.setScale(308/cardSprite.getLocalBounds().width, 374/cardSprite.getLocalBounds().height);
     int imgOffsetX =  -(shape.getSize().x / 2) + 20;
     int imgOffsetY = -(shape.getSize().y / 2) + 50;
