@@ -153,33 +153,24 @@ int main()
 
     while (window.isOpen())
     {   
-        if (testSpawnTimer.getElapsedTime().asSeconds() > 1.f) {
+        if (testSpawnTimer.getElapsedTime().asSeconds() > 0.01f) {
             if (playerDeck.getSize() > 0) {
                 playerDeck.dealCard(playerHand);
-                
-                // Testcode for adding to the board:
-                bool isPlayer = true;
-                if (!playerBoard.isFull(isPlayer)) {
-                    //playerBoard.addPlayerMonster(testMonster);
-                }
-                if (!playerBoard.isFull(!isPlayer)) {
-                    //playerBoard.addOppponentMonster(testMonster2);
-                }
             }
             testSpawnTimer.restart();
         }
         
-        // November 14: Testing adding a card to the board:
+        // This functionality checks for card being dragged to the board. 
+        // TODO: move it to update.
         if (playerBoard.isHovered(window) && !playerBoard.isFull(true)) {
             Card draggedCard = playerHand.getDraggedCard();
             if (!draggedCard.isNull()) {
-                cout << "YOU MAFAKKAS" << endl;
-
                 int atk = draggedCard.attack;
                 int hp = draggedCard.health;
                 string name = draggedCard.cardName;
                 Monster monster(atk, hp, name, 5);
                 playerBoard.addPlayerMonster(monster);
+                playerHand.deleteCard();
             }
         }
 

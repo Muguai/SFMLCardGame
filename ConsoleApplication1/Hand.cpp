@@ -21,6 +21,21 @@ void Hand::addCard(Card& card) {
     cardsRenderOrder = cards;
 
 }
+
+void Hand::deleteCard(){
+    int index = 0;
+    while (index < cards.size()){
+        if (&cards[index] == draggingCard) {
+            cout << "Hello" << endl;
+            cards.erase(cards.begin() + index);
+            cout << "From the other side" << endl;
+            draggingCard = nullptr;
+            break;
+        }
+    index++;
+    }
+}
+
 void Hand::update(float deltaTime, sf::RenderWindow& window) {
 
     for (auto& card : cards) {
@@ -83,6 +98,9 @@ void Hand::arrangeCardsInArc(sf::Vector2f circleRadius, sf::Vector2f circleCente
     float z = 0.0f;
 
     for (auto& card : cards) {
+        if (card.isNull())
+            continue;
+
         float radians = currentAngle * (3.14159265359f / 180.f); 
         float xPos = circleCenter.x + circleRadius.x * cos(radians);
         float yPos = circleCenter.y - circleRadius.y * sin(radians);

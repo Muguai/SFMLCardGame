@@ -20,7 +20,7 @@ public:
     std::vector<Card> getCards();
     void update(float deltaTime, sf::RenderWindow& window) override;
     void initialize() override;
-
+    void deleteCard();
     Card getDraggedCard();
 
 private:

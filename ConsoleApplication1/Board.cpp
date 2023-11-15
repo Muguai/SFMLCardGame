@@ -34,7 +34,7 @@ Board::Board(sf::Vector2f boardPos, float delimiterSpace){
 
 void Board::update(float deltaTime, sf::RenderWindow& window) {
 
-	playerSize++;
+	//playerSize++;
 	int permutation[] = { 2, 1, 3, 0, 4 };
 	for (int i = 0; i < maxCapacity; i++) {
 		int index = permutation[i];
@@ -43,7 +43,7 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 			break;
 		}
 	}
-	oppSize++;
+	//oppSize++;
 	int permutation2[] = { 2, 1, 3, 0, 4 };
 	for (int i = 0; i < maxCapacity; i++) {
 		int index = permutation2[i];
@@ -102,10 +102,14 @@ void Board::addOppponentMonster(Monster monster){
 */
 
 bool Board::isFull(bool isPlayer){
-	if (isPlayer)
+	if (isPlayer) {
+		cout << "TEST: ";
+		cout << playerSize;
 		return playerSize == maxCapacity;
-	else
+	}
+	else {
 		return oppSize == maxCapacity;
+	}
 }
 
 /*	renderPlayerMonsters()
@@ -138,6 +142,11 @@ void Board::renderOpponentMonsters(sf::RenderWindow& window, float monsterYOffse
 		}
 	}
 }
+
+/*	isHovered()
+	Make a check to see if the table is hovered over.
+	If it is, then return true. This is used so that we know when to put a dragged card on the board.
+*/
 
 bool Board::isHovered(const sf::RenderWindow& window) {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
