@@ -4,14 +4,21 @@
 /*	ManaHander() [Constructor]
 	Takes in the start mana and sets the current mana as well as the max mana.
 	param increaseFactor: How many mana points per turn max mana should increase.
-	param maxPossibleMana: How much mana is theoretically possible. 
+	param maxPossibleMana: How much max mana is theoretically possible. 
 */
 
-ManaHandler::ManaHandler(int startMana, int increaseFactor, int maxPossibleMana){
+ManaHandler::ManaHandler(int x, int y, int startMana, int increaseFactor, int maxPossibleMana){
+	this->x = x;
+	this->y = y;
 	mana = startMana;
 	manaCurrentMax = startMana;
 	manaIncrease = increaseFactor;
 	manaGlobalMax = maxPossibleMana;
+
+
+	if (!font.loadFromFile("Fonts/COMIC.ttf")) {
+		cout << "Error loading font!";
+	}
 }
 
 /*	tryPlaceMonster()
@@ -58,6 +65,22 @@ void ManaHandler::incrementMaxMana() {
 		min = manaGlobalMax;
 	}
 	manaCurrentMax = min;
+}
+
+void ManaHandler::draw(sf::RenderWindow& window) {
+	float radius = 30.0f;
+	float xOffset = x + radius / 2;
+	float yOffset = y + radius / 2;
+	sf::Text manaText(to_string(mana), font, 18);
+	manaText.setPosition(xOffset, yOffset);
+
+	manaIcon.setRadius(radius);
+	manaIcon.setPosition(x, y);
+	manaIcon.setFillColor(sf::Color::Blue);
+
+	window.draw(manaIcon);
+	window.draw(manaText);
+
 }
 
 void ManaHandler::update(float deltaTime, sf::RenderWindow& window) {

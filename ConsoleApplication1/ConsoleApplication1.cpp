@@ -157,7 +157,7 @@ int main()
     Monster testMonster(10, 10, "Dragon", 4);
     Monster testMonster2(10, 10, "Troll", 2);
     Board playerBoard(sf::Vector2f(450, 150), 40.0f);
-    ManaHandler playerMana(12, 1, 12);
+    ManaHandler playerMana(300, 650, 12, 1, 12);
 
     GameObjectManager::getInstance().addGameObject(&playerHand);
     GameObjectManager::getInstance().addGameObject(&playerDeck);
@@ -211,6 +211,7 @@ int main()
             window.setView(sf::View(view));
         }
 
+        playerMana.draw(window);
         GameObjectManager::getInstance().updateAll(deltaTime, window);
         
         //testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
