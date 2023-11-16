@@ -11,6 +11,7 @@
 #include <Header/Deck.hpp>
 #include <Header/Monster.hpp>
 #include <Header/Board.hpp>
+#include <Header/ManaHandler.hpp>
 #include <thread> 
 #include <Server.hpp>
 #include <Client.hpp>
@@ -156,6 +157,7 @@ int main()
     Monster testMonster(10, 10, "Dragon", 4);
     Monster testMonster2(10, 10, "Troll", 2);
     Board playerBoard(sf::Vector2f(450, 150), 40.0f);
+    ManaHandler playerMana(12, 1, 12);
 
     GameObjectManager::getInstance().addGameObject(&playerHand);
     GameObjectManager::getInstance().addGameObject(&playerDeck);
@@ -177,7 +179,7 @@ int main()
         // TODO: move it to update.
         if (playerBoard.isHovered(window) && !playerBoard.isFull(true)) {
             Card draggedCard = playerHand.getDraggedCard();
-            if (!draggedCard.isNull()) {
+            if (!draggedCard.isNull() && playerMana.tryPlaceMonster(draggedCard.getCost())){
                 int atk = draggedCard.attack;
                 int hp = draggedCard.health;
                 string name = draggedCard.cardName;

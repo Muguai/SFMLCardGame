@@ -27,6 +27,7 @@ public:
     sf::RectangleShape getShape();
     float getWidth() const;
     float getHeight() const;
+    int getCost();
     void flip();
     void setZ(float z) { this->z = z; }
     float getZ() const { return z; }

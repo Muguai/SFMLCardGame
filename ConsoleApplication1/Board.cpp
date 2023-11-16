@@ -103,8 +103,6 @@ void Board::addOppponentMonster(Monster monster){
 
 bool Board::isFull(bool isPlayer){
 	if (isPlayer) {
-		cout << "TEST: ";
-		cout << playerSize;
 		return playerSize == maxCapacity;
 	}
 	else {

@@ -154,3 +154,7 @@ float Card::getHeight() const {
 sf::RectangleShape Card::getShape() {
     return shape;
 }
+
+int Card::getCost() {
+    return cost;
+}
