@@ -1,10 +1,13 @@
 #pragma once
 #include <Header/Monster.hpp>
 #include "GameObject.hpp"
+#include <Header/ManaHandler.hpp>
+#include <Header/Hand.hpp>
+
 using namespace std;
 class Board : public GameObject{
 public:
-	Board(sf::Vector2f boardPos, float delimiterSpace);
+	Board(Hand& PlayerHand, ManaHandler& playerMana, sf::Vector2f boardPos, float delimiterSpace);
 	void addPlayerMonster(Monster monster);
 	void addOppponentMonster(Monster monster);
 	bool isFull(bool isPlayer);
@@ -18,6 +21,8 @@ private:
 	void renderPlayerMonsters(sf::RenderWindow& window, float monsterYOffset);
 	void renderOpponentMonsters(sf::RenderWindow& window, float monsterYOffset);
 	
+	Hand* playerHand;
+	ManaHandler* playerMana;
 	int playerSize;
 	int oppSize;
 	sf::Vector2f boardPos;

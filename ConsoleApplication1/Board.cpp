@@ -14,11 +14,13 @@ Monster* opponentMonsters;
 	In the constructor every global value is set.
 */
 
-Board::Board(sf::Vector2f boardPos, float delimiterSpace){
+Board::Board(Hand& playerHand, ManaHandler& playerMana, sf::Vector2f boardPos, float delimiterSpace){
 	maxCapacity = 5;
 	radius = 80.0f;
 	playerMonsters   = new Monster[maxCapacity];
 	opponentMonsters = new Monster[maxCapacity];
+	this->playerHand = &playerHand;
+	this->playerMana = &playerMana;
 	this->boardPos = boardPos;
 	this->delimiterSpace = delimiterSpace;
 	this->monsterXOffset = radius * 2 + delimiterSpace;
@@ -52,6 +54,21 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 			break;
 		}
 	}
+	
+	if (isHovered(window) && !isFull(true)) {
+		Card draggedCard = (*playerHand).getDraggedCard();
+		draggedCard.toString();
+
+		if (!draggedCard.isNull() && (*playerMana).tryPlaceMonster(draggedCard.getCost())) {
+			int atk = draggedCard.attack;
+			int hp = draggedCard.health;
+			string name = draggedCard.cardName;
+			Monster monster(atk, hp, name, 5);
+			addPlayerMonster(monster);
+			(*playerHand).deleteCard();
+		}
+	}
+
 	renderBoard(window);
 }
 

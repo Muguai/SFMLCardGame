@@ -156,9 +156,9 @@ int main()
     // Testing playerboard:
     Monster testMonster(10, 10, "Dragon", 4);
     Monster testMonster2(10, 10, "Troll", 2);
-    Board playerBoard(sf::Vector2f(450, 150), 40.0f);
     ManaHandler playerMana(300, 650, 12, 1, 12);
-
+    Board playerBoard(playerHand, playerMana, sf::Vector2f(450, 150), 40.0f);
+    
     GameObjectManager::getInstance().addGameObject(&playerHand);
     GameObjectManager::getInstance().addGameObject(&playerDeck);
     GameObjectManager::getInstance().addGameObject(&playerBoard);
@@ -176,20 +176,6 @@ int main()
             testSpawnTimer.restart();
         }
         
-        // This functionality checks for card being dragged to the board. 
-        // TODO: move it to update.
-        if (playerBoard.isHovered(window) && !playerBoard.isFull(true)) {
-            Card draggedCard = playerHand.getDraggedCard();
-            if (!draggedCard.isNull() && playerMana.tryPlaceMonster(draggedCard.getCost())){
-                int atk = draggedCard.attack;
-                int hp = draggedCard.health;
-                string name = draggedCard.cardName;
-                Monster monster(atk, hp, name, 5);
-                playerBoard.addPlayerMonster(monster);
-                playerHand.deleteCard();
-            }
-        }
-
         sf::Time elapsed = clock.restart();
         deltaTime = elapsed.asSeconds();
 

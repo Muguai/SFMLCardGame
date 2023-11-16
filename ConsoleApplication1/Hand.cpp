@@ -5,7 +5,7 @@
 #include <GameObject.hpp>
 using namespace std;
 
-
+Hand::Hand(){}
 Hand::Hand(bool _hoverable, bool _spawnFlipped, float _yHandOffset, sf::Vector2f _handArcRadius) : GameObject()  {
     hoverable = _hoverable;
     spawnFlipped = _spawnFlipped;

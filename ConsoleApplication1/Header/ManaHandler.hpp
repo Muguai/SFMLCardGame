@@ -7,6 +7,7 @@
 using namespace std;
 class ManaHandler : public GameObject {
 public:
+	ManaHandler();
 	ManaHandler(int x, int y, int startMana, int increaseFactor, int maxPossibleMana);
 	int getMana();
 	bool tryPlaceMonster(int manaCost);

@@ -21,6 +21,9 @@ ManaHandler::ManaHandler(int x, int y, int startMana, int increaseFactor, int ma
 	}
 }
 
+// Default Constructor: 
+ManaHandler::ManaHandler() {}
+
 /*	tryPlaceMonster()
 	A function that takes in the cost and subtracts the cost if possible and returns true,
 	else returns false. The return value should be used to see if it is possible to place
