@@ -84,6 +84,7 @@ void ManaHandler::draw(sf::RenderWindow& window) {
 }
 
 void ManaHandler::update(float deltaTime, sf::RenderWindow& window) {
+	draw(window);
 }
 void ManaHandler::initialize() {
 }

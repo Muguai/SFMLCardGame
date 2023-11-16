@@ -164,6 +164,7 @@ int main()
     GameObjectManager::getInstance().addGameObject(&playerBoard);
     GameObjectManager::getInstance().addGameObject(&opponentHand);
     GameObjectManager::getInstance().addGameObject(&opponentDeck);
+    GameObjectManager::getInstance().addGameObject(&playerMana);
 
 
     while (window.isOpen())
@@ -211,7 +212,6 @@ int main()
             window.setView(sf::View(view));
         }
 
-        playerMana.draw(window);
         GameObjectManager::getInstance().updateAll(deltaTime, window);
         
         //testMonster.drawMonster(sf::Vector2f(0.0, 0.0), 80.0f, window);
