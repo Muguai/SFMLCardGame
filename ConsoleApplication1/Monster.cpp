@@ -16,6 +16,7 @@ Monster::Monster(int atk, int hp, string n, int s) {
 	null = false;
 	clickLock = true;
 	clicked = false;
+	borderColor = sf::Color::Blue;
 
 	if (!monsterTexture.loadFromFile("Images/" + name + ".png")) {
 		cout << "Error loading card image!";
@@ -42,13 +43,23 @@ bool Monster::getClicked() {
 	return clicked;
 }
 
+void Monster::unclick() {
+	clicked = false;
+}
+
+/*	checkClicked()
+	A function that checks if the current monster is clicked and if so alternate
+	the boolean value corresponding to the clicked property. clickLock is used to
+	lock the click in place, i.e, to make it a unique occurance and to prevent
+	holding in mouse 1 from triggering multiple "clicks".
+*/
 
 void Monster::checkClicked(const sf::RenderWindow& window) {
 	if (clicked) {
-		outerCircle.setOutlineColor(sf::Color::Red);
+		borderColor = sf::Color::Red;
 	}
 	else {
-		outerCircle.setOutlineColor(sf::Color::Blue);
+		borderColor = sf::Color::Blue;
 	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isHovered(window)) {
@@ -76,6 +87,7 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	outerCircle.setRadius(radius);
 	outerCircle.setFillColor(sf::Color::White);
 	outerCircle.setOutlineThickness(4.f);
+	outerCircle.setOutlineColor(borderColor);
 	window.draw(outerCircle);
 	
 	// 2. Monster Portrait:
@@ -100,7 +112,7 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	redCircle.setRadius(orbRadius);
 	redCircle.setFillColor(sf::Color::Red);
 	redCircle.setOutlineThickness(2.f);
-	redCircle.setOutlineColor(sf::Color::Blue);
+	redCircle.setOutlineColor(borderColor);
 	window.draw(redCircle);
 	
 	// 5. Text within the Red Orb:
@@ -116,7 +128,7 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	yellowCircle.setRadius(orbRadius);
 	yellowCircle.setFillColor(sf::Color::Yellow);
 	yellowCircle.setOutlineThickness(2.f);
-	yellowCircle.setOutlineColor(sf::Color::Blue);
+	yellowCircle.setOutlineColor(borderColor);
 	window.draw(yellowCircle);
 
 	// 7. Text within yellow Orb:

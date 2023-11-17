@@ -37,18 +37,23 @@ Board::Board(Hand& playerHand, ManaHandler& playerMana, sf::Vector2f boardPos, f
 void Board::update(float deltaTime, sf::RenderWindow& window) {
 	// 1. Handle monsters already out on the board:
 	int permutation[] = { 2, 1, 3, 0, 4 };
-	vector<Monster> clickedMonsters;
+	int clickedCounter = 0;
 	for (int i = 0; i < maxCapacity; i++) {
 		int index = permutation[i];
 		if (!playerMonsters[index].isNull()) {
 			playerMonsters[index].update(deltaTime, window);
 			if (playerMonsters[index].getClicked()) {
-				clickedMonsters.push_back(playerMonsters[index]);
+				clickedCounter ++;
 			}
 		}
 	}
-	
-	cout << "TEST: " << clickedMonsters.size();
+
+	if (clickedCounter > 1) {
+		for (int i = 0; i < maxCapacity; i++) {
+			playerMonsters[i].unclick();
+		}
+	}
+
 
 	int permutation2[] = { 2, 1, 3, 0, 4 };
 	for (int i = 0; i < maxCapacity; i++) {
