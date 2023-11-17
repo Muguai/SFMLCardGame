@@ -17,6 +17,10 @@ Monster::Monster(int atk, int hp, string n, int s) {
 	clickLock = true;
 	clicked = false;
 	borderColor = sf::Color::Blue;
+	deathTime = 2.0f;
+	deathTimer = 0.0f;
+	deathPercentage = 0.0f;
+	isDead = false;
 
 	if (!monsterTexture.loadFromFile("Images/" + name + ".png")) {
 		cout << "Error loading card image!";
@@ -31,7 +35,25 @@ void Monster::takeDamage(int dmg) {
 }
 
 void Monster::update(float deltaTime, sf::RenderWindow& window) {
-	checkClicked(window);
+	if (!isDead && health <= 0) {
+		isDead = true;
+		deathStart = deltaTime;
+	}
+	if (!isDead) {
+		checkClicked(window);
+	}
+	else {
+		dying(deltaTime, window);
+	}
+}
+
+void Monster::dying(float deltaTime, sf::RenderWindow& window){
+	deathPercentage = deathTimer / (deathStart + deathTime);
+	cout << deathPercentage;
+	if (deathPercentage > 1.0f){
+		*this = Monster();
+	}
+	deathTimer += deltaTime;
 }
 
 void Monster::initialize() {
@@ -95,6 +117,9 @@ bool Monster::isHovered(const sf::RenderWindow& window) {
 }
 
 void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& window) {
+	sf::Uint8 alpha = (sf::Uint8)(255 * (1.0 - deathPercentage));
+	sf::Color alphaWhite(255, 255, 255, alpha);
+	
 	// 1. Render the bounding circle:
 	outerCircle.setPosition(pos);
 	outerCircle.setRadius(radius);
@@ -111,6 +136,7 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	portrait.setPosition(portraitPos);
 	portrait.setRadius(portraitRadius);
 	portrait.setTexture(&monsterTexture);
+	portrait.setFillColor(alphaWhite);
 	window.draw(portrait);
 
 	// 3. Data for the orbs containing Health / Attack damage numbers:

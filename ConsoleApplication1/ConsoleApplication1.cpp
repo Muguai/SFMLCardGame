@@ -169,7 +169,7 @@ int main()
 
     while (window.isOpen())
     {   
-        if (testSpawnTimer.getElapsedTime().asSeconds() > 0.01f) {
+        if (testSpawnTimer.getElapsedTime().asSeconds() > 2.0f) {
             playerBoard.addOppponentMonster(testMonster);
             if (playerDeck.getSize() > 0) {
                 playerDeck.dealCard(playerHand);
