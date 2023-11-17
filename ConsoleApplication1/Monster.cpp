@@ -14,6 +14,8 @@ Monster::Monster(int atk, int hp, string n, int s) {
 	name = n;
 	slot = s;
 	null = false;
+	clickLock = true;
+	clicked = false;
 
 	if (!monsterTexture.loadFromFile("Images/" + name + ".png")) {
 		cout << "Error loading card image!";
@@ -25,6 +27,7 @@ Monster::Monster(int atk, int hp, string n, int s) {
 
 
 void Monster::update(float deltaTime, sf::RenderWindow& window) {
+	checkClicked(window);
 }
 
 void Monster::initialize() {
@@ -34,14 +37,45 @@ bool Monster::isNull() {
 	return null;
 }
 
+
+bool Monster::getClicked() {
+	return clicked;
+}
+
+
+void Monster::checkClicked(const sf::RenderWindow& window) {
+	if (clicked) {
+		outerCircle.setOutlineColor(sf::Color::Red);
+	}
+	else {
+		outerCircle.setOutlineColor(sf::Color::Blue);
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isHovered(window)) {
+		if (!clickLock) {
+			clickLock = true;
+			clicked = !clicked;
+		}
+	}
+	else {
+		clickLock = false;
+	}
+
+	
+}
+
+bool Monster::isHovered(const sf::RenderWindow& window) {
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+	sf::FloatRect cardBounds = outerCircle.getGlobalBounds();
+	return cardBounds.contains(static_cast<sf::Vector2f>(mousePosition));
+}
+
 void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& window) {
 	// 1. Render the bounding circle:
-	sf::CircleShape outerCircle;
 	outerCircle.setPosition(pos);
 	outerCircle.setRadius(radius);
 	outerCircle.setFillColor(sf::Color::White);
 	outerCircle.setOutlineThickness(4.f);
-	outerCircle.setOutlineColor(sf::Color::Blue);
 	window.draw(outerCircle);
 	
 	// 2. Monster Portrait:

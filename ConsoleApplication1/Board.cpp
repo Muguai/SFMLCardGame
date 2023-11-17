@@ -35,26 +35,31 @@ Board::Board(Hand& playerHand, ManaHandler& playerMana, sf::Vector2f boardPos, f
 
 
 void Board::update(float deltaTime, sf::RenderWindow& window) {
-
-	//playerSize++;
+	// 1. Handle monsters already out on the board:
 	int permutation[] = { 2, 1, 3, 0, 4 };
+	vector<Monster> clickedMonsters;
 	for (int i = 0; i < maxCapacity; i++) {
 		int index = permutation[i];
-		if (playerMonsters[index].isNull()) {
+		if (!playerMonsters[index].isNull()) {
 			playerMonsters[index].update(deltaTime, window);
-			break;
-		}
-	}
-	//oppSize++;
-	int permutation2[] = { 2, 1, 3, 0, 4 };
-	for (int i = 0; i < maxCapacity; i++) {
-		int index = permutation2[i];
-		if (opponentMonsters[index].isNull()) {
-			opponentMonsters[index].update(deltaTime, window);
-			break;
+			if (playerMonsters[index].getClicked()) {
+				clickedMonsters.push_back(playerMonsters[index]);
+			}
 		}
 	}
 	
+	cout << "TEST: " << clickedMonsters.size();
+
+	int permutation2[] = { 2, 1, 3, 0, 4 };
+	for (int i = 0; i < maxCapacity; i++) {
+		int index = permutation2[i];
+		if (!opponentMonsters[index].isNull()) {
+			opponentMonsters[index].update(deltaTime, window);
+		}
+	}
+	
+
+	// Handle laying out cards to the board:
 	if (isHovered(window) && !isFull(true)) {
 		Card draggedCard = (*playerHand).getDraggedCard();
 		draggedCard.toString();
@@ -72,8 +77,7 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 	renderBoard(window);
 }
 
-void Board::initialize() {
-}
+void Board::initialize() {}
 
 /*	addPlayerMonster()
 *	A function that takes in a monster object and adds it to the array

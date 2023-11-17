@@ -11,17 +11,23 @@ public:
 	bool isNull();
 	int getAttack();
 	int getHealth();
+	bool getClicked();
 	float getRadius();
 	void drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& window);
+	void checkClicked(const sf::RenderWindow& window);
+	bool isHovered(const sf::RenderWindow& window);
 	void update(float deltaTime, sf::RenderWindow& window) override;
 	void initialize() override;
-
+	
 private:
 	int attack;
 	int health;
 	bool null;
+	bool clicked;
+	bool clickLock;
 	string name;
 	int slot;
 	sf::Texture monsterTexture;
 	sf::Font font;
+	sf::CircleShape outerCircle;
 };
