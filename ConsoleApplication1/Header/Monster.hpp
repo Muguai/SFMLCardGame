@@ -11,9 +11,10 @@ public:
 	bool isNull();
 	int getAttack();
 	int getHealth();
+	void takeDamage(int dmg);
 	void unclick();
 	bool getClicked();
-	float getRadius();
+	//float getRadius();
 	void drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& window);
 	bool isHovered(const sf::RenderWindow& window);
 	void update(float deltaTime, sf::RenderWindow& window) override;

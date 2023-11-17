@@ -20,7 +20,8 @@ public:
 private:
 	void renderPlayerMonsters(sf::RenderWindow& window, float monsterYOffset);
 	void renderOpponentMonsters(sf::RenderWindow& window, float monsterYOffset);
-	
+	void fight(int playerIndex, int oppIndex);
+
 	Hand* playerHand;
 	ManaHandler* playerMana;
 	int playerSize;

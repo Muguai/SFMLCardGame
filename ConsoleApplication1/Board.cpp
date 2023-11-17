@@ -33,38 +33,59 @@ Board::Board(Hand& playerHand, ManaHandler& playerMana, sf::Vector2f boardPos, f
 	}
 }
 
+/*	update()
 
+*/
 void Board::update(float deltaTime, sf::RenderWindow& window) {
-	// 1. Handle monsters already out on the board:
-	int permutation[] = { 2, 1, 3, 0, 4 };
+	// 1. Handle player monsters already out on the board:
 	int clickedCounter = 0;
 	for (int i = 0; i < maxCapacity; i++) {
-		int index = permutation[i];
-		if (!playerMonsters[index].isNull()) {
-			playerMonsters[index].update(deltaTime, window);
-			if (playerMonsters[index].getClicked()) {
+		if (!playerMonsters[i].isNull()) {
+			playerMonsters[i].update(deltaTime, window);
+			if (playerMonsters[i].getClicked()) {
 				clickedCounter ++;
 			}
 		}
 	}
 
+	// 2. Handle player clicks:
 	if (clickedCounter > 1) {
 		for (int i = 0; i < maxCapacity; i++) {
 			playerMonsters[i].unclick();
 		}
 	}
 
-
-	int permutation2[] = { 2, 1, 3, 0, 4 };
+	// 3. Handle opponent monsters already out on the board:
+	int oppClickedCounter = 0;
 	for (int i = 0; i < maxCapacity; i++) {
-		int index = permutation2[i];
-		if (!opponentMonsters[index].isNull()) {
-			opponentMonsters[index].update(deltaTime, window);
+		if (!opponentMonsters[i].isNull()) {
+			opponentMonsters[i].update(deltaTime, window);
+			if (opponentMonsters[i].getClicked()) {
+				oppClickedCounter++;
+			}
 		}
 	}
-	
 
-	// Handle laying out cards to the board:
+	// 4. If a player monster is clicked and an opponent monster, let them fight:
+	if (clickedCounter == 1 && oppClickedCounter == 1) {
+		cout << "FIGHT" << endl;
+		int playerIndex = 0;
+		int oppIndex = 0;
+		for (int i = 0; i < maxCapacity; i++) {
+			if (!playerMonsters[i].isNull() && playerMonsters[i].getClicked()) {
+				playerIndex = i;
+			}
+		}
+		for (int i = 0; i < maxCapacity; i++) {
+			if (!opponentMonsters[i].isNull() && opponentMonsters[i].getClicked()) {
+				oppIndex = i;
+			}
+		}
+	
+		fight(playerIndex, oppIndex);
+	}
+
+	// 5. Handle laying out cards to the board:
 	if (isHovered(window) && !isFull(true)) {
 		Card draggedCard = (*playerHand).getDraggedCard();
 		draggedCard.toString();
@@ -80,6 +101,13 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 	}
 
 	renderBoard(window);
+}
+
+void Board::fight(int playerIndex, int oppIndex) {
+	playerMonsters[playerIndex].takeDamage(opponentMonsters[oppIndex].getAttack());
+	opponentMonsters[oppIndex].takeDamage(playerMonsters[playerIndex].getAttack());
+	playerMonsters[playerIndex].unclick();
+	opponentMonsters[oppIndex].unclick();
 }
 
 void Board::initialize() {}

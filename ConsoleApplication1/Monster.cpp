@@ -26,6 +26,9 @@ Monster::Monster(int atk, int hp, string n, int s) {
 	}
 }
 
+void Monster::takeDamage(int dmg) {
+	health -= dmg;
+}
 
 void Monster::update(float deltaTime, sf::RenderWindow& window) {
 	checkClicked(window);
@@ -42,6 +45,16 @@ bool Monster::isNull() {
 bool Monster::getClicked() {
 	return clicked;
 }
+
+int Monster::getAttack() {
+	return attack;
+}
+
+
+int Monster::getHealth(){
+	return attack;
+}
+
 
 void Monster::unclick() {
 	clicked = false;
