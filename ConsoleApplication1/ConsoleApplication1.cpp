@@ -11,6 +11,7 @@
 #include <Header/Deck.hpp>
 #include <Header/Monster.hpp>
 #include <Header/Board.hpp>
+#include <Header/ManaHandler.hpp>
 #include <thread> 
 #include <Server.hpp>
 #include <Client.hpp>
@@ -146,7 +147,7 @@ int main()
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
 
     // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0, faction = <selected int>:
-    Deck playerDeck(10, false, faction);
+    Deck playerDeck(5, false, faction);
     Deck opponentDeck(10, true , faction);
 
     playerDeck.shuffleDeck();
@@ -154,38 +155,27 @@ int main()
     // Testing playerboard:
     Monster testMonster(10, 10, "Dragon", 4);
     Monster testMonster2(10, 10, "Troll", 2);
-    Board playerBoard(sf::Vector2f(450, 150), 40.0f);
-
+    ManaHandler playerMana(300, 650, 12, 1, 12);
+    Board playerBoard(playerHand, playerMana, sf::Vector2f(450, 150), 40.0f);
+    
     GameObjectManager::getInstance().addGameObject(&playerHand);
     GameObjectManager::getInstance().addGameObject(&playerDeck);
     GameObjectManager::getInstance().addGameObject(&playerBoard);
     GameObjectManager::getInstance().addGameObject(&opponentHand);
     GameObjectManager::getInstance().addGameObject(&opponentDeck);
+    GameObjectManager::getInstance().addGameObject(&playerMana);
 
 
     while (window.isOpen())
     {   
-        if (testSpawnTimer.getElapsedTime().asSeconds() > 0.01f) {
+        if (testSpawnTimer.getElapsedTime().asSeconds() > 2.0f) {
+            playerBoard.addOppponentMonster(testMonster);
             if (playerDeck.getSize() > 0) {
                 playerDeck.dealCard(playerHand);
             }
             testSpawnTimer.restart();
         }
         
-        // This functionality checks for card being dragged to the board. 
-        // TODO: move it to update.
-        if (playerBoard.isHovered(window) && !playerBoard.isFull(true)) {
-            Card draggedCard = playerHand.getDraggedCard();
-            if (!draggedCard.isNull()) {
-                int atk = draggedCard.attack;
-                int hp = draggedCard.health;
-                string name = draggedCard.cardName;
-                Monster monster(atk, hp, name, 5);
-                playerBoard.addPlayerMonster(monster);
-                playerHand.deleteCard();
-            }
-        }
-
         sf::Time elapsed = clock.restart();
         deltaTime = elapsed.asSeconds();
 

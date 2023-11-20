@@ -14,11 +14,13 @@ Monster* opponentMonsters;
 	In the constructor every global value is set.
 */
 
-Board::Board(sf::Vector2f boardPos, float delimiterSpace){
+Board::Board(Hand& playerHand, ManaHandler& playerMana, sf::Vector2f boardPos, float delimiterSpace){
 	maxCapacity = 5;
 	radius = 80.0f;
 	playerMonsters   = new Monster[maxCapacity];
 	opponentMonsters = new Monster[maxCapacity];
+	this->playerHand = &playerHand;
+	this->playerMana = &playerMana;
 	this->boardPos = boardPos;
 	this->delimiterSpace = delimiterSpace;
 	this->monsterXOffset = radius * 2 + delimiterSpace;
@@ -31,32 +33,109 @@ Board::Board(sf::Vector2f boardPos, float delimiterSpace){
 	}
 }
 
-
+/*	update()
+	The update function in board does many taskes:
+	1. Iterate over every player monster and count how many are clicked (and call their update).
+	2. Unclick player monsters if there are multiple clicked ones.
+	For example, if a player clicks his own monster 1 and then his own monster 2, both should be
+	unclicked as we cannot attack ourselves.
+	3. Iterate over every opponent monster instead and count their clicks + update.
+	4. Call the fight() function if one opponent monster and one friendly monster is clicked.
+	5. Unclick every monster on the board (In case enemy monsters were clicked first).
+	6. Check if the player is trying to put out cards on the board.
+	7. Render everything.
+*/
 void Board::update(float deltaTime, sf::RenderWindow& window) {
+	// 1. Handle player monsters already out on the board:
+	int clickedCounter = 0;
+	for (int i = 0; i < maxCapacity; i++) {
+		if (!playerMonsters[i].isNull()) {
+			playerMonsters[i].update(deltaTime, window);
+			if (playerMonsters[i].getClicked()) {
+				clickedCounter ++;
+			}
+		}
+	}
 
-	//playerSize++;
-	int permutation[] = { 2, 1, 3, 0, 4 };
-	for (int i = 0; i < maxCapacity; i++) {
-		int index = permutation[i];
-		if (playerMonsters[index].isNull()) {
-			playerMonsters[index].update(deltaTime, window);
-			break;
+	// 2. Handle player clicks:
+	if (clickedCounter > 1) {
+		for (int i = 0; i < maxCapacity; i++) {
+			playerMonsters[i].unclick();
 		}
 	}
-	//oppSize++;
-	int permutation2[] = { 2, 1, 3, 0, 4 };
+
+	// 3. Handle opponent monsters already out on the board:
+	int oppClickedCounter = 0;
 	for (int i = 0; i < maxCapacity; i++) {
-		int index = permutation2[i];
-		if (opponentMonsters[index].isNull()) {
-			opponentMonsters[index].update(deltaTime, window);
-			break;
+		if (!opponentMonsters[i].isNull()) {
+			opponentMonsters[i].update(deltaTime, window);
+			if (opponentMonsters[i].getClicked()) {
+				oppClickedCounter++;
+			}
 		}
 	}
+
+	// 4. If a player monster is clicked and an opponent monster, let them fight:
+	if (clickedCounter == 1 && oppClickedCounter == 1) {
+		int playerIndex = 0;
+		int oppIndex = 0;
+		for (int i = 0; i < maxCapacity; i++) {
+			if (!playerMonsters[i].isNull() && playerMonsters[i].getClicked()) {
+				playerIndex = i;
+			}
+		}
+		for (int i = 0; i < maxCapacity; i++) {
+			if (!opponentMonsters[i].isNull() && opponentMonsters[i].getClicked()) {
+				oppIndex = i;
+			}
+		}
+	
+		fight(playerIndex, oppIndex);
+	}
+
+	// 5. For each update, make sure that all the opponents are unclicked:
+	for (int i = 0; i < maxCapacity; i++) {
+		if (!opponentMonsters[i].isNull()) {
+			opponentMonsters[i].unclick();
+		}
+	}
+
+	// 6. Handle laying out cards to the board:
+	if (isHovered(window) && !isFull(true)) {
+		Card draggedCard = (*playerHand).getDraggedCard();
+		draggedCard.toString();
+
+		if (!draggedCard.isNull() && (*playerMana).tryPlaceMonster(draggedCard.getCost())) {
+			int atk = draggedCard.attack;
+			int hp = draggedCard.health;
+			string name = draggedCard.cardName;
+			Monster monster(atk, hp, name, 5);
+			addPlayerMonster(monster);
+			(*playerHand).deleteCard();
+		}
+	}
+
+	// 7. Render:
 	renderBoard(window);
 }
 
-void Board::initialize() {
+/*	fight()
+	A function that simulates a fight from the playerMonsters and the OpponentMonsters.
+	1. First a playerMonster and a opponentMonster is dealing damage to each other.
+	2. Then they are unclicked. 
+*/
+
+void Board::fight(int playerIndex, int oppIndex) {
+	// 1. Two monsters attack each other:
+	playerMonsters[playerIndex].takeDamage(opponentMonsters[oppIndex].getAttack());
+	opponentMonsters[oppIndex].takeDamage(playerMonsters[playerIndex].getAttack());
+	
+	// 2. They are unclicked
+	playerMonsters[playerIndex].unclick();
+	opponentMonsters[oppIndex].unclick();
 }
+
+void Board::initialize() {}
 
 /*	addPlayerMonster()
 *	A function that takes in a monster object and adds it to the array
@@ -103,8 +182,6 @@ void Board::addOppponentMonster(Monster monster){
 
 bool Board::isFull(bool isPlayer){
 	if (isPlayer) {
-		cout << "TEST: ";
-		cout << playerSize;
 		return playerSize == maxCapacity;
 	}
 	else {

@@ -14,6 +14,13 @@ Monster::Monster(int atk, int hp, string n, int s) {
 	name = n;
 	slot = s;
 	null = false;
+	clickLock = true;
+	clicked = false;
+	borderColor = sf::Color::Blue;
+	deathTime = 2.0f;
+	deathTimer = 0.0f;
+	deathPercentage = 0.0f;
+	isDead = false;
 
 	if (!monsterTexture.loadFromFile("Images/" + name + ".png")) {
 		cout << "Error loading card image!";
@@ -23,8 +30,30 @@ Monster::Monster(int atk, int hp, string n, int s) {
 	}
 }
 
+void Monster::takeDamage(int dmg) {
+	health -= dmg;
+}
 
 void Monster::update(float deltaTime, sf::RenderWindow& window) {
+	if (!isDead && health <= 0) {
+		isDead = true;
+		deathStart = deltaTime;
+	}
+	if (!isDead) {
+		checkClicked(window);
+	}
+	else {
+		dying(deltaTime, window);
+	}
+}
+
+void Monster::dying(float deltaTime, sf::RenderWindow& window){
+	deathPercentage = deathTimer / (deathStart + deathTime);
+	cout << deathPercentage;
+	if (deathPercentage > 1.0f){
+		*this = Monster();
+	}
+	deathTimer += deltaTime;
 }
 
 void Monster::initialize() {
@@ -34,14 +63,69 @@ bool Monster::isNull() {
 	return null;
 }
 
+
+bool Monster::getClicked() {
+	return clicked;
+}
+
+int Monster::getAttack() {
+	return attack;
+}
+
+
+int Monster::getHealth(){
+	return attack;
+}
+
+
+void Monster::unclick() {
+	clicked = false;
+}
+
+/*	checkClicked()
+	A function that checks if the current monster is clicked and if so alternate
+	the boolean value corresponding to the clicked property. clickLock is used to
+	lock the click in place, i.e, to make it a unique occurance and to prevent
+	holding in mouse 1 from triggering multiple "clicks".
+*/
+
+void Monster::checkClicked(const sf::RenderWindow& window) {
+	if (clicked) {
+		borderColor = sf::Color::Red;
+	}
+	else {
+		borderColor = sf::Color::Blue;
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isHovered(window)) {
+		if (!clickLock) {
+			clickLock = true;
+			clicked = !clicked;
+		}
+	}
+	else {
+		clickLock = false;
+	}
+
+	
+}
+
+bool Monster::isHovered(const sf::RenderWindow& window) {
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+	sf::FloatRect cardBounds = outerCircle.getGlobalBounds();
+	return cardBounds.contains(static_cast<sf::Vector2f>(mousePosition));
+}
+
 void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& window) {
+	sf::Uint8 alpha = (sf::Uint8)(255 * (1.0 - deathPercentage));
+	sf::Color alphaWhite(255, 255, 255, alpha);
+	
 	// 1. Render the bounding circle:
-	sf::CircleShape outerCircle;
 	outerCircle.setPosition(pos);
 	outerCircle.setRadius(radius);
 	outerCircle.setFillColor(sf::Color::White);
 	outerCircle.setOutlineThickness(4.f);
-	outerCircle.setOutlineColor(sf::Color::Blue);
+	outerCircle.setOutlineColor(borderColor);
 	window.draw(outerCircle);
 	
 	// 2. Monster Portrait:
@@ -52,6 +136,7 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	portrait.setPosition(portraitPos);
 	portrait.setRadius(portraitRadius);
 	portrait.setTexture(&monsterTexture);
+	portrait.setFillColor(alphaWhite);
 	window.draw(portrait);
 
 	// 3. Data for the orbs containing Health / Attack damage numbers:
@@ -66,7 +151,7 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	redCircle.setRadius(orbRadius);
 	redCircle.setFillColor(sf::Color::Red);
 	redCircle.setOutlineThickness(2.f);
-	redCircle.setOutlineColor(sf::Color::Blue);
+	redCircle.setOutlineColor(borderColor);
 	window.draw(redCircle);
 	
 	// 5. Text within the Red Orb:
@@ -82,7 +167,7 @@ void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& wind
 	yellowCircle.setRadius(orbRadius);
 	yellowCircle.setFillColor(sf::Color::Yellow);
 	yellowCircle.setOutlineThickness(2.f);
-	yellowCircle.setOutlineColor(sf::Color::Blue);
+	yellowCircle.setOutlineColor(borderColor);
 	window.draw(yellowCircle);
 
 	// 7. Text within yellow Orb:
