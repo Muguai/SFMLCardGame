@@ -109,7 +109,7 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 			int atk = draggedCard.attack;
 			int hp = draggedCard.health;
 			string name = draggedCard.cardName;
-			Monster monster(atk, hp, name, 5);
+			Monster monster(atk, hp, name);
 			addPlayerMonster(monster);
 			(*playerHand).deleteCard();
 		}

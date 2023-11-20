@@ -4,15 +4,15 @@
 #include <string>
 using namespace std;
 
+// Null (Standard) Constructor:
 Monster::Monster(){
 	null = true;
 }
 
-Monster::Monster(int atk, int hp, string n, int s) {
+Monster::Monster(int atk, int hp, string n) {
 	attack = atk;
 	health = hp;
 	name = n;
-	slot = s;
 	null = false;
 	clickLock = true;
 	clicked = false;

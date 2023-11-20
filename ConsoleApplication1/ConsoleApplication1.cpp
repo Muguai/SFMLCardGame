@@ -154,8 +154,8 @@ int main()
     playerDeck.shuffleDeck();
 
     // Testing playerboard:
-    Monster testMonster(10, 10, "Dragon", 4);
-    Monster testMonster2(10, 10, "Troll", 2);
+    Monster testMonster(10, 10, "Dragon");
+    Monster testMonster2(10, 10, "Troll");
     ManaHandler playerMana(300, 650, 12, 1, 12);
     Board playerBoard(playerHand, playerMana, sf::Vector2f(450, 150), 40.0f);
     
