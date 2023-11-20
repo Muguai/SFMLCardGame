@@ -68,6 +68,9 @@ void Server::receiveMessages() {
             std::size_t received;
             if (client->receive(buffer, sizeof(buffer), received) == sf::Socket::Done) {
                 cout << "Received message from client: " << buffer << endl;
+                if(std::strncmp(buffer, "Draw", 0) == 0) {
+                    std::cout << "draw" << std::endl;
+                }
             }
         }
     }
