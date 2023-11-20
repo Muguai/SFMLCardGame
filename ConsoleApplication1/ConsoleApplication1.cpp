@@ -158,7 +158,10 @@ int main()
     Monster testMonster2(10, 10, "Troll");
     ManaHandler playerMana(300, 650, 12, 1, 12);
     Board playerBoard(playerHand, playerMana, sf::Vector2f(450, 150), 40.0f);
-    
+    for (int i = 0; i < 5; i++) {
+        playerBoard.addOppponentMonster(testMonster);
+    }
+
     GameObjectManager::getInstance().addGameObject(&playerHand);
     GameObjectManager::getInstance().addGameObject(&playerDeck);
     GameObjectManager::getInstance().addGameObject(&playerBoard);
@@ -166,11 +169,10 @@ int main()
     GameObjectManager::getInstance().addGameObject(&opponentDeck);
     GameObjectManager::getInstance().addGameObject(&playerMana);
 
-
     while (window.isOpen())
     {   
         if (testSpawnTimer.getElapsedTime().asSeconds() > 2.0f) {
-            playerBoard.addOppponentMonster(testMonster);
+            
             if (playerDeck.getSize() > 0) {
                 playerDeck.dealCard(playerHand);
             }

@@ -7,6 +7,7 @@ using namespace std;
 // Null (Standard) Constructor:
 Monster::Monster(){
 	null = true;
+	clicked = false;
 }
 
 Monster::Monster(int atk, int hp, string n) {
