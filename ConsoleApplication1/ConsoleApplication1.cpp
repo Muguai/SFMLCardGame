@@ -111,7 +111,6 @@ int main()
         std::cout << "Whats the servers port?" << endl;
         std::cin >> port;
 
-
         if (port == "c") {
             port = "5000";
         }
