@@ -15,6 +15,10 @@ public:
     */
     virtual void initialize() {}
 
+    /*  updateOnTurn()
+        Performs task at the start of a new turn.
+    */
+    virtual void updateOnTurn(){}
 };
 
 

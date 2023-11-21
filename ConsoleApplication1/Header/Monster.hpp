@@ -7,7 +7,7 @@ using namespace std;
 class Monster : public GameObject {
 public:
 	Monster();
-	Monster(int atk, int hp, string n, int s);
+	Monster(int atk, int hp, string n);
 	bool isNull();
 	int getAttack();
 	int getHealth();
@@ -34,7 +34,6 @@ private:
 	bool clicked;
 	bool clickLock;
 	string name;
-	int slot;
 	sf::Texture monsterTexture;
 	sf::Font font;
 	sf::CircleShape outerCircle;

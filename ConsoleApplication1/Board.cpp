@@ -47,8 +47,10 @@ Board::Board(Hand& playerHand, ManaHandler& playerMana, sf::Vector2f boardPos, f
 	6. Check if the player is trying to put out cards on the board.
 	7. Render everything.
 */
+
 void Board::update(float deltaTime, sf::RenderWindow& window) {
-	// 1. Handle player monsters already out on the board:
+	// A). Handle player monsters already out on the board:
+	// 1. Check which player monsters are clicked
 	int clickedCounter = 0;
 	for (int i = 0; i < maxCapacity; i++) {
 		if (!playerMonsters[i].isNull()) {
@@ -59,14 +61,16 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 		}
 	}
 
-	// 2. Handle player clicks:
+	// 2. Handle these player clicks:
 	if (clickedCounter > 1) {
 		for (int i = 0; i < maxCapacity; i++) {
-			playerMonsters[i].unclick();
+			if (!playerMonsters[i].isNull()) {
+				playerMonsters[i].unclick();
+			}
 		}
 	}
 
-	// 3. Handle opponent monsters already out on the board:
+	// 3. Handle opponent monsters being clicked:
 	int oppClickedCounter = 0;
 	for (int i = 0; i < maxCapacity; i++) {
 		if (!opponentMonsters[i].isNull()) {
@@ -77,7 +81,7 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 		}
 	}
 
-	// 4. If a player monster is clicked and an opponent monster, let them fight:
+	// 4. If a player monster is clicked and an opponent monster, find index & let them fight:
 	if (clickedCounter == 1 && oppClickedCounter == 1) {
 		int playerIndex = 0;
 		int oppIndex = 0;
@@ -95,7 +99,7 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 		fight(playerIndex, oppIndex);
 	}
 
-	// 5. For each update, make sure that all the opponents are unclicked:
+	// 5. For each update/fight, make sure that all the opponents are unclicked (player untouched):
 	for (int i = 0; i < maxCapacity; i++) {
 		if (!opponentMonsters[i].isNull()) {
 			opponentMonsters[i].unclick();
@@ -111,7 +115,7 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 			int atk = draggedCard.attack;
 			int hp = draggedCard.health;
 			string name = draggedCard.cardName;
-			Monster monster(atk, hp, name, 5);
+			Monster monster(atk, hp, name);
 			addPlayerMonster(monster);
 			(*playerHand).deleteCard();
 		}
@@ -128,13 +132,15 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 */
 
 void Board::fight(int playerIndex, int oppIndex) {
-	// 1. Two monsters attack each other:
+	// 1. They are unclicked
+	playerMonsters[playerIndex].unclick();
+	opponentMonsters[oppIndex].unclick();
+
+	// 2. Two monsters attack each other:
 	playerMonsters[playerIndex].takeDamage(opponentMonsters[oppIndex].getAttack());
 	opponentMonsters[oppIndex].takeDamage(playerMonsters[playerIndex].getAttack());
 	
-	// 2. They are unclicked
-	playerMonsters[playerIndex].unclick();
-	opponentMonsters[oppIndex].unclick();
+
 }
 
 void Board::initialize() {}

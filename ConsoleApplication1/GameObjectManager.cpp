@@ -33,6 +33,12 @@ void GameObjectManager::updateAll(float deltaTime, sf::RenderWindow& window) {
     }
 }
 
+void GameObjectManager::updateAllOnTurn(sf::RenderWindow& window) {
+    for (const auto& object : gameObjects) {
+        object->updateOnTurn();
+    }
+}
+
 GameObjectManager::~GameObjectManager() {
     for (auto object : gameObjects) {
         delete object;

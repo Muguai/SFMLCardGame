@@ -4,15 +4,16 @@
 #include <string>
 using namespace std;
 
+// Null (Standard) Constructor:
 Monster::Monster(){
 	null = true;
+	clicked = false;
 }
 
-Monster::Monster(int atk, int hp, string n, int s) {
+Monster::Monster(int atk, int hp, string n) {
 	attack = atk;
 	health = hp;
 	name = n;
-	slot = s;
 	null = false;
 	clickLock = true;
 	clicked = false;
@@ -30,9 +31,19 @@ Monster::Monster(int atk, int hp, string n, int s) {
 	}
 }
 
+/*	takeDamage()
+*	A setter that updates the monster's damage.
+*/
+
 void Monster::takeDamage(int dmg) {
 	health -= dmg;
 }
+
+/*	update()
+*	1. Check to see if the monster is dead, if it is, start the death timer.
+*	2. If the monster is not dead, check to see if it is clicked (both player monster & opponent monster).
+*	3. If the monster is already dead, start the dying process instead.
+*/
 
 void Monster::update(float deltaTime, sf::RenderWindow& window) {
 	if (!isDead && health <= 0) {
@@ -47,9 +58,14 @@ void Monster::update(float deltaTime, sf::RenderWindow& window) {
 	}
 }
 
+/*	dying()
+	dying() is a function that adds deltaTime increments until deathPercentage has reached 100%.
+	As such, deathPercentage is a value that other functions can use to do animations. For example,
+	the easiest one being a fade (Add alpha to color based on deathPercentage).
+*/
+
 void Monster::dying(float deltaTime, sf::RenderWindow& window){
 	deathPercentage = deathTimer / (deathStart + deathTime);
-	cout << deathPercentage;
 	if (deathPercentage > 1.0f){
 		*this = Monster();
 	}
@@ -58,6 +74,8 @@ void Monster::dying(float deltaTime, sf::RenderWindow& window){
 
 void Monster::initialize() {
 }
+
+// Getters:
 
 bool Monster::isNull() {
 	return null;
@@ -77,7 +95,7 @@ int Monster::getHealth(){
 	return attack;
 }
 
-
+//	Set the current monster to be unclicked:
 void Monster::unclick() {
 	clicked = false;
 }
@@ -110,11 +128,20 @@ void Monster::checkClicked(const sf::RenderWindow& window) {
 	
 }
 
+/*	isHovered()
+*	Basically check if the monster object is being hovered.
+*/
+
 bool Monster::isHovered(const sf::RenderWindow& window) {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 	sf::FloatRect cardBounds = outerCircle.getGlobalBounds();
 	return cardBounds.contains(static_cast<sf::Vector2f>(mousePosition));
 }
+
+/*	drawMonster()
+	Render the monster in different stages.
+	The attribute 'deathPercantage' can be used here to create interpolations and animations.
+*/
 
 void Monster::drawMonster(sf::Vector2f pos, float radius, sf::RenderWindow& window) {
 	sf::Uint8 alpha = (sf::Uint8)(255 * (1.0 - deathPercentage));
