@@ -15,7 +15,7 @@ public:
     void removeGameObject(GameObject* object);
 
     void updateAll(float deltaTime, sf::RenderWindow& window);
-
+    void updateAllOnTurn(sf::RenderWindow& window);
     ~GameObjectManager();
 
 private:
