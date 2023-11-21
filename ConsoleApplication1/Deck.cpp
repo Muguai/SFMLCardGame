@@ -11,6 +11,7 @@ deque<Card> cardStack;
 sf::Vector2f position;
 sf::Texture cardTexture;
 
+Deck::Deck() {}
 // Constructor:
 Deck::Deck(int deckSize, bool _isOpponent, int faction){
 	isOpponent = _isOpponent;

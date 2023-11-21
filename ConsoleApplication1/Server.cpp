@@ -91,3 +91,17 @@ void Server::stop() {
         connectionsThread.join(); 
     }
 }
+
+void Server::setDecks(Deck _player1Deck, Deck _player2Deck) {
+    player1Deck = _player1Deck;
+    player2Deck = _player2Deck;
+}
+
+void Server::setHands(Hand _player1Hand, Hand _player2Hand) {
+    player1Hand = _player1Hand;
+    player2Hand = _player2Hand;
+}
+
+void Server::setBoard(Board _board) {
+    board = _board;
+}

@@ -2,6 +2,9 @@
 #include <iostream>
 #include <deque>
 #include <Header/Resources.hpp>
+#include "AllCardsManager.hpp"
+class AllCardsManager;
+
 
 using namespace std;
 sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
@@ -13,10 +16,13 @@ auto emptyFunction = []() {};
 */
 
 deque<Card> addQuantity(deque<Card> cardStack, int n, int atk, int hp, int cost, sf::Vector2f size, string name, std::function<void()> f) {
+	Card cardtomap(atk, hp, cost, size, name, f);
+
 	for (int i = 0; i < n; i++) {
 		Card card(atk, hp, cost, size, name, f);
 		cardStack.push_back(card);
 	}
+
 
 	return cardStack;
 }

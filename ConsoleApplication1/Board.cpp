@@ -8,6 +8,8 @@ using namespace std;
 Monster* playerMonsters;
 Monster* opponentMonsters;
 
+Board::Board() {}
+
 /*	Board()
 	The constructor for the board.
 	The position of the board is taken in and a delimiter space between each monster.

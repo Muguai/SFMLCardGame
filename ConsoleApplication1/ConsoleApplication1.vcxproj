@@ -82,7 +82,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)SFML\lib;$(SoltionDir)ConsoleApplication1\Header;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-window-d.lib;sfml-graphics-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AllCardsManager.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Client.cpp" />
@@ -154,12 +155,19 @@
     <ClCompile Include="VectorHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Card.hpp" />
+    <ClInclude Include="AllCardsManager.hpp" />
     <ClInclude Include="Client.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="GameObjectManager.hpp" />
+    <ClInclude Include="Header\Board.hpp" />
+    <ClInclude Include="Header\Card.hpp" />
+    <ClInclude Include="Header\Deck.hpp" />
+    <ClInclude Include="Header\Hand.hpp" />
+    <ClInclude Include="Header\ManaHandler.hpp" />
+    <ClInclude Include="Header\Monster.hpp" />
+    <ClInclude Include="Header\Resources.hpp" />
+    <ClInclude Include="Header\Shuffle.hpp" />
     <ClInclude Include="Server.hpp" />
-    <ClInclude Include="Shuffle.hpp" />
     <ClCompile Include="Hand.cpp" />
     <ClInclude Include="VectorHelper.hpp" />
   </ItemGroup>

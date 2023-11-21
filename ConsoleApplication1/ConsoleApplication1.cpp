@@ -17,6 +17,8 @@
 #include <Client.hpp>
 #include <string>
 #include "GameObjectManager.hpp"
+#include "AllCardsManager.hpp"
+class AllCardsManager;
 class GameObjectManager;
 
 using namespace std;
@@ -31,6 +33,7 @@ enum class NetworkMode {
 
 int main()
 {   
+    AllCardsManager::getInstance();
     GameObjectManager::getInstance();
     // Select a faction to play:
     int faction = 0;
@@ -150,6 +153,8 @@ int main()
     Deck playerDeck(5, false, faction);
     Deck opponentDeck(10, true , faction);
 
+   
+
     playerDeck.shuffleDeck();
 
     // Testing playerboard:
@@ -157,6 +162,14 @@ int main()
     Monster testMonster2(10, 10, "Troll", 2);
     ManaHandler playerMana(300, 650, 12, 1, 12);
     Board playerBoard(playerHand, playerMana, sf::Vector2f(450, 150), 40.0f);
+
+
+    if (mode == NetworkMode::Server) {
+        server.setDecks(playerDeck, opponentDeck);
+        server.setHands(playerHand, opponentHand);
+        server.setBoard(playerBoard);
+
+    }
     
     GameObjectManager::getInstance().addGameObject(&playerHand);
     GameObjectManager::getInstance().addGameObject(&playerDeck);
@@ -179,7 +192,7 @@ int main()
         sf::Time elapsed = clock.restart();
         deltaTime = elapsed.asSeconds();
 
-         //client.messageToServer("Hello, Server!");
+         client.messageToServer("Draw, Server!");
          //server.messageToClients("Hello Clients");
         
 

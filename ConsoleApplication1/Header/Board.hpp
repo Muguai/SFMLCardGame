@@ -7,6 +7,7 @@
 using namespace std;
 class Board : public GameObject{
 public:
+	Board();
 	Board(Hand& PlayerHand, ManaHandler& playerMana, sf::Vector2f boardPos, float delimiterSpace);
 	void addPlayerMonster(Monster monster);
 	void addOppponentMonster(Monster monster);

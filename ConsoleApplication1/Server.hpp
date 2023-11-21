@@ -5,7 +5,8 @@
 #include <atomic>
 #include <string>
 #include <mutex>
-
+#include "Board.hpp"
+#include "Deck.hpp"
 using namespace std;
 
 
@@ -17,6 +18,9 @@ public:
     void stop();
     void messageToClients(string message);
     void messageToClient(string message, size_t clientIndex);
+    void setDecks(Deck player1Deck, Deck player2Deck);
+    void setHands(Hand _player1Hand, Hand _player2Hand);
+    void setBoard(Board _board);
 
 
 private:
@@ -30,4 +34,9 @@ private:
     std::thread connectionsThread;
     std::thread receiveThread;
     std::atomic<bool> running; 
+    Board board;
+    Deck player1Deck;
+    Deck player2Deck;
+    Hand player1Hand;
+    Hand player2Hand;
 };

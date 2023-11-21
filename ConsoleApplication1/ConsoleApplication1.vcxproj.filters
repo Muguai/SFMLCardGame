@@ -1,27 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Card.cpp" />
-    <ClCompile Include="ConsoleApplication1.cpp" />
-    <ClCompile Include="Deck.cpp" />
-    <ClCompile Include="Shuffle.cpp" />
-    <ClCompile Include="VectorHelper.cpp" />
-    <ClCompile Include="Hand.cpp" />
-    <ClCompile Include="Server.cpp" />
-    <ClCompile Include="Client.cpp" />
-    <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="Board.cpp" />
-    <ClCompile Include="GameObjectManager.cpp" />
-    <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="ManaHandler.cpp" />
+    <ClCompile Include="AllCardsManager.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleApplication1.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Deck.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Hand.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ManaHandler.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Shuffle.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorHelper.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Card.hpp" />
-    <ClInclude Include="Shuffle.hpp" />
-    <ClInclude Include="VectorHelper.hpp" />
-    <ClInclude Include="Server.hpp" />
-    <ClInclude Include="Client.hpp" />
-    <ClInclude Include="GameObject.hpp" />
-    <ClInclude Include="GameObjectManager.hpp" />
+    <ClInclude Include="AllCardsManager.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorHelper.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Board.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Card.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Deck.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Hand.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\ManaHandler.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Monster.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Resources.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Shuffle.hpp">
+      <Filter>hpp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="cpp">
+      <UniqueIdentifier>{3ac05c1f-317b-47be-801b-4e400c8fd5a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hpp">
+      <UniqueIdentifier>{77cf09c8-c2de-4f22-ad3c-a32861652c5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

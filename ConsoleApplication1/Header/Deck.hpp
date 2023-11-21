@@ -17,6 +17,7 @@ private:
 	bool isOpponent;
 
 public:
+	Deck();
 	Deck(int deckSize, bool isOpponent, int faction);
 	void returnCard(Card card);
 	void createDeck(int n, int faction);

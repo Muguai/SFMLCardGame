@@ -21,7 +21,6 @@ void Hand::addCard(Card& card) {
 
     cards.push_back(newCard);    
     cardsRenderOrder = cards;
-
 }
 
 void Hand::deleteCard(){
