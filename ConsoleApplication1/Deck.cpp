@@ -5,6 +5,7 @@
 #include <string>
 #include <Resources.hpp>
 #include <GameObjectManager.hpp>
+#include <ManaHandler.hpp>
 
 using namespace std;
 deque<Card> cardStack;

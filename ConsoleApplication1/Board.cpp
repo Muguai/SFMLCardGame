@@ -79,7 +79,7 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 		}
 	}
 
-	// 4. If a player monster is clicked and an opponent monster, let them fight:
+	// 4. If a player monster is clicked and an opponent monster, find index & let them fight:
 	if (clickedCounter == 1 && oppClickedCounter == 1) {
 		int playerIndex = 0;
 		int oppIndex = 0;
@@ -97,7 +97,7 @@ void Board::update(float deltaTime, sf::RenderWindow& window) {
 		fight(playerIndex, oppIndex);
 	}
 
-	// 5. For each update, make sure that all the opponents are unclicked:
+	// 5. For each update/fight, make sure that all the opponents are unclicked (player untouched):
 	for (int i = 0; i < maxCapacity; i++) {
 		if (!opponentMonsters[i].isNull()) {
 			opponentMonsters[i].unclick();

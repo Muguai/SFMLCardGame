@@ -7,9 +7,8 @@
 	param maxPossibleMana: How much max mana is theoretically possible. 
 */
 
-ManaHandler::ManaHandler(int x, int y, int startMana, int increaseFactor, int maxPossibleMana){
-	this->x = x;
-	this->y = y;
+ManaHandler::ManaHandler(bool player, int startMana, int increaseFactor, int maxPossibleMana){
+	this->player = player;
 	mana = startMana;
 	manaCurrentMax = startMana;
 	manaIncrease = increaseFactor;
@@ -47,6 +46,14 @@ int ManaHandler::getMana() {
 	return this->mana;
 }
 
+/*	setPosition()
+	Simple setter.
+*/
+
+void ManaHandler::setPosition(sf::Vector2f pos) {
+	x = pos.x;
+	y = pos.y;
+}
 
 /*	restoreMana()
 	Restores mana to the current max. 
@@ -70,12 +77,14 @@ void ManaHandler::incrementMaxMana() {
 	manaCurrentMax = min;
 }
 
+/*	draw()
+*	Renders the mana of the player who the mana handler belongs to.
+*/
+
 void ManaHandler::draw(sf::RenderWindow& window) {
 	float radius = 30.0f;
-	float xOffset = x + radius / 2;
-	float yOffset = y + radius / 2;
 	sf::Text manaText(to_string(mana), font, 18);
-	manaText.setPosition(xOffset, yOffset);
+	manaText.setPosition(x + radius/2, y+radius/2);
 
 	manaIcon.setRadius(radius);
 	manaIcon.setPosition(x, y);
@@ -83,10 +92,24 @@ void ManaHandler::draw(sf::RenderWindow& window) {
 
 	window.draw(manaIcon);
 	window.draw(manaText);
-
 }
 
+/*	update()
+*	1. Sets up coordinates based on screen size.
+*	2. Re-renders the ManaHandler object.
+*/
+
 void ManaHandler::update(float deltaTime, sf::RenderWindow& window) {
+	float xOffset = 100;
+	float yOffset = 100;
+	if (player) {
+		x = window.getSize().x - xOffset;
+		y = window.getSize().y - yOffset;
+	}
+	else {
+		x = xOffset;
+		y = yOffset;
+	}
 	draw(window);
 }
 void ManaHandler::initialize() {

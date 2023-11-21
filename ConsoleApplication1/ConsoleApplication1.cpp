@@ -32,7 +32,8 @@ enum class NetworkMode {
 int main()
 {   
     GameObjectManager::getInstance();
-    // Select a faction to play:
+
+    // 1. Select a faction to play:
     int faction = 0;
     while (faction == 0) {
         cout << "What faction do you want to play?" << endl;
@@ -44,7 +45,8 @@ int main()
             faction = 0;
         }
     }
-
+    
+    // 2. Set up network role (Server, Client):
     NetworkMode mode = NetworkMode::Server;
     Server server;
     Client client;
@@ -125,6 +127,7 @@ int main()
             });
     }
 
+    // 3. Set up the SFML Window, player objects and stuff:
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
@@ -146,8 +149,6 @@ int main()
     
 
     sf::Vector2f cardSize = sf::Vector2f(150.f, 200.f);
-
-    // Init the deck as: Deck size = 10, x = 100.0 and y = 700.0, faction = <selected int>:
     Deck playerDeck(5, false, faction);
     Deck opponentDeck(10, true , faction);
 
@@ -156,7 +157,7 @@ int main()
     // Testing playerboard:
     Monster testMonster(10, 10, "Dragon");
     Monster testMonster2(10, 10, "Troll");
-    ManaHandler playerMana(300, 650, 12, 1, 12);
+    ManaHandler playerMana(true, 12, 1, 12);
     Board playerBoard(playerHand, playerMana, sf::Vector2f(450, 150), 40.0f);
     for (int i = 0; i < 5; i++) {
         playerBoard.addOppponentMonster(testMonster);
@@ -171,7 +172,7 @@ int main()
 
     while (window.isOpen())
     {   
-        if (testSpawnTimer.getElapsedTime().asSeconds() > 2.0f) {
+        if (testSpawnTimer.getElapsedTime().asSeconds() > .5f) {
             
             if (playerDeck.getSize() > 0) {
                 playerDeck.dealCard(playerHand);

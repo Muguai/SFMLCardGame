@@ -15,6 +15,7 @@ private:
 	sf::SoundBuffer soundBuffer;
 	sf::Sound sound;
 	bool isOpponent;
+	
 
 public:
 	Deck(int deckSize, bool isOpponent, int faction);
